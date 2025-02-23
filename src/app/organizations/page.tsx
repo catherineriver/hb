@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Box, VStack, Heading, Text, Button, SimpleGrid, Flex } from "@chakra-ui/react";
-import Layout from "@/components/layout";
+import { Box, VStack, Heading, Text, SimpleGrid, Flex } from "@chakra-ui/react";
+import MainLayout from "@/components/main-layout";
 
 const organizations = [
     {
@@ -31,7 +31,7 @@ const OrganizationsPage = () => {
     const [selectedOrganization, setSelectedOrganization] = useState(null);
 
     return (
-        <Layout sidebarContent={<SidebarOrganizations />}>
+        <MainLayout>
             <Flex height="100%" gap={4}>
                 {/* Список организаций */}
                 <Box flex={selectedOrganization ? 0.5 : 1} overflowY="auto">
@@ -39,35 +39,17 @@ const OrganizationsPage = () => {
                         {organizations.map((org, index) => (
                             <Box key={index} w="100%" p={4} border="1px solid black" borderRadius="8px" cursor="pointer" onClick={() => setSelectedOrganization(org)}>
                                 <VStack align="start" spacing={1}>
-                                    <Heading size="md" fontFamily="serif">{org.name}</Heading>
-                                    <Text fontSize="sm" fontFamily="serif">Участников: {org.members}</Text>
-                                    <Text fontSize="sm" fontFamily="serif" mt={2}>{org.description}</Text>
+                                    <Heading size="md"  >{org.name}</Heading>
+                                    <Text fontSize="sm"  >Участников: {org.members}</Text>
+                                    <Text fontSize="sm"   mt={2}>{org.description}</Text>
                                 </VStack>
                             </Box>
                         ))}
                     </SimpleGrid>
                 </Box>
-
-                {/* Открытая организация */}
-                {selectedOrganization && (
-                    <Box flex={0.5} p={6} borderLeft="1px solid black" overflowY="auto">
-                        <Heading size="lg" mb={4}>{selectedOrganization.name}</Heading>
-                        <Text fontSize="sm" fontFamily="serif">Участников: {selectedOrganization.members}</Text>
-                        <Text mt={4}>{selectedOrganization.description}</Text>
-                        <Button mt={4} onClick={() => setSelectedOrganization(null)}>Закрыть</Button>
-                    </Box>
-                )}
             </Flex>
-        </Layout>
+        </MainLayout>
     );
 };
-
-const SidebarOrganizations = () => (
-    <VStack align="start" spacing={3}>
-        <Button size="lg" variant="plain" color="black">Популярные</Button>
-        <Button size="lg" variant="plain" color="black">Новые</Button>
-        <Button size="lg" variant="plain" color="black">По рейтингу</Button>
-    </VStack>
-);
 
 export default OrganizationsPage;

@@ -1,55 +1,31 @@
-import {Box, Flex, VStack, Heading, HStack} from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
-import Navbar from "@/components/ui/navbar";
-import Tags from "@/components/ui/tags";
-import {useState} from "react";
-import Header from "@/components/ui/Header";
+import {Box, Flex, Button, HStack} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/ui/header";
+import {FaArrowLeft} from "react-icons/fa";
 
-const newsData = {
-    global: "Новости о глобальных событиях...",
-    local: "Местные новости и репортажи...",
-    corruption: "Расследования о коррупции...",
-    "human-rights": "Права человека и социальная справедливость...",
-    politics: "Политические события и выборы...",
-    international: "Международные события и мировая арена...",
-};
-
-const MainLayout = ({ children, sidebarContent }: { children: React.ReactNode, sidebarContent?: React.ReactNode }) => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
+    const router = useRouter();
     return (
         <Flex height="100vh" direction="column">
             <Box>
-                <Header />
+                <Header withNav />
             </Box>
 
             {/* Main Layout */}
-            <Flex flex={1} overflow="hidden">
-                {/* Динамический сайдбар */}
-                <Box
-                    borderRight="2px solid black"
-                    w="250px"
-                    p={4}
-                    display="flex"
-                    flexDirection="column"
-                    height="100%"
-                >
-                    {/* Контент сайдбара занимает всю высоту */}
-                    <Box flex="1" overflowY="auto">
-                        {sidebarContent}
+            <Flex flex={1} overflow="hidden" justifyContent="center" w="100%">
+                <HStack py="3" alignItems="flex-start" w="100%" justifyContent="center">
+                    <Box p={6}>
+                        <Button onClick={() => router.back()} variant="solid" borderRadius={50} background="#000086" color="white">
+                            <FaArrowLeft />
+                        </Button>
                     </Box>
-
-                    {/* Navbar остается внизу */}
-                    <Box mt="auto">
-                        <Navbar />
+                    <Box overflowY="auto" fontFamily="body" w="100%">
+                        {children}
                     </Box>
-                </Box>
-
-                {/* Контентная часть */}
-                <Box flex={1} p={6} overflowY="auto" fontFamily="body">
-                    {children}
-                </Box>
+                </HStack>
             </Flex>
         </Flex>
     );
 };
 
-export default MainLayout;
+export default PageLayout;

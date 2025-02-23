@@ -2,39 +2,79 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Box, Heading, Text, VStack, HStack } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, HStack, Link } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
-import useMockData, {NewsItem} from "@/hooks/useMockData";
+import useMockData, { Pitch, Author } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 
-const PitchPage = () => {
+const AuthorPage = () => {
     const { id } = useParams();
     const { mockData, loading, error } = useMockData();
-    const [pitch, setPitch] = useState<NewsItem>(null);
+    const [author, setAuthor] = useState<Author | null>(null);
+    const [pitches, setPitches] = useState<Pitch[]>([]);
 
     useEffect(() => {
         if (mockData) {
-            const foundPitch = mockData.data.find((item) => item.id.toString() === id);
-            setPitch(foundPitch);
+            const foundAuthor = mockData.authors.find((item) => item.id.toString() === id);
+            setAuthor(foundAuthor);
+
+            const authorPitches = mockData.data.filter((pitch) => pitch.authorId?.toString() === id);
+            setPitches(authorPitches);
         }
     }, [mockData, id]);
 
     if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
-    if (!pitch) return <Text textAlign="center">Питч не найден</Text>;
+    if (!author) return <Text textAlign="center">Автор не найден</Text>;
 
     return (
         <PageLayout>
-        <Box p={6}>
-            <Heading>{pitch.title}</Heading>
-            <HStack mt={2}>
-                <Avatar size="sm" />
-                <Text>{pitch.author}</Text>
-            </HStack>
-            <Text mt={4}>{pitch.full}</Text>
-        </Box>
+                {/* Информация об авторе */}
+                <HStack spacing={4} align="center">
+                    <Avatar size="lg" />
+                    <VStack align="start">
+                        <Heading>{author.name}</Heading>
+                        <Text fontSize="sm" color="gray.600">
+                            {author.articles.length} опубликованных материалов
+                        </Text>
+                        <Text fontSize="sm" color="gray.600">
+                            Работал с {author.organizations?.length || 0} организациями
+                        </Text>
+                        {author.organizations && author.organizations.length > 0 && (
+                            <Text fontSize="sm">
+                                Организации:{" "}
+                                {author.organizations.map((org, index) => (
+                                    <Link key={index} href={`/organizations/${org.id}`} color="blue.500">
+                                        {org.name}
+                                    </Link>
+                                ))}
+                            </Text>
+                        )}
+                    </VStack>
+                </HStack>
+
+                {/* Список питчей автора */}
+                <Heading size="md" mb={3}>
+                    Питчи автора
+                </Heading>
+                <VStack align="start" spacing={4}>
+                    {pitches.length > 0 ? (
+                        pitches.map((pitch) => (
+                            <Box key={pitch.id} p={4} border="1px solid gray" borderRadius="md" width="100%">
+                                <Link href={`/pitches/${pitch.id}`}>
+                                    <Heading size="sm" color="blue.600" _hover={{ textDecoration: "underline" }}>
+                                        {pitch.title}
+                                    </Heading>
+                                </Link>
+                                <Text fontSize="sm" color="gray.600">{pitch.description}</Text>
+                            </Box>
+                        ))
+                    ) : (
+                        <Text>У этого автора пока нет питчей.</Text>
+                    )}
+                </VStack>
         </PageLayout>
     );
 };
 
-export default PitchPage;
+export default AuthorPage;

@@ -1,26 +1,12 @@
-import {Box, Flex, VStack, Heading, HStack} from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
+import {Box, Flex } from "@chakra-ui/react";;
 import Navbar from "@/components/ui/navbar";
-import Tags from "@/components/ui/tags";
-import {useState} from "react";
-import Header from "@/components/ui/Header";
+import Header from "@/components/ui/header";
 
-const newsData = {
-    global: "Новости о глобальных событиях...",
-    local: "Местные новости и репортажи...",
-    corruption: "Расследования о коррупции...",
-    "human-rights": "Права человека и социальная справедливость...",
-    politics: "Политические события и выборы...",
-    international: "Международные события и мировая арена...",
-};
-
-const Layout = ({ children, sidebarContent }: { children: React.ReactNode, sidebarContent?: React.ReactNode }) => {
-    const [currentCategory, setCurrentCategory] = useState("global");
-
+const MainLayout = ({ children, sidebarContent }: { children: React.ReactNode, sidebarContent?: React.ReactNode }) => {
     return (
         <Flex height="100vh" direction="column">
             <Box>
-                <Header />
+                <Header withRegionSelector withSorting />
             </Box>
 
             {/* Main Layout */}
@@ -54,4 +40,4 @@ const Layout = ({ children, sidebarContent }: { children: React.ReactNode, sideb
     );
 };
 
-export default Layout;
+export default MainLayout;

@@ -1,55 +1,39 @@
-import {createListCollection} from "@chakra-ui/react";
-import {
-    SelectContent,
-    SelectItem,
-    SelectLabel,
-    SelectRoot,
-    SelectTrigger,
-    SelectValueText
-} from "@/components/ui/select";
+import {createListCollection} from "@chakra-ui/react"
 import React from "react";
+import {SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText} from "@/components/ui/select";
 
-const subjectsRF = createListCollection({
+const sortingOptions = createListCollection({
     items: [
-        { label: "Все", value: "all" },
-        { label: "Москва", value: "MOW" },
-        { label: "Санкт-Петербург", value: "SPE" },
-        { label: "Московская область", value: "MOS" },
-        { label: "Ленинградская область", value: "LEN" },
-        { label: "Краснодарский край", value: "KDA" },
-        { label: "Республика Татарстан", value: "TA" },
-        { label: "Новосибирская область", value: "NVS" },
-        { label: "Свердловская область", value: "SVE" },
-        { label: "Ростовская область", value: "ROS" },
-        { label: "Республика Башкортостан", value: "BA" },
-        { label: "Челябинская область", value: "CHE" },
-        { label: "Самарская область", value: "SAM" },
-        { label: "Нижегородская область", value: "NIZ" },
-        { label: "Красноярский край", value: "KYA" },
-        { label: "Приморский край", value: "PRI" },
-        { label: "Пермский край", value: "PER" },
-        { label: "Республика Дагестан", value: "DA" },
-        { label: "Омская область", value: "OMS" },
-        { label: "Воронежская область", value: "VOR" },
-        { label: "Волгоградская область", value: "VGG" },
+        { label: "Сначала новые", value: "newest" },
+        { label: "Сначала старые", value: "oldest" }
     ],
 })
 
-const RegionSelector = () => {
+interface SortingSelectorProps {
+    sortingValue: string;
+    onSortChange: (sortBy: string[]) => void;
+}
+
+const SortingSelector: React.FC<SortingSelectorProps> = ({ onSortChange, sortingValue }) => {
     return (
-        <SelectRoot multiple collection={subjectsRF} size="sm" width="320px">
+        <SelectRoot
+            collection={sortingOptions}
+            value={[sortingValue]}
+            onValueChange={(e) => onSortChange(e.value)}
+            size="sm" width="200px"
+        >
             <SelectTrigger clearable>
                 <SelectValueText fontSize="18px" px={2} py={3}  placeholder="Все" defaultValue="all" />
             </SelectTrigger>
             <SelectContent background="white" border="none">
-                {subjectsRF.items.map((subject) => (
-                    <SelectItem item={subject} key={subject.value}>
-                        {subject.label}
+                {sortingOptions.items.map((option) => (
+                    <SelectItem item={option} key={option.value}>
+                        {option.label}
                     </SelectItem>
                 ))}
             </SelectContent>
         </SelectRoot>
-    )
-}
+    );
+};
 
-export default RegionSelector;
+export default SortingSelector;
