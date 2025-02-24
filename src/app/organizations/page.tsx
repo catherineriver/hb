@@ -38,7 +38,7 @@ const OrganizationsPage = () => {
                     <SimpleGrid columns={selectedOrganization ? [1, null, 1] : [2, null, 3]} gap="40px">
                         {organizations.map((org, index) => (
                             <Box key={index} w="100%" p={4} border="1px solid black" borderRadius="8px" cursor="pointer" onClick={() => setSelectedOrganization(org)}>
-                                <VStack align="start" spacing={1}>
+                                <VStack align="start" gap={1}>
                                     <Heading size="md"  >{org.name}</Heading>
                                     <Text fontSize="sm"  >Участников: {org.members}</Text>
                                     <Text fontSize="sm"   mt={2}>{org.description}</Text>

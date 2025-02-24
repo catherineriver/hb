@@ -4,25 +4,20 @@ import React, { useEffect, useState } from "react";
 import {
     Box,
     Flex,
-    Heading,
     Text,
-    VStack,
-    HStack,
-    SimpleGrid, Link,
+    SimpleGrid,
 } from "@chakra-ui/react";
 import MainLayout from "@/components/main-layout";
 import SidebarCategories from "@/components/ui/side-bar";
 import { useNews } from "@/context/news-context";
 import useMockData, { Pitch } from "@/hooks/useMockData";
-import {Avatar} from "@/components/ui/avatar";
-import {useRouter} from "next/navigation";
+import PitchCard from "@/components/ui/pitch-card";
 
 
 const App = () => {
     const { selectedTags, selectedFormat, sortBy } = useNews();
     const { mockData, loading, error } = useMockData();
     const [news, setNews] = useState<Pitch[]>([]);
-    const router = useRouter();
 
     useEffect(() => {
         if (mockData) {
@@ -53,35 +48,13 @@ const App = () => {
             <Flex height="100%" gap={4}>
                 <Box flex={2} overflowY="auto">
                     {news.length === 0 ? (
-                        <Text textAlign="center" py={4} fontSize="lg" color="gray.500">
+                        <Text textAlign="center" py={4}>
                             Ничего не найдено
                         </Text>
                     ) : (
                         <SimpleGrid columns={[1, null, 2]} gap="40px">
-                            {news.map((item, index) => (
-                                <Box
-                                    key={index}
-                                    w="100%"
-                                    px={4}
-                                    py={2}
-                                    cursor="pointer"
-                                    onClick={() => router.push(`/pitches/${item.id}`)}
-                                >
-                                    <VStack align="start" spacing={1}>
-                                        <Heading size="xl">{item.title}</Heading>
-                                        <Text textStyle="sm">{item.description}</Text>
-                                        <HStack w="100%" justify="space-between">
-                                            <HStack align="center" w="100%" spacing={1}>
-                                                <HStack align="center" w="100%" spacing={1}>
-                                                    <Link href={`/authors/${item.author.id}`} color="blue.500">
-                                                        <Avatar size="xxs"></Avatar>
-                                                        <Text fontSize="sm">{item.author.name}</Text>
-                                                    </Link>
-                                                </HStack>
-                                            </HStack>
-                                        </HStack>
-                                    </VStack>
-                                </Box>
+                            {news.map((item) => (
+                                <PitchCard item={item} key={item.id}/>
                             ))}
                         </SimpleGrid>
                     )}

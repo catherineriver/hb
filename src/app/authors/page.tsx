@@ -15,7 +15,7 @@ import useMockData from "@/hooks/useMockData";
 import {useRouter} from "next/navigation";
 
 const SidebarAuthors = () => (
-    <VStack align="start" spacing={3}>
+    <VStack align="start" gap={3}>
         <Button size="lg" variant="plain" color="black">Популярные авторы</Button>
         <Button size="lg" variant="plain" color="black">Новые авторы</Button>
         <Button size="lg" variant="plain" color="black">По рейтингу</Button>

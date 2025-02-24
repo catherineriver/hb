@@ -18,9 +18,9 @@ const Tags = () => {
 
     return (
         <Box borderBottom="2px solid black" py={2}>
-            <HStack spacing={4} justify="center">
+            <HStack gap={4} justify="center">
                 {mockData.tags.map((tag, index) => (
-                    <HStack key={tag} spacing={2}>
+                    <HStack key={tag} gap={2}>
                         <Text
                             fontSize="lg"
                             fontWeight={selectedTags.includes(tag) ? "bold" : "normal"}

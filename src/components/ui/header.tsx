@@ -23,16 +23,16 @@ const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav
 
     return (
         <Box borderBottom="2px solid" px={4}>
-            <HStack justifyContent="space-between" alignItems="center" spacing={2}>
+            <HStack justifyContent="space-between" alignItems="center" gap={2}>
             <Flex align="center" justify="center" position="relative">
                 <ChakraLink asChild>
                     <NextLink href="/">
-                        <Logo width="140" height="45" />
+                        <Logo w="140" h="45" />
                     </NextLink>
                 </ChakraLink>
             </Flex>
                 {withNav &&
-                    <HStack justifyContent="space-between" alignItems="center" spacing={2}>
+                    <HStack justifyContent="space-between" alignItems="center">
                         <ChakraLink asChild>
                             <NextLink href="/">Все питчи</NextLink>
                         </ChakraLink>
@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav
                     </HStack>
                 }
 
-                <HStack justifyContent="space-between" alignItems="center" spacing={2}>
+                <HStack justifyContent="space-between" alignItems="center" gap={2}>
                     {withRegionSelector && <RegionSelector/>}
                     {withSorting &&
                         <SortingSelector

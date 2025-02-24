@@ -13,7 +13,7 @@ const MainLayout = ({ children, sidebarContent }: { children: React.ReactNode, s
             <Flex flex={1} overflow="hidden">
                 {/* Динамический сайдбар */}
                 <Box
-                    borderRight="2px solid black"
+                    borderRight="1px solid #2E2E3A"
                     w="250px"
                     p={4}
                     display="flex"

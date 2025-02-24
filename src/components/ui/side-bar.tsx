@@ -1,4 +1,4 @@
-import {VStack, Button, Text} from "@chakra-ui/react";
+import {VStack, Button} from "@chakra-ui/react";
 import { useNews } from "@/context/news-context"; // Используем глобальный контекст
 import React from "react";
 import useMockData from "@/hooks/useMockData";
@@ -21,34 +21,36 @@ const SidebarCategories = () => {
                 ? prevTags.filter((t) => t !== tag) // Удаляем, если уже выбран
                 : [...prevTags, tag] // Добавляем новый тег
         );
-        console.log(selectedTags)
     };
 
     const resetTags = () => {
         setSelectedTags([]); // Clears all selected tags
     };
     return (
-        <VStack align="start" spacing={3}>
+        <VStack align="start">
             <Button
-                size="lg"
+                fontSize="lg"
+                textTransform="uppercase"
                 variant="plain"
-                fontWeight={selectedTags.length === 0 ? "bold" : "normal"}
-                onClick={() =>resetTags()}>
-                <Text color="#333" fontSize="2xl">Все темы</Text>
+                color={selectedTags.length === 0 ? "#2E2E3A" : "#D9D9E3"}
+                textDecoration={selectedTags.length === 0 ? "underline" : "none"}
+                onClick={() =>resetTags()}
+            >
+                    Все темы
             </Button>
             {mockData.tags.map(tag => (
                 <Button
+                    fontSize="lg"
+                    textTransform="uppercase"
                     key={tag}
-                    size="lg"
                     variant="plain"
-                    fontWeight={selectedTags.includes(tag)? "bold" : "normal"}
+                    color={selectedTags.includes(tag)? "#2E2E3A" : "#D9D9E3"}
+                    textDecoration={selectedTags.includes(tag)? "underline" : "none"}
                     onClick={() => toggleTag(tag)}
                 >
-                    <Text color="#333" fontSize="2xl">{tag}</Text>
-                    <Text fontSize="lg" color="#333">({tagsCount[tag]})</Text>
-                    {selectedTags.includes(tag) && (
-                        <Text fontSize="xs" color="#333">⛌</Text>
-                    )}
+                    {tag}
+                    ({tagsCount[tag]})
+                    {selectedTags.includes(tag) && "⛌"}
                 </Button>
             ))}
 

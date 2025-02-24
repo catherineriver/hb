@@ -16,9 +16,9 @@ const AuthorPage = () => {
     useEffect(() => {
         if (mockData) {
             const foundAuthor = mockData.authors.find((item) => item.id.toString() === id);
-            setAuthor(foundAuthor);
+            setAuthor(foundAuthor ?? null);
 
-            const authorPitches = mockData.data.filter((pitch) => pitch.authorId?.toString() === id);
+            const authorPitches = mockData.data.filter((pitch) => pitch.author.id.toString() === id);
             setPitches(authorPitches);
         }
     }, [mockData, id]);
@@ -30,7 +30,7 @@ const AuthorPage = () => {
     return (
         <PageLayout>
                 {/* Информация об авторе */}
-                <HStack spacing={4} align="center">
+                <HStack align="center">
                     <Avatar size="lg" />
                     <VStack align="start">
                         <Heading>{author.name}</Heading>
@@ -57,7 +57,7 @@ const AuthorPage = () => {
                 <Heading size="md" mb={3}>
                     Питчи автора
                 </Heading>
-                <VStack align="start" spacing={4}>
+                <VStack align="start">
                     {pitches.length > 0 ? (
                         pitches.map((pitch) => (
                             <Box key={pitch.id} p={4} border="1px solid gray" borderRadius="md" width="100%">

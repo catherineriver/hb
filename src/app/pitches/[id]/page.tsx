@@ -30,7 +30,7 @@ const PitchPage = () => {
     useEffect(() => {
         if (mockData) {
             const foundPitch = mockData.data.find((item) => item.id.toString() === id);
-            setPitch(foundPitch);
+            setPitch(foundPitch || null);
         }
     }, [mockData, id]);
 
@@ -53,7 +53,7 @@ const PitchPage = () => {
                         <Badge variant="solid" paddingX={2} paddingY={1} background="green" color="white">
                             {pitch.status}
                         </Badge>
-                        <HStack align="center" justify="space-between" spacing={3}>
+                        <HStack align="center" justify="space-between" gap={3}>
                             <Heading size="5xl" mb={4}>
                                 {pitch.title}
                             </Heading>
@@ -104,10 +104,10 @@ const PitchPage = () => {
                     </Box>
 
                     <Box w="100%" maxWidth="428px">
-                        <VStack spacing={4} p={4} gap={6} bg="blue.100" borderRadius="md" align="center">
-                            <VStack align="start" spacing={2} w="100%" >
+                        <VStack gap={4} p={4} bg="blue.100" borderRadius="md" align="center">
+                            <VStack align="start" gap={2} w="100%" >
                                 <AuthorLink author={pitch.author} />
-                                <HStack align="center" justify="space-evenly" spacing={1} w="100%" >
+                                <HStack align="center" justify="space-evenly" gap={1} w="100%" >
                                     <VStack>
                                         <Text fontSize="sm">{pitch.author.total_pitches}</Text>
                                         <Text fontSize="sm">питчей</Text>
@@ -123,7 +123,7 @@ const PitchPage = () => {
                                     </VStack>
                                 </HStack>
                             </VStack>
-                            <VStack align="start" spacing={1} w="100%">
+                            <VStack align="start" gap={1} w="100%">
                                 <Button w="100%" colorScheme="teal" size="lg">Связаться</Button>
                             </VStack>
                         </VStack>
@@ -153,22 +153,22 @@ const PitchPage = () => {
                             <Separator py={2} variant="dashed" />
                         </Stack>
 
-                        <HStack justify="space-between" w="100%" spacing={2} mt={2}>
+                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
                             <Heading fontSize="sm">🗂 Формат:</Heading>
                             <Text fontSize="sm" color="gray.600">Лонгрид</Text>
                         </HStack>
 
-                        <HStack justify="space-between" w="100%" spacing={2} mt={2}>
+                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
                             <Heading fontSize="sm">📍Регион/город:</Heading>
                             <Text fontSize="sm" color="gray.600">Саратовская область</Text>
                         </HStack>
 
-                        <HStack justify="space-between" w="100%" spacing={2} mt={2}>
+                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
                             <Heading fontSize="sm">⏳ Дедлайн первого черновика:</Heading>
                             <Text fontSize="sm" color="gray.600">20.02.2055</Text>
                         </HStack>
 
-                        <HStack justify="space-between" w="100%" spacing={2} mt={2}>
+                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
                             <Heading fontSize="sm">💰 Сумма гонорара:</Heading>
                             <Text fontSize="sm" color="gray.600">2000 EUR</Text>
                         </HStack>
@@ -177,9 +177,9 @@ const PitchPage = () => {
                             <Separator py={2} variant="dashed" />
                         </Stack>
 
-                        <HStack spacing={2} mt={2}>
+                        <HStack gap={2} mt={2}>
                             {pitch.tags.map((tag, i) => (
-                                <Tag key={i} variant="outline" paddingY={1} paddingX={2} size="sm" colorScheme="gray">
+                                <Tag key={i} variant="outline" paddingY={1} paddingX={2} size="sm">
                                     {tag}
                                 </Tag>
                             ))}
