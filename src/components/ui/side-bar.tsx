@@ -24,7 +24,7 @@ const SidebarCategories = () => {
     };
 
     const resetTags = () => {
-        setSelectedTags([]); // Clears all selected tags
+        setSelectedTags(() => []);
     };
     return (
         <VStack align="start">

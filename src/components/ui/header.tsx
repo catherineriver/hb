@@ -6,6 +6,7 @@ import NextLink from "next/link"
 import Logo from "@/components/ui/logo";
 import SortingSelector from "@/components/ui/sorting-selector";
 import {useNews} from "@/context/news-context";
+import Navbar from "@/components/ui/navbar";
 
 interface HeaderProps {
     withRegionSelector?: boolean
@@ -16,39 +17,28 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav}) => {
     const {setSortBy, sortBy} = useNews()
 
-    const handleSort = (sortBy: string[]) => {
-        setSortBy(sortBy)
-        alert(sortBy)
-    }
+    const handleSort = (sortBy: string | string[]) => {
+        const sortValue = Array.isArray(sortBy) ? sortBy[0] : sortBy;
+        setSortBy(sortValue);
+        alert(sortValue);
+    };
 
     return (
         <Box borderBottom="2px solid" px={4}>
             <HStack justifyContent="space-between" alignItems="center" gap={2}>
-            <Flex align="center" justify="center" position="relative">
-                <ChakraLink asChild>
-                    <NextLink href="/">
-                        <Logo w="140" h="45" />
-                    </NextLink>
-                </ChakraLink>
-            </Flex>
+                <Flex align="center" justify="center" position="relative">
+                    <ChakraLink asChild>
+                        <NextLink href="/">
+                            <Logo width="180" height="90" />
+                        </NextLink>
+                    </ChakraLink>
+                </Flex>
+
                 {withNav &&
-                    <HStack justifyContent="space-between" alignItems="center">
-                        <ChakraLink asChild>
-                            <NextLink href="/">Все питчи</NextLink>
-                        </ChakraLink>
-                        <ChakraLink asChild>
-                            <NextLink href="/authors">Авторы</NextLink>
-                        </ChakraLink>
-                        <ChakraLink asChild>
-                            <NextLink href="/settings">Организации</NextLink>
-                        </ChakraLink>
-                        <ChakraLink asChild>
-                            <NextLink href="/settings">Настройки</NextLink>
-                        </ChakraLink>
-                    </HStack>
+                    <Navbar inline />
                 }
 
-                <HStack justifyContent="space-between" alignItems="center" gap={2}>
+                {!withNav && <HStack justifyContent="space-between" alignItems="center" gap={2}>
                     {withRegionSelector && <RegionSelector/>}
                     {withSorting &&
                         <SortingSelector
@@ -56,7 +46,8 @@ const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav
                             sortingValue={sortBy}
                         />
                     }
-                </HStack>
+                    </HStack>
+                }
 
             </HStack>
         </Box>

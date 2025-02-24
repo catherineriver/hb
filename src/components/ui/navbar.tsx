@@ -1,22 +1,21 @@
 "use client";
 
-import {VStack, Box, Link as ChakraLink} from "@chakra-ui/react";
+import {Box, Link as ChakraLink, Stack} from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 export const navigationData = [
     { href: "/authors", label: "Авторы" },
-    { href: "/organizations", label: "Организации" },
     { href: "/settings", label: "Ваша организация" },
 ];
 
-export default function Navbar() {
+export default function Navbar(props: { inline?: boolean; }) {
     const pathname = usePathname();
 
     return (
         <Box as="nav" p={4}>
-            <VStack>
+            <Stack direction={props.inline ? 'row' : 'column'}>
                 {navigationData.map(({ href, label }) => (
                     <ChakraLink
                         key={href}
@@ -29,7 +28,7 @@ export default function Navbar() {
                         {label}
                     </ChakraLink>
                 ))}
-            </VStack>
+            </Stack>
         </Box>
     );
 }

@@ -45,17 +45,38 @@ const App = () => {
 
     return (
         <MainLayout sidebarContent={<SidebarCategories />}>
-            <Flex height="100%" gap={4}>
+            <Flex height="100%">
                 <Box flex={2} overflowY="auto">
                     {news.length === 0 ? (
                         <Text textAlign="center" py={4}>
                             Ничего не найдено
                         </Text>
                     ) : (
-                        <SimpleGrid columns={[1, null, 2]} gap="40px">
-                            {news.map((item) => (
-                                <PitchCard item={item} key={item.id}/>
+                        <SimpleGrid columns={[1, null, 2]} position="relative">
+                            {news.map((item, index) => (
+                                <Box
+                                    key={item.id}
+                                    bg={(index % 2 === 0) === (Math.floor(index / 2) % 2 === 0) ? "rgba(223, 220,219, 0.2)" : "white"}
+                                    px="16px"
+                                    py="20px"
+                                    borderRadius="md"
+                                >
+                                    <PitchCard item={item} />
+                                </Box>
                             ))}
+                            <Box
+                                position="absolute"
+                                left="50%"
+                                top={0}
+                                bottom={0}
+                                width="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left top"
+                                backgroundRepeat= "repeat-y"
+                                backgroundSize= "2px 4px"
+                                transform="translateX(-50%)"
+                                display={{ base: "none", md: "block" }}
+                            />
                         </SimpleGrid>
                     )}
                 </Box>

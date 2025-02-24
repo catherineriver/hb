@@ -32,7 +32,7 @@ const MainLayout = ({ children, sidebarContent }: { children: React.ReactNode, s
                 </Box>
 
                 {/* Контентная часть */}
-                <Box flex={1} p={6} overflowY="auto" fontFamily="body">
+                <Box flex={1} overflowY="auto" fontFamily="body">
                     {children}
                 </Box>
             </Flex>

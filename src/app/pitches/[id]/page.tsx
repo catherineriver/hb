@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {Box, Heading, Text, VStack, HStack, Separator, Badge, Button, Stack} from "@chakra-ui/react";
+import {Box, Heading, Text, VStack, HStack, Badge, Button, Stack} from "@chakra-ui/react";
 import useMockData, {Pitch} from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 import {
@@ -25,7 +25,7 @@ import AuthorLink from "@/components/ui/author-link";
 const PitchPage = () => {
     const { id } = useParams();
     const { mockData, loading, error } = useMockData();
-    const [pitch, setPitch] = useState<Pitch>(null);
+    const [pitch, setPitch] = useState<Pitch | null>(null);
 
     useEffect(() => {
         if (mockData) {
@@ -54,17 +54,17 @@ const PitchPage = () => {
                             {pitch.status}
                         </Badge>
                         <HStack align="center" justify="space-between" gap={3}>
-                            <Heading size="5xl" mb={4}>
+                            <Heading size="4xl" mb={4}>
                                 {pitch.title}
                             </Heading>
                         </HStack>
 
                         <AccordionRoot collapsible defaultValue={[pitch.description]}>
-                            <AccordionItem value={pitch.description}>
+                            <AccordionItem value={pitch.description} borderBottomWidth="0">
                                 <AccordionItemTrigger>
                                     <Heading>Тема</Heading>
                                 </AccordionItemTrigger>
-                                <AccordionItemContent>
+                                <AccordionItemContent >
                                     {[...Array(1)].map((_, index) => (
                                         <Text key={index} mt={4}>{pitch.description}</Text>
                                     ))}
@@ -72,9 +72,19 @@ const PitchPage = () => {
                             </AccordionItem>
                         </AccordionRoot>
 
+                        <Stack my={6}>
+                            <Box
+                                w="100%"
+                                h="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left bottom"
+                                backgroundRepeat= "repeat-x"
+                                backgroundSize= "4px 100%"
+                            ></Box>
+                        </Stack>
 
                         <AccordionRoot collapsible defaultValue={[pitch.full]}>
-                            <AccordionItem value={pitch.full}>
+                            <AccordionItem value={pitch.full} borderBottomWidth="0">
                                 <AccordionItemTrigger>
                                     <Heading>Предварительный план</Heading>
                                 </AccordionItemTrigger>
@@ -86,10 +96,19 @@ const PitchPage = () => {
                             </AccordionItem>
                         </AccordionRoot>
 
-                        <Separator variant="dashed" />
+                        <Stack my={6}>
+                            <Box
+                                w="100%"
+                                h="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left bottom"
+                                backgroundRepeat= "repeat-x"
+                                backgroundSize= "4px 100%"
+                            ></Box>
+                        </Stack>
 
                         <AccordionRoot collapsible defaultValue={[pitch.plot]}>
-                            <AccordionItem value={pitch.plot}>
+                            <AccordionItem value={pitch.plot} borderBottomWidth="0">
                                 <AccordionItemTrigger>
                                     <Heading>Сюжет</Heading>
                                 </AccordionItemTrigger>
@@ -100,7 +119,6 @@ const PitchPage = () => {
                                 </AccordionItemContent>
                             </AccordionItem>
                         </AccordionRoot>
-
                     </Box>
 
                     <Box w="100%" maxWidth="428px">
@@ -127,8 +145,16 @@ const PitchPage = () => {
                                 <Button w="100%" colorScheme="teal" size="lg">Связаться</Button>
                             </VStack>
                         </VStack>
-                        <Stack pt={6}>
-                            <Separator py={2} variant="dashed" />
+
+                        <Stack my={6}>
+                            <Box
+                                w="100%"
+                                h="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left bottom"
+                                backgroundRepeat= "repeat-x"
+                                backgroundSize= "4px 100%"
+                            ></Box>
                         </Stack>
 
                         <MenuRoot>
@@ -149,8 +175,15 @@ const PitchPage = () => {
                             </MenuContent>
                         </MenuRoot>
 
-                        <Stack pt={6}>
-                            <Separator py={2} variant="dashed" />
+                        <Stack my={6}>
+                            <Box
+                                w="100%"
+                                h="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left bottom"
+                                backgroundRepeat= "repeat-x"
+                                backgroundSize= "4px 100%"
+                            ></Box>
                         </Stack>
 
                         <HStack justify="space-between" w="100%" gap={2} mt={2}>
@@ -173,8 +206,15 @@ const PitchPage = () => {
                             <Text fontSize="sm" color="gray.600">2000 EUR</Text>
                         </HStack>
 
-                        <Stack pt={6}>
-                            <Separator py={2} variant="dashed" />
+                        <Stack my={6}>
+                            <Box
+                                w="100%"
+                                h="2px"
+                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition= "left bottom"
+                                backgroundRepeat= "repeat-x"
+                                backgroundSize= "4px 100%"
+                            ></Box>
                         </Stack>
 
                         <HStack gap={2} mt={2}>
