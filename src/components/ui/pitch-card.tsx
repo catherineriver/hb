@@ -1,36 +1,64 @@
-import {Button, Heading, HStack, Link, Text, VStack} from "@chakra-ui/react";
-import { Avatar } from "@/components/ui/avatar";
+import {Button, Heading, HStack, Text, VStack, Box, Show} from "@chakra-ui/react";
 import NextLink from "next/link";
-import React from "react";
-import {Pitch} from "@/hooks/useMockData";
-import {FaTelegramPlane} from "react-icons/fa";
+import React, {useState} from "react";
+import { Pitch } from "@/hooks/useMockData";
+import { FaTelegramPlane } from "react-icons/fa";
+import AuthorLink from "@/components/ui/author-link";
 
 interface CardProps {
     item: Pitch;
-
 }
 
 const PitchCard = ({ item }: CardProps) => {
+    const [isHovering, setIsHovering] = useState(false);
     if (!item) return null;
 
     return (
-        <NextLink href={`/pitches/${item.id}`} passHref>
-                <VStack align="start" gap={1}>
+        <Box
+            position="relative"
+            onMouseLeave={() => setIsHovering(false)}
+            onMouseEnter={() => setIsHovering(true)}
+        >
+            <VStack align="start" gap={1} filter={isHovering ? 'opacity(0.5)' : 'none'}>
+                <NextLink href={`/pitches/${item.id}`} passHref>
                     <Heading fontSize="18px" lineHeight="24px">{item.title}</Heading>
                     <Text fontSize="16px" lineHeight="150%">{item.full}</Text>
-                    <HStack w="100%" justify="space-between" mt={3}>
-                        <HStack align="center" justify="space-between" w="100%" gap={1}>
-                            <Link href={`/authors/${item.author.id}`} color="blue.500">
-                                <Avatar size="sm"></Avatar>
-                                <Text fontFamily="heading" fontSize="md">{item.author.name}</Text>
-                            </Link>
+                </NextLink>
+                <HStack w="100%" justify="space-between" mt={3}>
+                    <AuthorLink author={item.author} />
+                </HStack>
+            </VStack>
 
-                            <Button size="lg" color="primary" border="button"><FaTelegramPlane></FaTelegramPlane></Button>
-                        </HStack>
+            <Show when={isHovering}>
+                <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    w="100%"
+                    h="100%"
+                    display={{ base: "flex" }}
+                    alignItems="center"
+                    justifyContent="center"
+                    borderRadius="md"
+                    _groupHover={{ display: 'flex' }}
+                    pointerEvents="auto"
+                >
+                    <HStack gap={4}>
+                    <Button size="md" variant="solid" color='white' bg="{colors.primary}" shadow="{shadows.button}" px={6}>
+                        <Text fontSize="14px" fontFamily="heading">✉️&nbsp; Связаться с автором</Text>
+                    </Button>
+                    <Button size="md" variant="solid" color='white' bg="{colors.primary}" shadow="{shadows.button}" px={6}>
+                        <NextLink href={`/pitches/${item.id}`} passHref><Text fontSize="14px" fontFamily="heading">✉️&nbsp; Посмотреть все</Text></NextLink>
+                    </Button>
                     </HStack>
-                </VStack>
-        </NextLink>
+                </Box>
+            </Show>
+        </Box>
     );
 };
 
 export default PitchCard;
+function setIsHovering(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}
+

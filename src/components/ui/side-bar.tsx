@@ -1,4 +1,4 @@
-import {VStack, Button} from "@chakra-ui/react";
+import {VStack, Button, Text} from "@chakra-ui/react";
 import { useNews } from "@/context/news-context"; // Используем глобальный контекст
 import React from "react";
 import useMockData from "@/hooks/useMockData";
@@ -27,29 +27,27 @@ const SidebarCategories = () => {
         setSelectedTags(() => []);
     };
     return (
-        <VStack align="start">
+        <VStack align="start" gap="0">
             <Button
-                fontSize="lg"
-                textTransform="uppercase"
+                size="sm"
                 variant="plain"
                 color={selectedTags.length === 0 ? "#2E2E3A" : "#D9D9E3"}
                 textDecoration={selectedTags.length === 0 ? "underline" : "none"}
                 onClick={() =>resetTags()}
             >
-                    Все темы
+                <Text fontFamily="heading" textTransform="uppercase">Все темы</Text>
             </Button>
             {mockData.tags.map(tag => (
                 <Button
-                    fontSize="lg"
                     textTransform="uppercase"
                     key={tag}
+                    size="sm"
                     variant="plain"
                     color={selectedTags.includes(tag)? "#2E2E3A" : "#D9D9E3"}
-                    textDecoration={selectedTags.includes(tag)? "underline" : "none"}
                     onClick={() => toggleTag(tag)}
                 >
-                    {tag}
-                    ({tagsCount[tag]})
+                    <Text fontFamily="heading" textDecoration={selectedTags.includes(tag)? "underline" : "none"}>{tag}</Text>
+                    <Text color="{colors.neutral}">({tagsCount[tag]})</Text>
                     {selectedTags.includes(tag) && "⛌"}
                 </Button>
             ))}

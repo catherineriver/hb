@@ -36,13 +36,17 @@ const system = createSystem(defaultConfig, {
       },
       colors: {
         primary: { value: "#000086" },
-        secondary: { value: "#EE0F0F" },
+        text: { value: "#2E2E3A" },
         neutral: { value: "#9B9895" },
+        secondary: { value: "rgba(0,166, 118, 1)" },
       },
       borders: {
         button: { value: "1px solid {colors.primary}" },
         divider: { value: "2px dotted {colors.neutral}" },
         // composite value
+      },
+      shadows: {
+        button: { value: "2px 2px 7px 1px rgba(0, 0, 0, 0.25)" },
       }
     },
   },

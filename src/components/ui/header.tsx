@@ -24,12 +24,12 @@ const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav
     };
 
     return (
-        <Box borderBottom="2px solid" px={4}>
+        <Box borderBottom="1px solid {colors.text}" px={4}>
             <HStack justifyContent="space-between" alignItems="center" gap={2}>
                 <Flex align="center" justify="center" position="relative">
                     <ChakraLink asChild>
                         <NextLink href="/">
-                            <Logo width="180" height="90" />
+                            <Logo width="158" height="70" />
                         </NextLink>
                     </ChakraLink>
                 </Flex>

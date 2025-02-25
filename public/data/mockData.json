@@ -81,7 +81,8 @@
         "total_pitches": 25,
         "in_progress": 4,
         "completed": 18,
-        "rejected": 3
+        "rejected": 3,
+        "booked": true
       },
       "status": "Опубликовано",
       "tags": ["Кофе", "Смешное"],

@@ -1,6 +1,7 @@
 import { Link, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
-import NextLink from "next/link";
+
+import React from "react";
 
 interface AuthorLinkProps {
     author: {
@@ -13,12 +14,10 @@ const AuthorLink = ({ author }: AuthorLinkProps) => {
     if (!author) return null;
 
     return (
-            <NextLink href={`/authors/${author.id}`} passHref>
-                <Link color="blue.500" display="flex" alignItems="center">
-                    <Avatar size="sm" />
-                    <Text fontSize="xl" ml={2}>{author.name}</Text>
-                </Link>
-            </NextLink>
+        <Link href={`/authors/${author.id}`} color="blue.500">
+            <Avatar size="2xs"></Avatar>
+            <Text fontFamily="heading" fontSize='14px' >{author.name}</Text>
+        </Link>
     );
 };
 
