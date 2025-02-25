@@ -2,7 +2,6 @@ import {Button, Heading, HStack, Text, VStack, Box, Show} from "@chakra-ui/react
 import NextLink from "next/link";
 import React, {useState} from "react";
 import { Pitch } from "@/hooks/useMockData";
-import { FaTelegramPlane } from "react-icons/fa";
 import AuthorLink from "@/components/ui/author-link";
 
 interface CardProps {
@@ -58,7 +57,4 @@ const PitchCard = ({ item }: CardProps) => {
 };
 
 export default PitchCard;
-function setIsHovering(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}
 
