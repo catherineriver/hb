@@ -1,22 +1,23 @@
-import {Button, Heading, HStack, Text, VStack, Box, Show} from "@chakra-ui/react";
+import {Button, Heading, HStack, Text, VStack, Box} from "@chakra-ui/react";
 import NextLink from "next/link";
-import React, {useState} from "react";
+import React from "react";
 import { Pitch } from "@/hooks/useMockData";
 import AuthorLink from "@/components/ui/author-link";
+import {FaPaperPlane} from "react-icons/fa";
 
 interface CardProps {
     item: Pitch;
 }
 
 const PitchCard = ({ item }: CardProps) => {
-    const [isHovering, setIsHovering] = useState(false);
+    // const [isHovering, setIsHovering] = useState(false);
     if (!item) return null;
 
     return (
         <Box
             position="relative"
-            onMouseLeave={() => setIsHovering(false)}
-            onMouseEnter={() => setIsHovering(true)}
+            // onMouseLeave={() => setIsHovering(false)}
+            // onMouseEnter={() => setIsHovering(true)}
         >
             <VStack align="start" gap={1}>
                 <NextLink href={`/pitches/${item.id}`} passHref>
@@ -29,6 +30,7 @@ const PitchCard = ({ item }: CardProps) => {
                         <Text fontFamily="heading" fontSize='14px'>•</Text>
                         <Text fontFamily="heading" fontSize='14px'>{item.category}</Text>
                     </HStack>
+                    <Button variant="plain" color="{colors.primary}" size="xs"><FaPaperPlane></FaPaperPlane></Button>
                 </HStack>
             </VStack>
 
