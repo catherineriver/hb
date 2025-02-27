@@ -13,7 +13,6 @@ import { useNews } from "@/context/news-context";
 import useMockData, { Pitch } from "@/hooks/useMockData";
 import PitchCard from "@/components/ui/pitch-card";
 
-
 const App = () => {
     const { selectedTags, selectedFormat, sortBy } = useNews();
     const { mockData, loading, error } = useMockData();

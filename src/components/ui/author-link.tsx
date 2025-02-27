@@ -15,8 +15,8 @@ const AuthorLink = ({ author }: AuthorLinkProps) => {
 
     return (
         <Link href={`/authors/${author.id}`} color="blue.500">
-            <Avatar size="2xs"></Avatar>
-            <Text fontFamily="heading" fontSize='14px' >{author.name}</Text>
+            {/*<Avatar size="2xs"></Avatar>*/}
+            <Text fontFamily="heading" fontSize='14px'>{author.name}</Text>
         </Link>
     );
 };
