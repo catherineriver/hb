@@ -39,6 +39,7 @@ const system = createSystem(defaultConfig, {
         text: { value: "#2E2E3A" },
         neutral: { value: "#9B9895" },
         secondary: { value: "rgba(0,166, 118, 1)" },
+        highlight: { value: "rgba(199,215, 255, 1)" },
       },
       borders: {
         button: { value: "1px solid {colors.primary}" },
