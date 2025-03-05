@@ -2,7 +2,6 @@ import {Button, Heading, HStack, Text, VStack, Box, Show} from "@chakra-ui/react
 import NextLink from "next/link";
 import React, {useState} from "react";
 import { Pitch } from "@/hooks/useMockData";
-import AuthorLink from "@/components/ui/author-link";
 import {FaPaperPlane} from "react-icons/fa";
 
 interface CardProps {
