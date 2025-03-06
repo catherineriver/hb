@@ -9,16 +9,18 @@ const App = () => {
                   direction={{ base: "column", md: "row" }}
                   alignItems="center"
                   justifyContent={{ base: "space-between", md: "center" }}
-                  px={{ base: 4, md: 10 }}
-                  py={{ base: 6, md: 0 }}>
+                  >
                 {/* Левая секция (61.8%) */}
                 <Box w={{ base: "100%", md: "61.8%" }}
+                     flexGrow={{ base: "1", md: "0" }}
                      h="100%"
                      textAlign={{ base: "left", md: "left" }}
                      display="flex"
                      flexDirection="column"
-                     justifyContent="center"
+                     justifyContent={{ base: 'flex-start', md: 'center' }}
                      position="relative"
+                     px={{ base: 6, md: 6 }}
+                     py={{ base: 6, md: 0 }}
                      _after={{
                          content: '""',
                          backgroundImage: "radial-gradient(circle, #CCC 1px, transparent 1px)",
@@ -41,30 +43,27 @@ const App = () => {
 
                         </Box>
                     </Flex>
-                    <Heading as="h1" fontSize={{ base: "38px", md: "74px" }} fontWeight="bold" lineHeight="1.1" fontFamily="Futura" maxW="1020px">
+                    <Heading as="h1" fontSize={{ base: "38px", md: "74px" }} fontWeight="bold" lineHeight="1.1" fontFamily="Futura" maxW="900px">
                         Связываем журналистов и&nbsp;фотографов с&nbsp;независимыми медиа по всему миру.
                     </Heading>
                 </Box>
 
                 {/* Правая секция (38.2%) */}
-                <Box
-                    w={{ base: "100%", md: "38.2%" }}
-                    display="flex"
-                    flexDirection="column"
-                    textAlign={{ base: "center", md: "left" }}
-                    mt={{ base: "auto", md: 0 }}
-                    p={4}
-                >
-                    <Flex direction="column" alignItems={{ base: "flex-end", md: "flex-start" }}>
+                    <Flex direction="column" alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "100%", md: "38.2%" }}>
                         <Link
-                            as={NextLink}
-                            href="/authors"
-                            fontWeight="medium"
+                            h="50%"
+                            w="100%"
                             display="flex"
-                            alignItems="center"
-                            position="relative"
+                            flexDirection="column"
+                            justifyContent="flex-end"
+                            alignItems={{ base: 'flex-end', md: "flex-start" }}
                             fontSize={{ base: "24px", md: "38px" }}
+                            mt={{ base: "auto", md: 0 }}
+                            transition="all 0.2s ease-in-out"
+                            px={6}
                             _hover={{
+                                background: '#000086',
+                                color: '#fff',
                                 _after: {
                                     content: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_232_3031)'%3E%3Cpath d='M33.292 31.2919L38.586 25.9999H6V23.9999H38.586L33.292 18.7079L34.706 17.2939L42.414 24.9999L34.706 32.7079L33.292 31.2919Z' fill='black'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_232_3031'%3E%3Crect width='48' height='48' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")`,
                                     position: "absolute",
@@ -75,18 +74,31 @@ const App = () => {
                                     height: '48px',
                                 },
                             }}
+                            as={NextLink}
+                            href="/authors"
+                            fontWeight="medium"
                         >
                             Найти автора
+
                         </Link>
                         <Link
                             as={NextLink}
                             href="/pitches"
                             fontWeight="medium"
-                            display="flex"
-                            alignItems="center"
                             position="relative"
                             fontSize={{ base: "24px", md: "38px" }}
+                            h="50%"
+                            w="100%"
+                            display="flex"
+                            flexDirection="column"
+                            justifyContent="flex-start"
+                            alignItems={{ base: 'flex-end', md: "flex-start" }}
+                            mt={{ base: "auto", md: 0 }}
+                            transition="all 0.2s ease-in-out"
+                            px={6}
                             _hover={{
+                                background: '#000086',
+                                color: '#fff',
                                 _after: {
                                     content: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_232_3031)'%3E%3Cpath d='M33.292 31.2919L38.586 25.9999H6V23.9999H38.586L33.292 18.7079L34.706 17.2939L42.414 24.9999L34.706 32.7079L33.292 31.2919Z' fill='black'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_232_3031'%3E%3Crect width='48' height='48' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")`,
                                     position: "absolute",
@@ -101,7 +113,6 @@ const App = () => {
                             Посмотреть питчи
                         </Link>
                     </Flex>
-                </Box>
             </Flex>
         </Container>
     );
