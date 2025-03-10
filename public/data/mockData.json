@@ -532,7 +532,14 @@
       "total_pitches": 30,
       "in_progress": 5,
       "completed": 20,
-      "rejected": 5
+      "rejected": 5,
+      "location": "Москва",
+      "regions": ["Россия", "Украина"],
+      "formats": ["Расследование", "Лонгрид"],
+      "topics": ["Мистика", "Преступления", "Тайны"],
+      "urgent": true,
+      "travel": true,
+      "experience": true
     },
     {
       "id": 2,
@@ -554,7 +561,14 @@
       "total_pitches": 25,
       "in_progress": 4,
       "completed": 18,
-      "rejected": 3
+      "rejected": 3,
+      "location": "Санкт-Петербург",
+      "regions": ["Россия"],
+      "formats": ["Мнение", "Репортаж"],
+      "topics": ["Кофе", "Гастрономия"],
+      "urgent": false,
+      "travel": true,
+      "experience": false
     },
     {
       "id": 3,
@@ -572,7 +586,14 @@
       "total_pitches": 23,
       "in_progress": 2,
       "completed": 10,
-      "rejected": 1
+      "rejected": 1,
+      "location": "Казань",
+      "regions": ["Россия", "США"],
+      "formats": ["Профайл"],
+      "topics": ["Архитектура", "Экология"],
+      "urgent": false,
+      "travel": false,
+      "experience": true
     },
     {
       "id": 4,
@@ -591,7 +612,14 @@
       "total_pitches": 28,
       "in_progress": 6,
       "completed": 15,
-      "rejected": 7
+      "rejected": 7,
+      "location": "Новосибирск",
+      "regions": ["Россия", "Канада"],
+      "formats": ["Репортаж"],
+      "topics": ["Экология", "Животные"],
+      "urgent": true,
+      "travel": false,
+      "experience": false
     },
     {
       "id": 5,
@@ -609,97 +637,14 @@
       "total_pitches": 15,
       "in_progress": 3,
       "completed": 10,
-      "rejected": 2
-    },
-    {
-      "id": 6,
-      "name": "Проф. Крошкин",
-      "bio": "Физик-теоретик, исследует необъяснимые явления в кулинарии.",
-      "articles": [
-        "Гигантский бутерброд упал маслом вниз, подтвердив теорию гравитации"
-      ],
-      "organizations": [
-        {
-          "id": 7,
-          "name": "Институт Кулинарной Физики"
-        }
-      ],
-      "total_pitches": 12,
-      "in_progress": 2,
-      "completed": 8,
-      "rejected": 2
-    },
-    {
-      "id": 7,
-      "name": "Проф. Эрл Грей",
-      "bio": "Исследователь влияния температуры и акустики на чайные напитки.",
-      "articles": [
-        "Чайники могут свистеть в такт музыке, если правильно их настроить"
-      ],
-      "organizations": [
-        {
-          "id": 8,
-          "name": "Чайное сообщество"
-        }
-      ],
-      "total_pitches": 18,
-      "in_progress": 3,
-      "completed": 13,
-      "rejected": 2
-    },
-    {
-      "id": 8,
-      "name": "Проф. Пушистиков",
-      "bio": "Исследователь когнитивных способностей хомяков.",
-      "articles": [
-        "Как шахматы спасли хомяка от депрессии"
-      ],
-      "organizations": [
-        {
-          "id": 9,
-          "name": "Лаборатория Звериных Интеллектов"
-        }
-      ],
-      "total_pitches": 20,
-      "in_progress": 4,
-      "completed": 14,
-      "rejected": 2
-    },
-    {
-      "id": 9,
-      "name": "Фёдор Лисович",
-      "bio": "Эколог, изучает взаимодействие животных и городской инфраструктуры.",
-      "articles": [
-        "Как лисы научились пересекать дорогу по зебре"
-      ],
-      "organizations": [
-        {
-          "id": 10,
-          "name": "Экологический Альянс"
-        }
-      ],
-      "total_pitches": 14,
-      "in_progress": 3,
-      "completed": 9,
-      "rejected": 2
-    },
-    {
-      "id": 10,
-      "name": "Лев Балуев",
-      "bio": "Журналист, специализирующийся на необычных событиях в мире животных.",
-      "articles": [
-        "Слон-художник продал свою картину за миллион"
-      ],
-      "organizations": [
-        {
-          "id": 11,
-          "name": "Журнал Животного Мира"
-        }
-      ],
-      "total_pitches": 22,
-      "in_progress": 5,
-      "completed": 12,
-      "rejected": 5
+      "rejected": 2,
+      "location": "Минск",
+      "regions": ["Беларусь", "Россия"],
+      "formats": ["Лонгрид"],
+      "topics": ["Животные", "Наука"],
+      "urgent": false,
+      "travel": false,
+      "experience": true
     }
   ]
 }

@@ -51,7 +51,7 @@ const App = () => {
                 {/* Правая секция (38.2%) */}
                     <Flex direction="column" alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "100%", md: "38.2%" }}>
                         <Link
-                            h="50%"
+                            h={{ base: "100%", md: "61.8%" }}
                             w="100%"
                             display="flex"
                             flexDirection="column"
@@ -64,15 +64,6 @@ const App = () => {
                             _hover={{
                                 background: '#000086',
                                 color: '#fff',
-                                _after: {
-                                    content: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_232_3031)'%3E%3Cpath d='M33.292 31.2919L38.586 25.9999H6V23.9999H38.586L33.292 18.7079L34.706 17.2939L42.414 24.9999L34.706 32.7079L33.292 31.2919Z' fill='black'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_232_3031'%3E%3Crect width='48' height='48' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")`,
-                                    position: "absolute",
-                                    right: "-58px",
-                                    transition: "right 0.2s ease-in-out",
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    height: '48px',
-                                },
                             }}
                             as={NextLink}
                             href="/authors"
@@ -87,7 +78,7 @@ const App = () => {
                             fontWeight="medium"
                             position="relative"
                             fontSize={{ base: "24px", md: "38px" }}
-                            h="50%"
+                            h={{ base: "100%", md: "38.2%" }}
                             w="100%"
                             display="flex"
                             flexDirection="column"
@@ -99,15 +90,6 @@ const App = () => {
                             _hover={{
                                 background: '#000086',
                                 color: '#fff',
-                                _after: {
-                                    content: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_232_3031)'%3E%3Cpath d='M33.292 31.2919L38.586 25.9999H6V23.9999H38.586L33.292 18.7079L34.706 17.2939L42.414 24.9999L34.706 32.7079L33.292 31.2919Z' fill='black'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_232_3031'%3E%3Crect width='48' height='48' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")`,
-                                    position: "absolute",
-                                    right: "-58px",
-                                    transition: "right 0.2s ease-in-out",
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    height: '48px',
-                                },
                             }}
                         >
                             Посмотреть питчи

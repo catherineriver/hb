@@ -19,6 +19,9 @@ interface Organization {
 }
 
 export interface Author {
+    regions: any;
+    location: any;
+    topics: any;
     id: number;
     name: string;
     bio: string;

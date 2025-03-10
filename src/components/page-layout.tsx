@@ -19,7 +19,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
                             <FaArrowLeft />
                         </Button>
                     </Box>
-                    <Box overflowY="auto" fontFamily="body" w="100%">
+                    <Box overflowY="auto" fontFamily="body" w="100%" h='-webkit-fill-available'>
                         {children}
                     </Box>
                 </HStack>
