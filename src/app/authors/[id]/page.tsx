@@ -105,7 +105,7 @@ const AuthorPage = () => {
                 </Stack>
 
                 {/* Список открытых питчей */}
-                <VStack align="start">
+                <VStack align="start" w="100%">
                     <Heading size="md">Открытые питчи:</Heading>
                     {pitches.length > 0 ? (
                         pitches.map((pitch) => (
