@@ -55,9 +55,9 @@ const Pitches = () => {
                             Ничего не найдено
                         </Text>
                     ) : (
-                        <SimpleGrid columns={2} position="relative" gridAutoFlow="row" minHeight="100%">
+                        <SimpleGrid columns={{ base: 1, md: 2 }} position="relative" gridAutoFlow="row" minHeight="100%">
                             {news.map((item, index) => (
-                                <Box key={item.id} height="auto" maxHeight="230px">
+                                <Box key={item.id} height="auto">
                                     <PitchCard isHighlighted={isHighlighted(index)} item={item} />
                                 </Box>
                             ))}

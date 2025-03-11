@@ -1,15 +1,7 @@
-import {createListCollection} from "@chakra-ui/react";
-import {
-    SelectContent,
-    SelectItem,
-    SelectRoot,
-    SelectTrigger,
-    SelectValueText
-} from "@/components/ui/select";
+import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
 import React from "react";
 
-const subjectsRF = createListCollection({
-    items: [
+const subjectsRF =[
         { label: "Все", value: "all" },
         { label: "Москва", value: "MOW" },
         { label: "Санкт-Петербург", value: "SPE" },
@@ -31,24 +23,10 @@ const subjectsRF = createListCollection({
         { label: "Омская область", value: "OMS" },
         { label: "Воронежская область", value: "VOR" },
         { label: "Волгоградская область", value: "VGG" },
-    ],
-})
+    ];
 
 const RegionSelector = () => {
-    return (
-        <SelectRoot multiple collection={subjectsRF} size="sm" width="320px">
-            <SelectTrigger clearable>
-                <SelectValueText fontSize="18px" px={2} py={3}  placeholder="Все" defaultValue="all" />
-            </SelectTrigger>
-            <SelectContent background="white" border="none">
-                {subjectsRF.items.map((subject) => (
-                    <SelectItem item={subject} key={subject.value}>
-                        {subject.label}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </SelectRoot>
-    )
+    return <BaseSelect items={subjectsRF} placeholder="Выберите регион" />;
 }
 
 export default RegionSelector;
