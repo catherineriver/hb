@@ -1,31 +1,33 @@
-import {Box, Flex, HStack} from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, Drawer } from "@chakra-ui/react";
 import RegionSelector from "@/components/ui/region-selector";
 import React from "react";
-import { Link as ChakraLink } from "@chakra-ui/react"
-import NextLink from "next/link"
+import { Link as ChakraLink } from "@chakra-ui/react";
+import NextLink from "next/link";
 import Logo from "@/components/ui/logo";
 import SortingSelector from "@/components/ui/sorting-selector";
-import {useNews} from "@/context/news-context";
+import { useNews } from "@/context/news-context";
 import Navbar from "@/components/ui/navbar";
+import {FaBurger} from "react-icons/fa6";
+import {FaCross} from "react-icons/fa";
 
 interface HeaderProps {
-    withRegionSelector?: boolean
-    withNav?: boolean
-    withSorting?: boolean
+    withRegionSelector?: boolean;
+    withNav?: boolean;
+    withSorting?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav}) => {
-    const {setSortBy, sortBy} = useNews()
+const Header: React.FC<HeaderProps> = ({ withRegionSelector, withSorting, withNav }) => {
+    const { setSortBy, sortBy } = useNews();
 
     const handleSort = (sortBy: string | string[]) => {
         const sortValue = Array.isArray(sortBy) ? sortBy[0] : sortBy;
         setSortBy(sortValue);
-        alert(sortValue);
     };
 
     return (
-        <Box borderBottom="1px solid {colors.text}" px={4}>
-            <HStack justifyContent="space-between" alignItems="center" gap={2}>
+        <HStack borderBottom="1px solid" px={4} justify="space-between">
+            <HStack justifyContent="space-between" alignItems="center" gap={2} w="100%">
+                {/* Логотип */}
                 <Flex align="center" justify="center" position="relative">
                     <ChakraLink asChild>
                         <NextLink href="/">
@@ -34,23 +36,41 @@ const Header: React.FC<HeaderProps> = ({withRegionSelector, withSorting, withNav
                     </ChakraLink>
                 </Flex>
 
-                {withNav &&
-                    <Navbar inline />
-                }
-
-                {!withNav && <HStack justifyContent="space-between" alignItems="center" gap={2}>
-                    {withRegionSelector && <RegionSelector/>}
-                    {withSorting &&
-                        <SortingSelector
-                            onSortChange={(e) => handleSort(e)}
-                            sortingValue={sortBy}
-                        />
-                    }
-                    </HStack>
-                }
-
+                {/* Навигация и фильтры на десктопе */}
+                <HStack display={{ base: "none", md: "flex" }} justifyContent="space-between" alignItems="center" gap={2}>
+                    {withNav && <Navbar inline />}
+                    {!withNav && (
+                        <>
+                            {withRegionSelector && <RegionSelector />}
+                            {withSorting && (
+                                <SortingSelector
+                                    onSortChange={(e) => handleSort(e)}
+                                    sortingValue={sortBy}
+                                />
+                            )}
+                        </>
+                    )}
+                </HStack>
             </HStack>
-        </Box>
+
+            <Drawer.Root>
+                <Drawer.Backdrop />
+                <Drawer.Trigger display={{ base: "flex", md: "none" }}>
+                    <FaBurger />
+                </Drawer.Trigger>
+                <Drawer.Positioner>
+                    <Drawer.Content color="#fff">
+                        <Drawer.CloseTrigger>
+                            <FaCross />
+                        </Drawer.CloseTrigger>
+                        <Drawer.Body>
+                            <Navbar />
+                        </Drawer.Body>
+                        <Drawer.Footer />
+                    </Drawer.Content>
+                </Drawer.Positioner>
+            </Drawer.Root>
+        </HStack>
     );
 };
 

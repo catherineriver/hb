@@ -5,7 +5,7 @@ import {
     SelectTrigger,
     SelectValueText
 } from "@/components/ui/select";
-import { createListCollection } from "@chakra-ui/react";
+import {createListCollection} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { SelectLabel } from "@ark-ui/react";
 
@@ -44,11 +44,15 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
             width="320px"
             defaultValue={[defaultItem]}
             onValueChange={(e) => setValue(e.value)}
+            display="flex"
+            flexDirection="row"
+            alignItems='center'
+            multiple
         >
-            <SelectLabel>{placeholder}</SelectLabel>
-            <SelectTrigger clearable onClear={() => handleValueChange(null)}>
-                <SelectValueText fontSize="16px" px={3} py={2} placeholder={placeholder} />
-            </SelectTrigger>
+                <SelectLabel>{placeholder}</SelectLabel>
+                <SelectTrigger clearable onClear={() => handleValueChange(null)} w="100%">
+                    <SelectValueText fontSize="16px" px={3} py={2} placeholder={placeholder} />
+                </SelectTrigger>
             <SelectContent background="white" border="none" boxShadow="md">
                 {collection.items.map((item) => (
                     <SelectItem

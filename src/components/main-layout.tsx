@@ -1,22 +1,20 @@
-import {Box, Flex } from "@chakra-ui/react";;
+import { Box, Flex } from "@chakra-ui/react";
 import Navbar from "@/components/ui/navbar";
 import Header from "@/components/ui/header";
 import TopFilterPanel from "@/components/ui/TopFilterPanel";
 
-const MainLayout = ({ children, sidebarContent }: { children: React.ReactNode, sidebarContent?: React.ReactNode }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <Flex height="100vh" direction="column">
-            <Box>
+        <Flex direction="column">
+            {/* Закрепленный хедер и панель фильтров */}
+            <Box position="fixed" top="0" left="0" w="100%" zIndex="10" bg="white">
                 <Header withNav />
                 <TopFilterPanel />
             </Box>
 
-            {/* Main Layout */}
-            <Flex flex={1} overflow="hidden" mx='100px'>
-                {/* Контентная часть */}
-                <Box flex={1} overflowY="auto" fontFamily="body">
-                    {children}
-                </Box>
+            {/* Основной контент с отступом */}
+            <Flex flex={1} overflowY="auto" fontFamily="body" maxWidth="1200px" margin="0 auto" pt="140px">
+                {children}
             </Flex>
         </Flex>
     );

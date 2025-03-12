@@ -23,7 +23,7 @@ const themes = [
     ];
 
 const ThemeSelector = () => {
-    return <BaseSelect items={themes} placeholder="Выберите тему" />;
+    return <BaseSelect items={themes} placeholder="Тема:" />;
 };
 
 export default ThemeSelector;

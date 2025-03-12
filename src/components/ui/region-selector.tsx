@@ -26,7 +26,7 @@ const subjectsRF =[
     ];
 
 const RegionSelector = () => {
-    return <BaseSelect items={subjectsRF} placeholder="Выберите регион" />;
+    return <BaseSelect items={subjectsRF} placeholder="Регион:" />;
 }
 
 export default RegionSelector;
