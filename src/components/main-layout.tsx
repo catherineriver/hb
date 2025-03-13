@@ -1,5 +1,4 @@
 import { Box, Flex } from "@chakra-ui/react";
-import Navbar from "@/components/ui/navbar";
 import Header from "@/components/ui/header";
 import TopFilterPanel from "@/components/ui/TopFilterPanel";
 

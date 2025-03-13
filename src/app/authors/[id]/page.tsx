@@ -2,11 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {Box, Heading, Text, VStack, HStack, Highlight, Button, Icon, Stack} from "@chakra-ui/react";
+import {Box, Heading, Text, VStack, HStack, Highlight, Button, Stack} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import useMockData, { Pitch, Author } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
-import {FaCheckCircle} from "react-icons/fa";
 import PitchCard from "@/components/ui/pitch-card";
 
 const AuthorPage = () => {
@@ -30,7 +29,7 @@ const AuthorPage = () => {
     if (!author) return <Text textAlign="center">Автор не найден</Text>;
 
 
-    // @ts-ignore
+// @ts-expect-error
     return (
         <PageLayout>
             <VStack m={4} maxW="800px" mx="auto" my={6} align="flex-start" p={{ base: "20px", md: '0' }}>
@@ -130,8 +129,8 @@ const AuthorPage = () => {
                 <VStack align="start" w="100%">
                     <Heading size="xl" mb="20px">Открытые питчи:</Heading>
                     {pitches.length > 0 ? (
-                        pitches.map((pitch) => (
-                            <PitchCard item={pitch} />
+                        pitches.map((pitch, index) => (
+                            <PitchCard key="index" item={pitch} />
                         ))
                     ) : (
                         <Text>У этого автора пока нет питчей.</Text>

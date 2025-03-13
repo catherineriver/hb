@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, IconButton, Drawer } from "@chakra-ui/react";
+import { Flex, HStack, Drawer } from "@chakra-ui/react";
 import RegionSelector from "@/components/ui/region-selector";
 import React from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
@@ -8,7 +8,6 @@ import SortingSelector from "@/components/ui/sorting-selector";
 import { useNews } from "@/context/news-context";
 import Navbar from "@/components/ui/navbar";
 import {FaBurger, FaXmark} from "react-icons/fa6";
-import {FaCross} from "react-icons/fa";
 
 interface HeaderProps {
     withRegionSelector?: boolean;

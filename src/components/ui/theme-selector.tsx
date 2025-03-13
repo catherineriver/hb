@@ -1,11 +1,3 @@
-import { createListCollection } from "@chakra-ui/react";
-import {
-    SelectContent,
-    SelectItem,
-    SelectRoot,
-    SelectTrigger,
-    SelectValueText
-} from "@/components/ui/select";
 import React from "react";
 import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
 
