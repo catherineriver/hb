@@ -7,7 +7,7 @@ import Logo from "@/components/ui/logo";
 import SortingSelector from "@/components/ui/sorting-selector";
 import { useNews } from "@/context/news-context";
 import Navbar from "@/components/ui/navbar";
-import {FaBurger} from "react-icons/fa6";
+import {FaBurger, FaXmark} from "react-icons/fa6";
 import {FaCross} from "react-icons/fa";
 
 interface HeaderProps {
@@ -60,9 +60,11 @@ const Header: React.FC<HeaderProps> = ({ withRegionSelector, withSorting, withNa
                 </Drawer.Trigger>
                 <Drawer.Positioner>
                     <Drawer.Content color="#fff">
+                        <HStack width="100%" justifyContent="end" alignItems="center" p={4}>
                         <Drawer.CloseTrigger>
-                            <FaCross />
+                            <FaXmark color='#fff'/>
                         </Drawer.CloseTrigger>
+                        </HStack>
                         <Drawer.Body>
                             <Navbar />
                         </Drawer.Body>

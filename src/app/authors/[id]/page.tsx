@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {Box, Heading, Text, VStack, HStack, Link, Button, Icon, Stack} from "@chakra-ui/react";
+import {Box, Heading, Text, VStack, HStack, Highlight, Button, Icon, Stack} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import useMockData, { Pitch, Author } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 import {FaCheckCircle} from "react-icons/fa";
+import PitchCard from "@/components/ui/pitch-card";
 
 const AuthorPage = () => {
     const { id } = useParams();
@@ -28,67 +29,88 @@ const AuthorPage = () => {
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
     if (!author) return <Text textAlign="center">Автор не найден</Text>;
 
+
+    // @ts-ignore
     return (
         <PageLayout>
-            <VStack m={4} maxW="800px" mx="auto" my={6}>
-                <Avatar size="xl" />
-                <Heading size="lg" textAlign="center">{author.name}</Heading>
+            <VStack m={4} maxW="800px" mx="auto" my={6} align="flex-start" p={{ base: "20px", md: '0' }}>
+                <HStack justify="center" w="100%">
+                    <Avatar size="2xl" />
+                </HStack>
+
+                <HStack justify="center" w="100%">
+                    <Heading size="3xl" textAlign="center">{author.name}</Heading>
+                </HStack>
+
 
                 {/* Контейнер с кнопкой */}
-                <Button background="green" color="#fff" size="sm" variant="solid" px={2}>
-                    Связаться
-                </Button>
+                <HStack justify="center" w="100%" my="16px">
+                    <Button background="#00A676" color="#fff" size="md" variant="solid" px={5}>
+                        Связаться
+                    </Button>
+                </HStack>
 
                 {/* Метаданные */}
-                <VStack align="start" width="100%">
+                <VStack align="start" width="100%" mt="40px">
                     <HStack justify="space-between" width="100%">
-                        <Text fontSize="sm">📂 Успешных материалов:</Text>
+                        <Heading size='sm' fontWeight="bold">📂 Успешных материалов:</Heading>
                         <Text colorScheme="blue">{author.articles.length}</Text>
                     </HStack>
                     <HStack justify="space-between" width="100%">
-                        <Text fontSize="sm">🏢 Работал с организациями:</Text>
+                        <Heading size='sm' fontWeight="bold">🏢 Работал с организациями:</Heading>
                         <Text colorScheme="purple">{author.organizations?.length || 0}</Text>
                     </HStack>
                     <HStack justify="space-between" width="100%">
-                        <Text fontSize="sm">📍 Регион/город:</Text>
+                        <Heading size='sm' fontWeight="bold">📍 Регион/город:</Heading>
                         <Text  fontSize="sm">{author.location}</Text>
                     </HStack>
                     <HStack justify="space-between" width="100%">
-                        <Text fontSize="sm">✈️ Готов к командировкам:</Text>
-                        <Icon as={FaCheckCircle} color="green.500" />
+                        <Heading size='sm' fontWeight="bold">✈️ Готов к командировкам:</Heading>
+                        <Text  fontSize="sm">✅</Text>
                     </HStack>
                     <HStack justify="space-between" width="100%">
-                        <Text fontSize="sm">⚡ Готов к срочной работе:</Text>
-                        <Icon as={FaCheckCircle} color="green.500" />
+                        <Heading size='sm' fontWeight="bold">⚡ Готов к срочной работе:</Heading>
+                        <Text  fontSize="sm">✅</Text>
                     </HStack>
                 </VStack>
 
                 {/* Темы и регионы */}
-                <HStack  width="100%" my={4}>
+                <Box my="12px">
                     <Text fontSize="sm">
                         Пишет на темы{" "}
-                        {author.topics.map((topic: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
-                            <Link key={index} color="blue.500" href="#">
-                                {topic}
-                            </Link>
+                        {author.topics.map((topic, index) => (
+                            <React.Fragment key={topic}>
+                                <Highlight as="span" ignoreCase query={[topic]} styles={{ color: "#000086" }}>
+                                    {topic}
+                                </Highlight>
+                                {index < author.topics.length - 1 && ", "}
+                            </React.Fragment>
+                        ))}
+                        {" "}в регионах{" "}
+                        {author.regions.map((region, index) => (
+                            <React.Fragment key={region}>
+                                <Highlight as="span" ignoreCase query={[region]} styles={{ color: "#000086" }}>
+                                    {region}
+                                </Highlight>
+                                {index < author.regions.length - 1 && ", "}
+                            </React.Fragment>
+                        ))}
+                        .{" "}Предпочитает жанры{" "}
+                        {author.formats.map((format, index) => (
+                            <React.Fragment key={format}>
+                                <Highlight as="span" ignoreCase query={[format]} styles={{ color: "#000086" }}>
+                                    {format}
+                                </Highlight>
+                                {index < author.formats.length - 1 && ", "}
+                            </React.Fragment>
                         ))}
                     </Text>
-                    <Text fontSize="sm">
-                        В регионах{" "}
-                        {author.regions.map((region: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
-                            <Link key={index} color="blue.500" href="#">
-                                {region}
-                            </Link>
-                        ))}
-                    </Text>
-                </HStack>
+                </Box>
 
 
                 {/* Описание автора */}
-                <Box p={4} bg="gray.50" borderRadius="md" w="100%">
-                    <Heading size="sm" mb={2}>
-                        Автор о себе:
-                    </Heading>
+                <Box w="100%">
+                    <Heading size="xl" mb="20px">Автор о себе:</Heading>
                     <Text fontSize="sm">{author.bio}</Text>
                 </Box>
 
@@ -106,19 +128,10 @@ const AuthorPage = () => {
 
                 {/* Список открытых питчей */}
                 <VStack align="start" w="100%">
-                    <Heading size="md">Открытые питчи:</Heading>
+                    <Heading size="xl" mb="20px">Открытые питчи:</Heading>
                     {pitches.length > 0 ? (
                         pitches.map((pitch) => (
-                            <Box key={pitch.id} p={4} border="1px solid gray" borderRadius="md" width="100%">
-                                <Link href={`/pitches/${pitch.id}`}>
-                                    <Heading size="sm" color="blue.600" _hover={{ textDecoration: "underline" }}>
-                                        {pitch.title}
-                                    </Heading>
-                                </Link>
-                                <Text fontSize="sm" color="gray.600">
-                                    {pitch.description}
-                                </Text>
-                            </Box>
+                            <PitchCard item={pitch} />
                         ))
                     ) : (
                         <Text>У этого автора пока нет питчей.</Text>

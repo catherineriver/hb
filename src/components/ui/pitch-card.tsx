@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 interface CardProps {
     item: Pitch;
-    isHighlighted: boolean;
+    isHighlighted?: boolean;
 }
 
 const PitchCard = ({ item, isHighlighted }: CardProps) => {

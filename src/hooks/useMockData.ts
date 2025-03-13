@@ -31,6 +31,7 @@ export interface Author {
     in_progress: number;
     completed: number;
     rejected: number;
+    formats: string[];
 }
 
 export interface MockData {
