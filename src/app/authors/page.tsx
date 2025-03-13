@@ -5,8 +5,6 @@ import {
     Box,
     Heading,
     Text,
-    VStack,
-    Button,
     SimpleGrid,
     Flex
 } from "@chakra-ui/react";
@@ -14,20 +12,12 @@ import MainLayout from "@/components/main-layout";
 import useMockData from "@/hooks/useMockData";
 import {useRouter} from "next/navigation";
 
-const SidebarAuthors = () => (
-    <VStack align="start" gap={3}>
-        <Button size="lg" variant="plain" color="black">Популярные авторы</Button>
-        <Button size="lg" variant="plain" color="black">Новые авторы</Button>
-        <Button size="lg" variant="plain" color="black">По рейтингу</Button>
-    </VStack>
-);
-
 const AuthorsPage = () => {
 
     const { mockData } = useMockData();
     const router = useRouter();
     return (
-        <MainLayout sidebarContent={<SidebarAuthors />}>
+        <MainLayout>
             <Flex height="100%" gap={4}>
                 {/* Список авторов */}
                 <Box overflowY="auto">
