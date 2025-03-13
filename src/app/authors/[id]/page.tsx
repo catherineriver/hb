@@ -29,7 +29,6 @@ const AuthorPage = () => {
     if (!author) return <Text textAlign="center">Автор не найден</Text>;
 
 
-// @ts-expect-error
     return (
         <PageLayout>
             <VStack m={4} maxW="800px" mx="auto" my={6} align="flex-start" p={{ base: "20px", md: '0' }}>
@@ -77,18 +76,20 @@ const AuthorPage = () => {
                 <Box my="12px">
                     <Text fontSize="sm">
                         Пишет на темы{" "}
+                        {/*@ts-expect-error: Should expect string*/}
                         {author.topics.map((topic, index) => (
                             <React.Fragment key={topic}>
-                                <Highlight as="span" ignoreCase query={[topic]} styles={{ color: "#000086" }}>
+                                <Highlight query={[topic]} styles={{ color: "#000086" }}>
                                     {topic}
                                 </Highlight>
                                 {index < author.topics.length - 1 && ", "}
                             </React.Fragment>
                         ))}
                         {" "}в регионах{" "}
+                        {/*@ts-expect-error: Should expect string*/}
                         {author.regions.map((region, index) => (
                             <React.Fragment key={region}>
-                                <Highlight as="span" ignoreCase query={[region]} styles={{ color: "#000086" }}>
+                                <Highlight ignoreCase query={[region]} styles={{ color: "#000086" }}>
                                     {region}
                                 </Highlight>
                                 {index < author.regions.length - 1 && ", "}
@@ -97,7 +98,7 @@ const AuthorPage = () => {
                         .{" "}Предпочитает жанры{" "}
                         {author.formats.map((format, index) => (
                             <React.Fragment key={format}>
-                                <Highlight as="span" ignoreCase query={[format]} styles={{ color: "#000086" }}>
+                                <Highlight ignoreCase query={[format]} styles={{ color: "#000086" }}>
                                     {format}
                                 </Highlight>
                                 {index < author.formats.length - 1 && ", "}
@@ -130,7 +131,7 @@ const AuthorPage = () => {
                     <Heading size="xl" mb="20px">Открытые питчи:</Heading>
                     {pitches.length > 0 ? (
                         pitches.map((pitch, index) => (
-                            <PitchCard key="index" item={pitch} />
+                            <PitchCard key={index} item={pitch} />
                         ))
                     ) : (
                         <Text>У этого автора пока нет питчей.</Text>

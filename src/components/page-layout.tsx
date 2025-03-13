@@ -15,7 +15,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
             <Flex flex={1} overflow="hidden" justifyContent="center" w="100%">
                 <HStack py="3" alignItems="flex-start" w="100%" justifyContent="center">
                     <Box p={6}
-                         position={{ base: 'absolute', md: 'auto' }}
+                         position={{ base: 'absolute', md: 'relative' }}
                          left={{ base: '0', md: 'auto' }}
                          zIndex="10"
                     >
