@@ -13,7 +13,7 @@ const SettingsPage = () => {
     };
 
     return (
-        <MainLayout sidebarContent={<SidebarSettings />}>
+        <MainLayout>
             <Box maxW="600px" mx="auto" p={6} borderWidth={1} borderRadius="lg">
                 <Heading size="lg" mb={4}>Настройки организации</Heading>
                 <VStack align="stretch">

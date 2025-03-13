@@ -47,7 +47,7 @@ const Pitches = () => {
     };
 
     return (
-        <MainLayout sidebarContent={<SidebarCategories />}>
+        <MainLayout>
             <Flex height="100%">
                 <Box flex={2} overflowY="auto">
                     {news.length === 0 ? (
