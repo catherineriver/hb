@@ -22,6 +22,7 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
 
     const handleValueChange = (value: string | null) => {
         const newValue = value ?? defaultItem;
+        {/*@ts-expect-error: Should expect string[]*/}
         setValue(newValue);
         if (onValueChange) {
             onValueChange(newValue);
@@ -50,7 +51,7 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
             multiple
         >
                 <SelectLabel>{placeholder}</SelectLabel>
-                <SelectTrigger clearable onClear={() => handleValueChange(null)} w="100%">
+                <SelectTrigger clearable w="100%">
                     <SelectValueText fontSize="16px" px={3} py={2} placeholder={placeholder} />
                 </SelectTrigger>
             <SelectContent background="white" border="none" boxShadow="md">

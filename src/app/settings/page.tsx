@@ -34,12 +34,4 @@ const SettingsPage = () => {
     );
 };
 
-const SidebarSettings = () => (
-    <VStack align="start">
-        <Button size="lg" variant="plain" color="black">Профиль</Button>
-        <Button size="lg" variant="plain" color="black">Безопасность</Button>
-        <Button size="lg" variant="plain" color="black">Настройки организации</Button>
-    </VStack>
-);
-
 export default SettingsPage;

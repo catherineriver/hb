@@ -8,7 +8,6 @@ import {
     SimpleGrid,
 } from "@chakra-ui/react";
 import MainLayout from "@/components/main-layout";
-import SidebarCategories from "@/components/ui/side-bar";
 import { useNews } from "@/context/news-context";
 import useMockData, { Pitch } from "@/hooks/useMockData";
 import PitchCard from "@/components/ui/pitch-card";
