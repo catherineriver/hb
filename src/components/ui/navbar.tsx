@@ -15,7 +15,7 @@ export default function Navbar(props: { inline?: boolean; }) {
 
     return (
         <Box as="nav" p={4}>
-            <Stack direction={props.inline ? 'row' : 'column'}>
+            <Stack direction={props.inline ? 'row' : 'column'} gap={5}>
                 {navigationData.map(({ href, label }) => (
                     <ChakraLink
                         key={href}

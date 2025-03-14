@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ withRegionSelector, withSorting, withNa
                 <Flex align="center" justify="center" position="relative">
                     <ChakraLink asChild>
                         <NextLink href="/">
-                            <Logo width="158" height="70" />
+                            <Logo width="250" height="70" />
                         </NextLink>
                     </ChakraLink>
                 </Flex>
@@ -38,17 +38,6 @@ const Header: React.FC<HeaderProps> = ({ withRegionSelector, withSorting, withNa
                 {/* Навигация и фильтры на десктопе */}
                 <HStack display={{ base: "none", md: "flex" }} justifyContent="space-between" alignItems="center" gap={2}>
                     {withNav && <Navbar inline />}
-                    {!withNav && (
-                        <>
-                            {withRegionSelector && <RegionSelector />}
-                            {withSorting && (
-                                <SortingSelector
-                                    onSortChange={(e) => handleSort(e)}
-                                    sortingValue={sortBy}
-                                />
-                            )}
-                        </>
-                    )}
                 </HStack>
             </HStack>
 

@@ -7,6 +7,8 @@ import { Avatar } from "@/components/ui/avatar";
 import useMockData, { Pitch, Author } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 import PitchCard from "@/components/ui/pitch-card";
+import {Tooltip} from "@/components/ui/tooltip";
+import {FaInfoCircle} from "react-icons/fa";
 
 const AuthorPage = () => {
     const { id } = useParams();
@@ -36,8 +38,14 @@ const AuthorPage = () => {
                     <Avatar size="2xl" />
                 </HStack>
 
-                <HStack justify="center" w="100%">
+                <HStack justify="center" align='center' w="100%">
                     <Heading size="3xl" textAlign="center">{author.name}</Heading>
+                    <Tooltip showArrow interactive content="Это псевдоним">
+                        <Box p={2} w="16px">
+                            <FaInfoCircle />
+                        </Box>
+                    </Tooltip>
+
                 </HStack>
 
 

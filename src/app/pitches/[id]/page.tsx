@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/menu"
 import {Tag} from "@/components/ui/tag";
 import AuthorLink from "@/components/ui/author-link";
+import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
+import AuthorDetails from "@/components/AuthorDetails/AuthorDetails";
 
 const PitchPage = () => {
     const { id } = useParams();
@@ -40,13 +42,19 @@ const PitchPage = () => {
 
     return (
         <PageLayout>
-                <HStack alignItems="flex-start" justifyContent="center" gap="10" width="100%">
-
+            <HStack
+                alignItems="flex-start"
+                justifyContent="center"
+                gap="10"
+                width="100%"
+                flexDirection={{ base: "column", md: "row" }}
+                p={{ base: 4, md: 0 }}
+            >
                     <Box
                         width="100%"
-                        maxWidth="750px"
-                        maxHeight="85dvh"
-                        overflowY="auto"
+                        maxWidth={{ base: "none", md: "750px" }}
+                        maxHeight={{ base: "none", md: "85dvh" }}
+                        overflowY={{ base: "auto", md: "scroll" }}
                         paddingRight="8px"
 
                     >
@@ -58,6 +66,16 @@ const PitchPage = () => {
                                 {pitch.title}
                             </Heading>
                         </HStack>
+
+                        <Box display={{ base: "block", md: "none" }}>
+                            <PitchDetails
+                                format={pitch.category}
+                                region={pitch.location}
+                                deadline={pitch.deadline}
+                                fee={pitch.budget}
+
+                            />
+                        </Box>
 
                         <AccordionRoot collapsible defaultValue={[pitch.description]}>
                             <AccordionItem value={pitch.description} borderBottomWidth="0">
@@ -121,30 +139,10 @@ const PitchPage = () => {
                         </AccordionRoot>
                     </Box>
 
-                    <Box w="100%" maxWidth="428px">
-                        <VStack gap={4} p={4} bg="blue.100" borderRadius="md" align="center">
-                            <VStack align="start" gap={2} w="100%" >
-                                <AuthorLink author={pitch.author} />
-                                <HStack align="center" justify="space-evenly" gap={1} w="100%" >
-                                    <VStack>
-                                        <Text fontSize="sm">{pitch.author.total_pitches}</Text>
-                                        <Text fontSize="sm">питчей</Text>
-                                    </VStack>
-                                    <VStack>
-                                        <Text fontSize="sm">{pitch.author.in_progress}</Text>
-                                        <Text fontSize="sm">В работе </Text>
-                                    </VStack>
+                    {/*// Aside block*/}
 
-                                    <VStack>
-                                        <Text fontSize="sm">{pitch.author.completed}</Text>
-                                        <Text fontSize="sm">закончено </Text>
-                                    </VStack>
-                                </HStack>
-                            </VStack>
-                            <VStack align="start" gap={1} w="100%">
-                                <Button w="100%" colorScheme="teal" size="lg">Связаться</Button>
-                            </VStack>
-                        </VStack>
+                    <Box w="100%" maxWidth="428px">
+                        <AuthorDetails author={pitch.author} />
 
                         <Stack my={6}>
                             <Box
@@ -186,25 +184,14 @@ const PitchPage = () => {
                             ></Box>
                         </Stack>
 
-                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
-                            <Heading fontSize="sm">🗂 Формат:</Heading>
-                            <Text fontSize="sm" color="gray.600">Лонгрид</Text>
-                        </HStack>
-
-                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
-                            <Heading fontSize="sm">📍Регион/город:</Heading>
-                            <Text fontSize="sm" color="gray.600">Саратовская область</Text>
-                        </HStack>
-
-                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
-                            <Heading fontSize="sm">⏳ Дедлайн первого черновика:</Heading>
-                            <Text fontSize="sm" color="gray.600">20.02.2055</Text>
-                        </HStack>
-
-                        <HStack justify="space-between" w="100%" gap={2} mt={2}>
-                            <Heading fontSize="sm">💰 Сумма гонорара:</Heading>
-                            <Text fontSize="sm" color="gray.600">2000 EUR</Text>
-                        </HStack>
+                        <Box display={{ base: "none", md: "block" }}>
+                            <PitchDetails
+                                format={pitch.category}
+                                region={pitch.location}
+                                deadline={pitch.deadline}
+                                fee={pitch.budget}
+                            />
+                        </Box>
 
                         <Stack my={6}>
                             <Box

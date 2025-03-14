@@ -11,6 +11,9 @@ export interface Pitch {
     full: string;
     plot: string;
     date: string;
+    location: string;
+    deadline: string;
+    budget: string;
 }
 
 interface Organization {
