@@ -17,7 +17,7 @@ interface BaseSelectProps {
 
 const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChange }) => {
     const collection = createListCollection({ items });
-    const defaultItem = items[0]?.value || ""; // Дефолтный пункт
+    const defaultItem = items[0]?.value || "";
     const [value, setValue] = useState<string[]>([])
 
     const handleValueChange = (value: string | null) => {

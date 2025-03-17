@@ -1,11 +1,8 @@
 import { Flex, HStack, Drawer } from "@chakra-ui/react";
-import RegionSelector from "@/components/ui/region-selector";
 import React from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Logo from "@/components/ui/logo";
-import SortingSelector from "@/components/ui/sorting-selector";
-import { useNews } from "@/context/news-context";
 import Navbar from "@/components/ui/navbar";
 import {FaBurger, FaXmark} from "react-icons/fa6";
 
@@ -15,14 +12,7 @@ interface HeaderProps {
     withSorting?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ withRegionSelector, withSorting, withNav }) => {
-    const { setSortBy, sortBy } = useNews();
-
-    const handleSort = (sortBy: string | string[]) => {
-        const sortValue = Array.isArray(sortBy) ? sortBy[0] : sortBy;
-        setSortBy(sortValue);
-    };
-
+const Header: React.FC<HeaderProps> = ({ withNav }) => {
     return (
         <HStack borderBottom="1px solid" px={4} justify="space-between">
             <HStack justifyContent="space-between" alignItems="center" gap={2} w="100%">

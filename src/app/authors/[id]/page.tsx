@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import {Box, Heading, Text, VStack, HStack, Highlight, Button, Stack} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
-import useMockData, { Pitch, Author } from "@/hooks/useMockData";
+import { Pitch, Author } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 import PitchCard from "@/components/ui/pitch-card";
 import {Tooltip} from "@/components/ui/tooltip";
@@ -12,19 +12,36 @@ import {FaInfoCircle} from "react-icons/fa";
 
 const AuthorPage = () => {
     const { id } = useParams();
-    const { mockData, loading, error } = useMockData();
     const [author, setAuthor] = useState<Author | null>(null);
     const [pitches, setPitches] = useState<Pitch[]>([]);
 
-    useEffect(() => {
-        if (mockData) {
-            const foundAuthor = mockData.authors.find((item) => item.id.toString() === id);
-            setAuthor(foundAuthor ?? null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-            const authorPitches = mockData.data.filter((pitch) => pitch.author.id.toString() === id);
-            setPitches(authorPitches);
-        }
-    }, [mockData, id]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/mockData.json"); // Исправлен путь
+                if (!response.ok) throw new Error("Ошибка загрузки данных");
+
+                const data = await response.json();
+                console.log("ID из useParams:", id);
+                console.log("Загруженные данные:", data);
+
+                const foundAuthor = data.authors.find((item: Author) => item.id.toString() === id);
+                console.log("Найденный автор:", foundAuthor);
+
+                setAuthor(foundAuthor || null);
+                setPitches(foundAuthor.articles)
+            } catch (err) {
+               setError((err as Error).message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
@@ -72,11 +89,11 @@ const AuthorPage = () => {
                     </HStack>
                     <HStack justify="space-between" width="100%">
                         <Heading size='sm' fontWeight="bold">✈️ Готов к командировкам:</Heading>
-                        <Text  fontSize="sm">✅</Text>
+                        <Text  fontSize="sm">{author.ready_for_travel ? '✅' : '❌'}</Text>
                     </HStack>
                     <HStack justify="space-between" width="100%">
                         <Heading size='sm' fontWeight="bold">⚡ Готов к срочной работе:</Heading>
-                        <Text  fontSize="sm">✅</Text>
+                        <Text  fontSize="sm">{author.ready_for_urgent ? '✅' : '❌'}</Text>
                     </HStack>
                 </VStack>
 
@@ -94,7 +111,6 @@ const AuthorPage = () => {
                             </React.Fragment>
                         ))}
                         {" "}в регионах{" "}
-                        {/*@ts-expect-error: Should expect string*/}
                         {author.regions.map((region, index) => (
                             <React.Fragment key={region}>
                                 <Highlight ignoreCase query={[region]} styles={{ color: "#000086" }}>

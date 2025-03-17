@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 export interface Pitch {
     id: number;
-    title: string;
-    category: string;
     author: Author;
-    status: string;
-    tags: string[];
-    description: string;
-    full: string;
-    plot: string;
-    date: string;
-    location: string;
-    deadline: string;
-    budget: string;
+    is_booked: boolean;
+    content: {
+        tags: string[];
+        date: string;
+        location: string;
+        deadline: string;
+        budget: string;
+        full: string[];
+        plot: string[];
+        status: string;
+        format: string;
+        title: string;
+        key_description: string;
+    }
 }
 
 interface Organization {
@@ -22,19 +25,26 @@ interface Organization {
 }
 
 export interface Author {
-    regions: any;
-    location: any;
-    topics: any;
-    id: number;
-    name: string;
-    bio: string;
-    articles: string[];
-    organizations: Organization[];
-    total_pitches: number;
-    in_progress: number;
-    completed: number;
-    rejected: number;
-    formats: string[];
+    avatar_url: string,
+    ready_for_urgent: boolean,
+    ready_for_travel: boolean,
+    regions: string[],
+    location: string,
+    topics: any,
+    id: number,
+    name: string,
+    bio: string,
+    articles: string[],
+    organizations: Organization[],
+    total_pitches: number,
+    in_progress: number,
+    completed: number,
+    rejected: number,
+    formats: string[],
+    stats: {
+        completed_posts: number;
+        total_posts: number;
+    },
 }
 
 export interface MockData {
@@ -69,7 +79,7 @@ const useMockData = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    return { mockData, loading, error };
+    return {mockData, loading, error};
 };
 
 export default useMockData;

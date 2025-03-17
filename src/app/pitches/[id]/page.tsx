@@ -2,15 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {Box, Heading, Text, VStack, HStack, Badge, Button, Stack} from "@chakra-ui/react";
-import useMockData, {Pitch} from "@/hooks/useMockData";
+import {Box, Heading, Text, HStack, Badge, Button, Stack} from "@chakra-ui/react";
 import PageLayout from "@/components/page-layout";
-import {
-    AccordionItem,
-    AccordionItemContent,
-    AccordionItemTrigger,
-    AccordionRoot,
-} from "@/components/ui/accordion"
 import {
     MenuContent,
     MenuItem,
@@ -20,21 +13,34 @@ import {
     MenuTrigger,
 } from "@/components/ui/menu"
 import {Tag} from "@/components/ui/tag";
-import AuthorLink from "@/components/ui/author-link";
 import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
-import AuthorDetails from "@/components/AuthorDetails/AuthorDetails";
+import AuthorDetails from "@/components/ui/AuthorDetails/AuthorDetails";
+import {Pitch} from "@/hooks/useMockData";
 
 const PitchPage = () => {
     const { id } = useParams();
-    const { mockData, loading, error } = useMockData();
     const [pitch, setPitch] = useState<Pitch | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (mockData) {
-            const foundPitch = mockData.data.find((item) => item.id.toString() === id);
-            setPitch(foundPitch || null);
-        }
-    }, [mockData, id]);
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/mockData.json");
+                if (!response.ok) throw new Error("Ошибка загрузки данных");
+                const data = await response.json();
+                console.log(data)
+                const foundPitch = data.data.find((item: Pitch) => item.id.toString() === id);
+                setPitch(foundPitch || null);
+            } catch (err) {
+                setError((err as Error).message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
@@ -59,36 +65,28 @@ const PitchPage = () => {
 
                     >
                         <Badge variant="solid" paddingX={2} paddingY={1} background="green" color="white">
-                            {pitch.status}
+                            {pitch.content.status}
                         </Badge>
                         <HStack align="center" justify="space-between" gap={3}>
                             <Heading size="4xl" mb={4}>
-                                {pitch.title}
+                                {pitch.content.title}
                             </Heading>
                         </HStack>
 
                         <Box display={{ base: "block", md: "none" }}>
                             <PitchDetails
-                                format={pitch.category}
-                                region={pitch.location}
-                                deadline={pitch.deadline}
-                                fee={pitch.budget}
+                                format={pitch.content.format}
+                                region={pitch.content.location}
+                                deadline={pitch.content.deadline}
+                                fee={pitch.content.budget}
 
                             />
                         </Box>
 
-                        <AccordionRoot collapsible defaultValue={[pitch.description]}>
-                            <AccordionItem value={pitch.description} borderBottomWidth="0">
-                                <AccordionItemTrigger>
-                                    <Heading>Тема</Heading>
-                                </AccordionItemTrigger>
-                                <AccordionItemContent >
-                                    {[...Array(1)].map((_, index) => (
-                                        <Text key={index} mt={4}>{pitch.description}</Text>
-                                    ))}
-                                </AccordionItemContent>
-                            </AccordionItem>
-                        </AccordionRoot>
+                        <Heading>Тема</Heading>
+                        {[...Array(1)].map((_, index) => (
+                            <Text key={index} mt={4}>{pitch.content.key_description}</Text>
+                        ))}
 
                         <Stack my={6}>
                             <Box
@@ -101,18 +99,10 @@ const PitchPage = () => {
                             ></Box>
                         </Stack>
 
-                        <AccordionRoot collapsible defaultValue={[pitch.full]}>
-                            <AccordionItem value={pitch.full} borderBottomWidth="0">
-                                <AccordionItemTrigger>
-                                    <Heading>Предварительный план</Heading>
-                                </AccordionItemTrigger>
-                                <AccordionItemContent>
-                                    {[...Array(5)].map((_, index) => (
-                                        <Text key={index} mt={4}>{pitch.full}</Text>
-                                    ))}
-                                </AccordionItemContent>
-                            </AccordionItem>
-                        </AccordionRoot>
+                        <Heading>Предварительный план</Heading>
+                        {[...Array(5)].map((_, index) => (
+                            <Text key={index} mt={4}>{pitch.content.full}</Text>
+                        ))}
 
                         <Stack my={6}>
                             <Box
@@ -125,21 +115,13 @@ const PitchPage = () => {
                             ></Box>
                         </Stack>
 
-                        <AccordionRoot collapsible defaultValue={[pitch.plot]}>
-                            <AccordionItem value={pitch.plot} borderBottomWidth="0">
-                                <AccordionItemTrigger>
-                                    <Heading>Сюжет</Heading>
-                                </AccordionItemTrigger>
-                                <AccordionItemContent>
-                                    {[...Array(5)].map((_, index) => (
-                                        <Text key={index} mt={4}>{pitch.plot}</Text>
-                                    ))}
-                                </AccordionItemContent>
-                            </AccordionItem>
-                        </AccordionRoot>
+                        <Heading>Сюжет</Heading>
+                        {[...Array(5)].map((_, index) => (
+                            <Text key={index} mt={4}>{pitch.content.plot}</Text>
+                        ))}
                     </Box>
 
-                    {/*// Aside block*/}
+                    {/* Aside block*/}
 
                     <Box w="100%" maxWidth="428px">
                         <AuthorDetails author={pitch.author} />
@@ -186,10 +168,10 @@ const PitchPage = () => {
 
                         <Box display={{ base: "none", md: "block" }}>
                             <PitchDetails
-                                format={pitch.category}
-                                region={pitch.location}
-                                deadline={pitch.deadline}
-                                fee={pitch.budget}
+                                format={pitch.content.format}
+                                region={pitch.content.location}
+                                deadline={pitch.content.deadline}
+                                fee={pitch.content.budget}
                             />
                         </Box>
 
@@ -205,7 +187,7 @@ const PitchPage = () => {
                         </Stack>
 
                         <HStack gap={2} mt={2}>
-                            {pitch.tags.map((tag, i) => (
+                            {pitch.content.tags.map((tag, i) => (
                                 <Tag key={i} variant="outline" paddingY={1} paddingX={2} size="sm">
                                     {tag}
                                 </Tag>

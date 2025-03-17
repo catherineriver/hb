@@ -6,39 +6,56 @@ import {
     Flex,
     Text,
     SimpleGrid,
+    Spinner
 } from "@chakra-ui/react";
 import MainLayout from "@/components/main-layout";
 import { useNews } from "@/context/news-context";
-import useMockData, { Pitch } from "@/hooks/useMockData";
+import { Pitch } from "@/hooks/useMockData";
 import PitchCard from "@/components/ui/pitch-card";
 
 const Pitches = () => {
     const { selectedTags, selectedFormat, sortBy } = useNews();
-    const { mockData, loading, error } = useMockData();
-    const [news, setNews] = useState<Pitch[]>([]);
+    const [post, setPosts] = useState<Pitch[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (mockData) {
-            let filteredNews = mockData.data;
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch("/api/mockData.json");
+                if (!response.ok) throw new Error("Ошибка загрузки данных");
+                const data = await response.json();
 
-            if (selectedFormat) {
-                filteredNews = filteredNews.filter((news) => news.category === selectedFormat);
+                let filteredPosts = data.data;
+
+                if (selectedFormat) {
+                    filteredPosts = filteredPosts.filter((post: Pitch) => post.content.format === selectedFormat);
+                }
+
+                if (selectedTags.length > 0) {
+                    filteredPosts = filteredPosts.filter((post: Pitch) =>
+                        selectedTags.some(tag => post.content.tags.includes(tag))
+                    );
+                }
+
+                if (sortBy) {
+                    filteredPosts = filteredPosts.sort((a: Pitch, b: Pitch) =>
+                        new Date(b.content.date).getTime() - new Date(a.content.date).getTime()
+                    );
+                }
+
+                setPosts(filteredPosts);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
+        };
 
-            if (selectedTags) {
-                filteredNews = filteredNews.filter(news =>
-                    selectedTags.length === 0 || selectedTags.some(tag => news.tags.includes(tag)))
-            }
+        fetchData();
+    }, [sortBy, selectedTags, selectedFormat]);
 
-            if (sortBy) {
-                filteredNews = filteredNews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            }
-
-            setNews(filteredNews);
-        }
-    }, [mockData, sortBy, selectedTags, selectedFormat]);
-
-    if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
 
     const isHighlighted = (index: number) => {
@@ -49,13 +66,17 @@ const Pitches = () => {
         <MainLayout>
             <Flex height="100%">
                 <Box flex={2} overflowY="auto">
-                    {news.length === 0 ? (
+                    {loading ? (
+                        <Flex justify="center" align="center" height="100%" p={5}>
+                            <Spinner size="xl" color="{colors.primary}" borderWidth="4px" />
+                        </Flex>
+                    ) : post.length === 0 ? (
                         <Text textAlign="center" py={4}>
                             Ничего не найдено
                         </Text>
                     ) : (
                         <SimpleGrid columns={{ base: 1, md: 2 }} position="relative" gridAutoFlow="row" minHeight="100%">
-                            {news.map((item, index) => (
+                            {post.map((item, index) => (
                                 <Box key={item.id} height="auto">
                                     <PitchCard isHighlighted={isHighlighted(index)} item={item} />
                                 </Box>
@@ -66,10 +87,10 @@ const Pitches = () => {
                                 top={0}
                                 bottom={0}
                                 width="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left top"
-                                backgroundRepeat= "repeat-y"
-                                backgroundSize= "2px 4px"
+                                backgroundImage="radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                backgroundPosition="left top"
+                                backgroundRepeat="repeat-y"
+                                backgroundSize="2px 4px"
                                 transform="translateX(-50%)"
                                 display={{ base: "none", md: "block" }}
                             />

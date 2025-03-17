@@ -11,7 +11,7 @@ const SidebarCategories = () => {
 
 
     const tagsCount = mockData.tags.reduce((acc, tag) => {
-        acc[tag] = mockData.data.filter(news => news.tags.includes(tag)).length;
+        acc[tag] = mockData.data.filter(news => news.content.tags.includes(tag)).length;
         return acc;
     }, {} as Record<string, number>);
 
