@@ -66,7 +66,7 @@ const App = () => {
                                 color: '#fff',
                             }}
                             as={NextLink}
-                            href="/authors"
+                            href="/api/authors"
                             fontWeight="medium"
                         >
                             Найти автора

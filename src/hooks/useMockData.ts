@@ -41,6 +41,7 @@ export interface Author {
     completed: number,
     rejected: number,
     formats: string[],
+    experience: boolean;
     stats: {
         completed_posts: number;
         total_posts: number;
