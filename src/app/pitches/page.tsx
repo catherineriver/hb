@@ -63,7 +63,7 @@ const Pitches = () => {
     };
 
     return (
-        <MainLayout>
+        <MainLayout withTopPanel>
             <Flex height="100%">
                 <Box flex={2} overflowY="auto">
                     {loading ? (

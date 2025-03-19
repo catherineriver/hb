@@ -1,9 +1,9 @@
-import { Box, Heading, Text, SimpleGrid } from "@chakra-ui/react";
-import { useAuthorsFilter } from "@/context/filter-context";
+import {Box, Heading, Text, SimpleGrid, HStack, VStack} from "@chakra-ui/react";
 import React from "react";
-import { useRouter } from "next/navigation";
 import List from '@/components/ui/List/List';
 import {Author} from "@/hooks/useMockData";
+import {Avatar} from "@/components/ui/avatar";
+import Link from "next/link";
 
 interface AuthorsListProps {
     authors: Author[];
@@ -12,28 +12,28 @@ interface AuthorsListProps {
 }
 
 const AuthorsList: React.FC<AuthorsListProps> = ({ authors, loading, error }) => {
-    const { filters } = useAuthorsFilter();
-    const router = useRouter();
+    // const { filters } = useAuthorsFilter();
+    // const router = useRouter();
 
     if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text>Ошибка: {error}</Text>;
 
-    const filteredAuthors = authors.filter((author) => {
-        if (filters.search && !author.name.toLowerCase().includes(filters.search.toLowerCase())) {
-            return false;
-        }
-        if (filters.format && !author.formats.includes(filters.format)) {
-            return false;
-        }
-        if (filters.urgent && !author.ready_for_urgent) {
-            return false;
-        }
-        if (filters.travel && !author.ready_for_travel) {
-            return false;
-        }
-        if (filters.experience && !author.experience) {
-            return false;
-        }
+    const filteredAuthors = authors.filter(() => {
+        // if (filters.search && !author.name.toLowerCase().includes(filters.search.toLowerCase())) {
+        //     return false;
+        // }
+        // if (filters.format && !author.formats.includes(filters.format)) {
+        //     return false;
+        // }
+        // if (filters.urgent && !author.ready_for_urgent) {
+        //     return false;
+        // }
+        // if (filters.travel && !author.ready_for_travel) {
+        //     return false;
+        // }
+        // if (filters.experience && !author.experience) {
+        //     return false;
+        // }
         return true;
     });
 
@@ -45,18 +45,31 @@ const AuthorsList: React.FC<AuthorsListProps> = ({ authors, loading, error }) =>
                 error={error}
                 emptyMessage="Нет авторов по заданным параметрам"
                 renderItem={(author) => (
+                    <Link href={`/authors/${author.id}`} passHref>
                     <Box
                         key={author.id}
                         p={4}
-                        borderWidth="1px"
                         borderRadius="lg"
                         width="100%"
-                        onClick={() => router.push(`/authors/${author.id}`)}
+                        background="{colors.gray}"
                     >
-                        <Heading size="md">{author.name}</Heading>
+                        <HStack p={2} justifyContent="space-between">
+                            <HStack>
+                                <Avatar size="xl" src={author.avatar_url} />
+                                <VStack alignItems="start">
+                                    <Heading size="md">{author.name}</Heading>
+                                    <Text fontSize="xs" color="gray.600">{author.location}</Text>
+                                </VStack>
+                            </HStack>
+                            <HStack gap='16px'>
+                                {author.ready_for_urgent && <Text>⚡️</Text>}
+                                {author.ready_for_travel && <Text>✈️</Text>}
+                                {author.experience && <Text>✅</Text>}
+                            </HStack>
+                        </HStack>
                         <Text color="gray.600">{author.bio}</Text>
-                        <Text fontSize="sm" color="gray.500">Статьи: {author.articles.join(", ")}</Text>
                     </Box>
+                    </Link>
                 )}
             />
         </SimpleGrid>
