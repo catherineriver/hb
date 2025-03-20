@@ -1,17 +1,14 @@
 import { Link, Text, Flex } from "@chakra-ui/react";
 import React from "react";
 import {Avatar} from "@/components/ui/avatar";
+import {Author} from "@/hooks/useMockData";
 
 interface AuthorLinkProps {
-    author: {
-        id: number;
-        name: string;
-    };
-    avatarSrc?: string;
+    author: Author;
     variant?: 'withAvatar' | string;
 }
 
-const AuthorLink: React.FC<AuthorLinkProps> = ({ variant, author , avatarSrc}) => {
+const AuthorLink: React.FC<AuthorLinkProps> = ({ variant, author }) => {
     if (!author) return null;
 
     return (
@@ -23,7 +20,7 @@ const AuthorLink: React.FC<AuthorLinkProps> = ({ variant, author , avatarSrc}) =
                 align="center"
                 gap={variant === "withAvatar" ? 2 : 0}
             >
-                {variant === "withAvatar" && <Avatar size="md" src={avatarSrc || ""} />}
+                {variant === "withAvatar" && <Avatar size="md" src={author.avatar_url} />}
                 <Text fontSize="14px" fontWeight="medium">{author.name}</Text>
             </Flex>
         </Link>

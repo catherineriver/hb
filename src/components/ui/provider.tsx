@@ -41,10 +41,12 @@ const system = createSystem(defaultConfig, {
         secondary: { value: "rgba(0,166, 118, 1)" },
         highlight: { value: "rgba(199,215, 255, 1)" },
         gray: { value: "rgba(223, 220, 219, 0.2)" },
+        lightGray: { value: "#ddd" },
       },
       borders: {
         button: { value: "1px solid {colors.primary}" },
         divider: { value: "2px dotted {colors.neutral}" },
+        input: { value: "1px solid {colors.lightGray}" },
         // composite value
       },
       shadows: {

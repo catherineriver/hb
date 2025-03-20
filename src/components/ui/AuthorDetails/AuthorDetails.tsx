@@ -33,7 +33,7 @@ const AuthorDetails: React.FC<AuthorDetailsProps> = ({author}) => {
         <VStack gap={4} p={4} bg="blue.100" borderRadius="md" align="center">
             <VStack align="start" gap={2} w="100%">
                 <HStack  w="100%">
-                    <AuthorLink variant='withAvatar' author={author} avatarSrc={author.avatar_url}/>
+                    <AuthorLink variant='withAvatar' author={author} />
                 </HStack>
 
                 <HStack justify="space-between" w="100%">
