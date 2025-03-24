@@ -1,10 +1,10 @@
 import {VStack, HStack, Text, Button, Heading} from "@chakra-ui/react";
 import AuthorLink from "@/components/ui/author-link";
 import React from "react";
-import {Author} from "@/hooks/useMockData";
+import {AuthorType} from "@/hooks/useMockData";
 
 interface AuthorDetailsProps {
-    author: Author;
+    author: AuthorType;
 }
 
 const AuthorDetails: React.FC<AuthorDetailsProps> = ({author}) => {

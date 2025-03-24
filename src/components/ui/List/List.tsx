@@ -1,4 +1,4 @@
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import {JSX} from "react";
 
 interface ListProps<T> {

@@ -1,10 +1,10 @@
 import { Link, Text, Flex } from "@chakra-ui/react";
 import React from "react";
 import {Avatar} from "@/components/ui/avatar";
-import {Author} from "@/hooks/useMockData";
+import {AuthorType} from "@/hooks/useMockData";
 
 interface AuthorLinkProps {
-    author: Author;
+    author: AuthorType;
     variant?: 'withAvatar' | string;
 }
 

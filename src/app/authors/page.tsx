@@ -24,7 +24,7 @@ const AuthorsContent = () => {
 
     useEffect(() => {
         fetchInitialAuthors();
-    }, []);
+    }, [fetchInitialAuthors]);
 
     return (
         <Flex height="100%" gap={4} p={4}>

@@ -1,4 +1,4 @@
-import {createContext, useCallback, useContext, useState} from "react";
+import {createContext, useContext, useState, useCallback} from "react";
 import {AuthorType} from "@/hooks/useMockData";
 
 interface Filters {
@@ -32,19 +32,20 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     const [filters, setFilters] = useState<Filters>({});
     const [notFound, setNotFound] = useState(false);
 
-    const fetchInitialAuthors = async () => {
+    const fetchInitialAuthors = useCallback(async () => {
         try {
             const res = await fetch("/api/authors");
             const data = await res.json();
             setAuthors(data.authors);
         } catch (e) {
+            console.error(e);
             setError("Ошибка при загрузке");
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
-    const fetchSearchedAuthors = async (query: string = "", filters: Record<string, any> = {}) => {
+    const fetchSearchedAuthors = useCallback(async (query: string = "", filters: Record<string, any> = {}) => {
         try {
             setLoading(true);
             let url = "/api/authors?";
@@ -59,11 +60,12 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
             setAuthors(data.authors);
             setNotFound(data.authors.length === 0);
         } catch (e) {
+            console.error(e);
             setError("Ошибка при поиске");
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     return (
         <AuthorsContext.Provider value={{ filters, setFilters, authors, loading, error, fetchSearchedAuthors, fetchInitialAuthors, notFound }}>

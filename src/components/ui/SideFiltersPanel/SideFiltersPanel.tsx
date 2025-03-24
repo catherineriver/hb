@@ -89,7 +89,7 @@ const SideFilterPanel = () => {
             await fetchSearchedAuthors(debouncedSearch, filtersObj);
         };
         fetchFilters();
-    }, [debouncedSearch, withExperience, readyToTravel, readyToUrgent, formats, topics]);
+    }, [debouncedSearch, withExperience, readyToTravel, readyToUrgent, formats, topics, fetchSearchedAuthors]);
 
     return (
             <Box borderRight="1px solid #ddd" p={{ base: 2, md: 3 }} bg="white" w='100%'>
@@ -232,7 +232,7 @@ const SideFilterPanel = () => {
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
-                            <CheckboxGroup name="format" value={formats} onChange={() => setFormats}>
+                            <CheckboxGroup name="format" value={formats} onChange={() => setFormats(formats)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
                                     Выберите формат
                                     {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
@@ -266,7 +266,7 @@ const SideFilterPanel = () => {
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
-                            <CheckboxGroup name="topics" value={topics} onChange={setTopics}>
+                            <CheckboxGroup name="topics" value={topics} onChange={() => setTopics(topics)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
                                     Выберите тему
                                     {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
