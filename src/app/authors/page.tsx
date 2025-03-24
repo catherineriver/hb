@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Text,
     Flex,
     Spinner,
 } from "@chakra-ui/react";
-import { Author } from "@/hooks/useMockData";
-// import {useAuthorsFilter} from "@/context/filter-context";
 import AuthorsList from "@/components/ui/AuthorsList/AuthorsList";
 import FiltersLayout from "@/components/filters-layout";
+import {useAuthorsFilter} from "@/context/authors-context";
 
 const AuthorsPage = () => {
     return (
@@ -21,29 +20,10 @@ const AuthorsPage = () => {
 };
 
 const AuthorsContent = () => {
-    // const { filters } = useAuthorsFilter();
-    const [authors, setAuthors] = useState<Author[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const { fetchInitialAuthors, authors, loading, error, notFound } = useAuthorsFilter();
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-
-                const response = await fetch(`/api/authors`);
-
-                if (!response.ok) throw new Error("Ошибка загрузки данных");
-                const data = await response.json();
-                setAuthors(data.authors);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
+        fetchInitialAuthors();
     }, []);
 
     return (
@@ -57,8 +37,10 @@ const AuthorsContent = () => {
                         </Flex>
                     ) : error ? (
                         <Text>{error}</Text>
+                    ) : notFound ? (
+                        <Text>Ничего не найдено</Text>
                     ) : (
-                        <AuthorsList authors={authors} loading={false} error={null} />
+                        <AuthorsList authors={authors} />
                     )}
                 </Box>
             </Box>

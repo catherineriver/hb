@@ -1,49 +1,20 @@
 import {Box, Heading, Text, SimpleGrid, HStack, VStack} from "@chakra-ui/react";
 import React from "react";
 import List from '@/components/ui/List/List';
-import {Author} from "@/hooks/useMockData";
+import {AuthorType} from "@/hooks/useMockData";
 import {Avatar} from "@/components/ui/avatar";
 import Link from "next/link";
 
 interface AuthorsListProps {
-    authors: Author[];
-    loading: boolean;
-    error: string | null;
+    authors: AuthorType[];
 }
 
-const AuthorsList: React.FC<AuthorsListProps> = ({ authors, loading, error }) => {
-    // const { filters } = useAuthorsFilter();
-    // const router = useRouter();
-
-    if (loading) return <Text>Загрузка...</Text>;
-    if (error) return <Text>Ошибка: {error}</Text>;
-
-    const filteredAuthors = authors.filter(() => {
-        // if (filters.search && !author.name.toLowerCase().includes(filters.search.toLowerCase())) {
-        //     return false;
-        // }
-        // if (filters.format && !author.formats.includes(filters.format)) {
-        //     return false;
-        // }
-        // if (filters.urgent && !author.ready_for_urgent) {
-        //     return false;
-        // }
-        // if (filters.travel && !author.ready_for_travel) {
-        //     return false;
-        // }
-        // if (filters.experience && !author.experience) {
-        //     return false;
-        // }
-        return true;
-    });
+const AuthorsList: React.FC<AuthorsListProps> = ({ authors }) => {
 
     return (
         <SimpleGrid gap="40px">
             <List
-                data={filteredAuthors}
-                loading={loading}
-                error={error}
-                emptyMessage="Нет авторов по заданным параметрам"
+                data={authors}
                 renderItem={(author) => (
                     <Link href={`/authors/${author.id}`} passHref>
                     <Box
@@ -64,7 +35,7 @@ const AuthorsList: React.FC<AuthorsListProps> = ({ authors, loading, error }) =>
                             <HStack gap='16px'>
                                 {author.ready_for_urgent && <Text>⚡️</Text>}
                                 {author.ready_for_travel && <Text>✈️</Text>}
-                                {author.experience && <Text>✅</Text>}
+                                {author.experience_with_hb && <Text>✅</Text>}
                             </HStack>
                         </HStack>
                         <Text color="gray.600">{author.bio}</Text>

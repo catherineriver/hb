@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 
 export interface Pitch {
     id: number;
-    author: Author;
+    author: AuthorType;
     is_booked: boolean;
     content: {
         tags: string[];
@@ -24,10 +24,11 @@ interface Organization {
     name: string;
 }
 
-export interface Author {
+export interface AuthorType {
     avatar_url: string,
     ready_for_urgent: boolean,
     ready_for_travel: boolean,
+    experience_with_hb: boolean;
     regions: string[],
     location: string,
     topics: any,
@@ -41,7 +42,6 @@ export interface Author {
     completed: number,
     rejected: number,
     formats: string[],
-    experience: boolean;
     stats: {
         completed_posts: number;
         total_posts: number;
@@ -52,7 +52,7 @@ export interface MockData {
     formats: string[];
     tags: string[];
     data: Pitch[];
-    authors: Author[];
+    authors: AuthorType[];
 }
 
 const useMockData = () => {

@@ -1,19 +1,19 @@
 {
   "page_token": "string",
-    "tags": [
-      "Коты",
-      "Кофе",
-      "Смешное",
-      "Утки",
-      "Тайны природы",
-      "Заговор",
-      "Бобры",
-      "Архитектура",
-      "Элитная недвижимость",
-      "Еноты",
-      "Хомяки",
-      "Шахматы"
-    ],
+  "tags": [
+    "Коты",
+    "Кофе",
+    "Смешное",
+    "Утки",
+    "Тайны природы",
+    "Заговор",
+    "Бобры",
+    "Архитектура",
+    "Элитная недвижимость",
+    "Еноты",
+    "Хомяки",
+    "Шахматы"
+  ],
   "region": "string",
   "query": "string",
   "sort_by": "oldest",
@@ -466,14 +466,22 @@
         }
       ],
       "ready_for_urgent": false,
-      "ready_for_travel": true,
+      "ready_for_travel": false,
+      "experience_with_hb": false,
       "location": "Москва",
-      "regions": ["Россия", "Украина"],
-      "formats": ["Расследование", "Лонгрид"],
-      "topics": ["Мистика", "Преступления", "Тайны"],
-      "urgent": true,
-      "travel": true,
-      "experience": true
+      "regions": [
+        "Россия",
+        "Украина"
+      ],
+      "formats": [
+        "Расследование",
+        "Лонгрид"
+      ],
+      "topics": [
+        "Мистика",
+        "Преступления",
+        "Тайны"
+      ]
     },
     {
       "id": 2,
@@ -505,12 +513,11 @@
       ],
       "ready_for_urgent": false,
       "ready_for_travel": true,
+      "experience_with_hb": false,
       "location": "Санкт-Петербург",
       "regions": ["Россия"],
       "formats": ["Мнение", "Репортаж"],
-      "topics": ["Кофе", "Гастрономия"],
-      "travel": true,
-      "experience": false
+      "topics": ["Кофе", "Гастрономия"]
     },
     {
       "id": 3,
@@ -537,12 +544,12 @@
         }
       ],
       "ready_for_urgent": true,
-      "ready_for_travel": true,
+      "ready_for_travel": false,
+      "experience_with_hb": false,
       "location": "Казань",
       "regions": ["Россия", "США"],
       "formats": ["Профайл"],
-      "topics": ["Архитектура", "Экология"],
-      "experience": true
+      "topics": ["Архитектура", "Экология"]
     },
     {
       "id": 4,
@@ -570,13 +577,11 @@
       ],
       "ready_for_urgent": true,
       "ready_for_travel": false,
+      "experience_with_hb": false,
       "location": "Новосибирск",
       "regions": ["Россия", "Канада"],
       "formats": ["Репортаж"],
-      "topics": ["Экология", "Животные"],
-      "urgent": true,
-      "travel": false,
-      "experience": false
+      "topics": ["Экология", "Животные"]
     },
     {
       "id": 5,
@@ -603,14 +608,162 @@
         }
       ],
       "ready_for_urgent": false,
+      "experience_with_hb": true,
       "ready_for_travel": false,
       "location": "Минск",
       "regions": ["Беларусь", "Россия"],
       "formats": ["Лонгрид"],
-      "topics": ["Животные", "Наука"],
-      "urgent": false,
-      "travel": false,
-      "experience": true
+      "topics": ["Животные", "Наука"]
+    },
+    {
+      "id": 6,
+      "name": "Инга Капучино",
+      "bio": "Пишет о городской культуре, искусстве и людях, которые меняют мир вокруг.",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "stats": {
+        "completed_posts": 25,
+        "total_posts": 31
+      },
+      "articles": [
+        {
+          "id": 9007199254740920,
+          "content": {
+            "title": "Как уличные художники преображают серые районы",
+            "key_description": "Одна стена — одна история: граффити в жизни города."
+          }
+        }
+      ],
+      "organizations": [
+        {
+          "id": 7,
+          "name": "Культурный код"
+        }
+      ],
+      "ready_for_urgent": false,
+      "ready_for_travel": false,
+      "experience_with_hb": true,
+      "location": "Екатеринбург",
+      "regions": ["Россия", "Беларусь"],
+      "formats": ["Репортаж"],
+      "topics": ["Искусство", "Город"]
+
+    },
+    {
+      "id": 7,
+      "name": "Эмма Сова",
+      "bio": "Специалист по образованию, анализирует школьные и университетские реформы.",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "stats": {
+        "completed_posts": 17,
+        "total_posts": 22
+      },
+      "articles": [
+        {
+          "id": 9007199254740921,
+          "content": {
+            "title": "Что не так с современным образованием?",
+            "key_description": "Новый взгляд на школу глазами родителей, учеников и учителей."
+          }
+        }
+      ],
+      "organizations": [],
+      "ready_for_urgent": true,
+      "ready_for_travel": false,
+      "experience_with_hb": true,
+      "location": "Калуга",
+      "regions": ["Россия"],
+      "formats": ["Мнение", "Лонгрид"],
+      "topics": ["Образование", "Общество"]
+    },
+    {
+      "id": 8,
+      "name": "Михаил Тихонов",
+      "bio": "Военный корреспондент, освещает конфликты и гуманитарные миссии.",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "stats": {
+        "completed_posts": 80,
+        "total_posts": 110
+      },
+      "articles": [
+        {
+          "id": 9007199254740922,
+          "content": {
+            "title": "Внутри зоны конфликта",
+            "key_description": "Истории мирных жителей, оказавшихся между фронтами."
+          }
+        }
+      ],
+      "organizations": [
+        {
+          "id": 8,
+          "name": "Фонд поддержки прессы"
+        }
+      ],
+      "ready_for_urgent": true,
+      "ready_for_travel": true,
+      "experience_with_hb": false,
+      "location": "Ростов-на-Дону",
+      "regions": ["Украина", "Россия", "Грузия"],
+      "formats": ["Репортаж", "Расследование"],
+      "topics": ["Конфликты", "Политика"]
+    },
+    {
+      "id": 9,
+      "name": "Светлана Чайкина",
+      "bio": "Пишет об экологии, климате и устойчивом образе жизни.",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "stats": {
+        "completed_posts": 45,
+        "total_posts": 70
+      },
+      "articles": [
+        {
+          "id": 9007199254740923,
+          "content": {
+            "title": "Как один поселок стал примером экологичного сообщества",
+            "key_description": "Сортировка отходов, солнечные панели и эко-инициативы."
+          }
+        }
+      ],
+      "organizations": [
+        {
+          "id": 9,
+          "name": "Зеленая волна"
+        }
+      ],
+      "ready_for_urgent": false,
+      "ready_for_travel": true,
+      "experience_with_hb": false,
+      "location": "Пермь",
+      "regions": ["Россия"],
+      "formats": ["Лонгрид"],
+      "topics": ["Экология", "Общество"]
+    },
+    {
+      "id": 10,
+      "name": "Антон Тестеров",
+      "bio": "Специалист по науке и технологиям, делает сложное — понятным.",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "stats": {
+        "completed_posts": 12,
+        "total_posts": 16
+      },
+      "articles": [
+        {
+          "id": 9007199254740924,
+          "content": {
+            "title": "Почему ИИ не заменит журналиста (пока)",
+            "key_description": "Разбираемся, чем сильны и слабы алгоритмы."
+          }
+        }
+      ],
+      "organizations": [],
+      "ready_for_urgent": false,
+      "ready_for_travel": false,
+      "location": "Томск",
+      "regions": ["Россия"],
+      "formats": ["Аналитика", "Мнение"],
+      "topics": ["Наука", "Технологии"]
     }
   ]
 }
