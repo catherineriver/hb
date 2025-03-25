@@ -55,6 +55,12 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
             if(filters.experience) url += `experience=true&`;
             if(filters.travel) url += `travel=true&`;
             if(filters.urgent) url += `urgent=true&`;
+            if (filters.formats && filters.formats.length > 0) {
+                url += `formats=${filters.formats.join(",")}&`;
+            }
+            if (filters.topics && filters.topics.length > 0) {
+                url += `topics=${filters.topics.join(",")}&`;
+            }
             const res = await fetch(url);
             const data = await res.json();
             setAuthors(data.authors);

@@ -13,7 +13,7 @@ import {
     createListCollection,
     VStack
 } from "@chakra-ui/react";
-import {useState} from "react";
+import { useState} from "react";
 import { useEffect } from "react";
 import {useAuthorsFilter} from "@/context/authors-context";
 import {useDebouncedValue} from "@/hooks/useDebouncedValue";
@@ -25,6 +25,7 @@ const formatOptions = [
     { value: "interview", label: "Интервью" },
     { value: "analysis", label: "Аналитика" },
     { value: "feature", label: "Фичер" },
+    { value: "longread", label: "Лонгрид" },
 ];
 
 const topicOptions = [
@@ -69,6 +70,7 @@ const SideFilterPanel = () => {
     const [readyToUrgent, setReadyToUrgent] = useState(false);
     const [formats, setFormats] = useState<string[]>([]);
     const [topics, setTopics] = useState<string[]>([]);
+
     const handleClearFilters = () => {
         setSearchQuery("");
         setWithExperience(false);
@@ -77,14 +79,18 @@ const SideFilterPanel = () => {
         setFormats([]);
         setTopics([]);
     };
+
     const debouncedSearch = useDebouncedValue(searchQuery, 600);
 
     useEffect(() => {
+        console.log("setFormats", formats);
         const fetchFilters = async () => {
             const filtersObj = {
                 experience: withExperience,
                 travel: readyToTravel,
                 urgent: readyToUrgent,
+                formats,
+                topics,
             };
             await fetchSearchedAuthors(debouncedSearch, filtersObj);
         };
@@ -232,7 +238,7 @@ const SideFilterPanel = () => {
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
-                            <CheckboxGroup name="format" value={formats} onChange={() => setFormats(formats)}>
+                            <CheckboxGroup name="formats" value={formats} onValueChange={(values: string[]) => setFormats(values)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
                                     Выберите формат
                                     {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
@@ -254,7 +260,16 @@ const SideFilterPanel = () => {
                                                             background: 'white',
                                                         },
                                                     }}
-                                                />
+                                                >
+                                                <Checkbox.Indicator>
+                                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                                        <path
+                                                            fill="currentColor"
+                                                            d="M6.173 11.414L3.293 8.536a1 1 0 011.414-1.414l1.466 1.466 4.293-4.293a1 1 0 011.414 1.414L6.173 11.414z"
+                                                        />
+                                                    </svg>
+                                                </Checkbox.Indicator>
+                                                </Checkbox.Control>
                                                 <Checkbox.Label>{value.label}</Checkbox.Label>
                                             </Checkbox.Root>
                                         )}
@@ -266,7 +281,7 @@ const SideFilterPanel = () => {
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
-                            <CheckboxGroup name="topics" value={topics} onChange={() => setTopics(topics)}>
+                            <CheckboxGroup name="topics" value={topics} onValueChange={(values: string[]) => setTopics(values)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
                                     Выберите тему
                                     {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
@@ -287,7 +302,16 @@ const SideFilterPanel = () => {
                                                         background: 'white',
                                                     },
                                                 }}
-                                                />
+                                                >
+                                                <Checkbox.Indicator>
+                                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                                        <path
+                                                            fill="currentColor"
+                                                            d="M6.173 11.414L3.293 8.536a1 1 0 011.414-1.414l1.466 1.466 4.293-4.293a1 1 0 011.414 1.414L6.173 11.414z"
+                                                        />
+                                                    </svg>
+                                                </Checkbox.Indicator>
+                                                </Checkbox.Control>
                                                 <Checkbox.Label>{value.label}</Checkbox.Label>
                                             </Checkbox.Root>
                                         )}

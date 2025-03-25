@@ -8,6 +8,8 @@ export async function GET(request: Request) {
     const experience = searchParams.get("experience") === "true";
     const travel = searchParams.get("travel") === "true";
     const urgent = searchParams.get("urgent") === "true";
+    const formatsQuery = searchParams.get("formats");
+    const topicsQuery = searchParams.get("topics");
 
     let filteredAuthors = mockData.authors;
 
@@ -29,7 +31,19 @@ export async function GET(request: Request) {
         filteredAuthors = filteredAuthors.filter((author: any) => author.ready_for_urgent === true);
     }
 
-    // При необходимости можно добавить обработку других фильтров, например formats и topics
+    if (formatsQuery) {
+        const formats = formatsQuery.split(",");
+        filteredAuthors = filteredAuthors.filter((author: any) =>
+            formats.some((format: string) => author.formats.includes(format))
+        );
+    }
+
+    if (topicsQuery) {
+        const topics = topicsQuery.split(",");
+        filteredAuthors = filteredAuthors.filter((author: any) =>
+            topics.some((topic: string) => author.topics.includes(topic))
+        );
+    }
 
     return NextResponse.json({ authors: filteredAuthors });
 }
