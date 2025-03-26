@@ -20,18 +20,11 @@ const AuthorPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("/api/mockData.json");
+                const response = await fetch(`/api/authors/${id}`);
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
-
                 const data = await response.json();
-                console.log("ID из useParams:", id);
-                console.log("Загруженные данные:", data);
-
-                const foundAuthor = data.authors.find((item: AuthorType) => item.id.toString() === id);
-                console.log("Найденный автор:", foundAuthor);
-
-                setAuthor(foundAuthor || null);
-                setPitches(foundAuthor.articles)
+                setAuthor(data);
+                setPitches(data.articles)
             } catch (err) {
                setError((err as Error).message);
             } finally {
@@ -42,6 +35,7 @@ const AuthorPage = () => {
         fetchData();
     }, [id]);
 
+    const isHighlighted = (index: number) => index % 2 === 1;
 
     return (
         <PageLayout>
@@ -66,18 +60,15 @@ const AuthorPage = () => {
                                 <FaInfoCircle />
                             </Box>
                         </Tooltip>
-
                     </HStack>
 
 
-                    {/* Контейнер с кнопкой */}
                     <HStack justify="center" w="100%" my="16px">
                         <Button background="#00A676" color="#fff" size="md" variant="solid" px={5}>
                             Связаться
                         </Button>
                     </HStack>
 
-                    {/* Метаданные */}
                     <VStack align="start" width="100%" mt="40px">
                         <HStack justify="space-between" width="100%">
                             <Heading size='sm' fontWeight="bold">📂 Успешных материалов:</Heading>
@@ -159,7 +150,7 @@ const AuthorPage = () => {
                         <Heading size="xl" mb="20px">Открытые питчи:</Heading>
                         {pitches.length > 0 ? (
                             pitches.map((pitch, index) => (
-                                <PitchCard key={index} item={pitch} />
+                                <PitchCard key={index} item={pitch} isPreviewCard={true} isHighlighted={isHighlighted(index)} />
                             ))
                         ) : (
                             <Text>У этого автора пока нет питчей.</Text>

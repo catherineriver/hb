@@ -1,4 +1,4 @@
-import {createContext, useContext, useState, useCallback} from "react";
+import {createContext, useContext, useState, useCallback, useMemo} from "react";
 import {AuthorType} from "@/hooks/useMockData";
 
 interface Filters {
@@ -35,6 +35,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchInitialAuthors = useCallback(async () => {
         try {
             const res = await fetch("/api/authors");
+            console.log("fetchInitialAuthors called")
             const data = await res.json();
             setAuthors(data.authors);
         } catch (e) {
@@ -73,12 +74,32 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, []);
 
+    const contextValue = useMemo(() => ({
+        filters,
+        setFilters,
+        authors,
+        loading,
+        error,
+        fetchSearchedAuthors,
+        fetchInitialAuthors,
+        notFound
+    }), [
+        filters,
+        authors,
+        loading,
+        error,
+        fetchSearchedAuthors,
+        fetchInitialAuthors,
+        notFound
+    ]);
+
     return (
-        <AuthorsContext.Provider value={{ filters, setFilters, authors, loading, error, fetchSearchedAuthors, fetchInitialAuthors, notFound }}>
+        <AuthorsContext.Provider value={contextValue}>
             {children}
         </AuthorsContext.Provider>
     );
 };
+
 
 export const useAuthorsFilter = () => {
     const context = useContext(AuthorsContext);

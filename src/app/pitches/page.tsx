@@ -23,29 +23,11 @@ const Pitches = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await fetch("/api/mockData.json");
+                const response = await fetch("/api/pitches");
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
                 const data = await response.json();
 
-                let filteredPosts = data.data;
-
-                if (selectedFormat) {
-                    filteredPosts = filteredPosts.filter((post: Pitch) => post.content.format === selectedFormat);
-                }
-
-                if (selectedTags.length > 0) {
-                    filteredPosts = filteredPosts.filter((post: Pitch) =>
-                        selectedTags.some(tag => post.content.tags.includes(tag))
-                    );
-                }
-
-                if (sortBy) {
-                    filteredPosts = filteredPosts.sort((a: Pitch, b: Pitch) =>
-                        new Date(b.content.date).getTime() - new Date(a.content.date).getTime()
-                    );
-                }
-
-                setPosts(filteredPosts);
+                setPosts(data.pitches);
             } catch (err: any) {
                 setError(err.message);
             } finally {

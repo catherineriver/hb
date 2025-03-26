@@ -9,9 +9,10 @@ import NextLink from "next/link";
 interface CardProps {
     item: Pitch;
     isHighlighted?: boolean;
+    isPreviewCard?: boolean;
 }
 
-const PitchCard = ({ item, isHighlighted }: CardProps) => {
+const PitchCard = ({ item, isHighlighted, isPreviewCard }: CardProps) => {
     const potsBooked = item.is_booked;
     const post = item.content
     if (!item) return null;
@@ -49,7 +50,7 @@ const PitchCard = ({ item, isHighlighted }: CardProps) => {
                     </LinkOverlay>
                 </Heading>
                 <Text fontSize="16px" lineHeight="150%">{post.key_description}</Text>
-                <HStack w="100%" justify="space-between" mt={3}>
+                {!isPreviewCard && <HStack w="100%" justify="space-between" mt={3}>
                     <HStack align="start" gap={1} w="100%" alignItems="center">
                         <AuthorLink author={item.author} />
                         <Text fontFamily="heading" fontSize="14px">•</Text>
@@ -69,6 +70,7 @@ const PitchCard = ({ item, isHighlighted }: CardProps) => {
                         </Button>
                     )}
                 </HStack>
+                }
             </VStack>
 
             <Show when={potsBooked}>

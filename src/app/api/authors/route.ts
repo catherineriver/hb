@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import mockData from "../mockData.json";
 
 export async function GET(request: Request) {

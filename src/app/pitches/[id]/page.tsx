@@ -26,12 +26,10 @@ const PitchPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("/api/mockData.json");
+                const response = await fetch(`/api/pitches/${id}`);
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
                 const data = await response.json();
-                console.log(data)
-                const foundPitch = data.data.find((item: Pitch) => item.id.toString() === id);
-                setPitch(foundPitch || null);
+                setPitch(data);
             } catch (err) {
                 setError((err as Error).message);
             } finally {
