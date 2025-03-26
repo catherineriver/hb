@@ -1,13 +1,13 @@
 import {Button, Heading, HStack, Text, VStack, Show, LinkBox, LinkOverlay} from "@chakra-ui/react";
 import React from "react";
-import { Pitch } from "@/hooks/useMockData";
+import { PitchType } from "@/hooks/useMockData";
 import {FaPaperPlane} from "react-icons/fa";
 import AuthorLink from "@/components/ui/author-link";;
 import Overlay from "@/components/ui/Overlay/Overlay";
 import NextLink from "next/link";
 
 interface CardProps {
-    item: Pitch;
+    item: PitchType;
     isHighlighted?: boolean;
     isPreviewCard?: boolean;
 }

@@ -15,11 +15,11 @@ import {
 import {Tag} from "@/components/ui/tag";
 import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
 import AuthorDetails from "@/components/ui/AuthorDetails/AuthorDetails";
-import {Pitch} from "@/hooks/useMockData";
+import {PitchType} from "@/hooks/useMockData";
 
 const PitchPage = () => {
     const { id } = useParams();
-    const [pitch, setPitch] = useState<Pitch | null>(null);
+    const [pitch, setPitch] = useState<PitchType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 

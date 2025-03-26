@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export interface Pitch {
+export interface PitchType {
     id: number;
     author: AuthorType;
     is_booked: boolean;
@@ -51,7 +51,7 @@ export interface AuthorType {
 export interface MockData {
     formats: string[];
     tags: string[];
-    data: Pitch[];
+    data: PitchType[];
     authors: AuthorType[];
 }
 

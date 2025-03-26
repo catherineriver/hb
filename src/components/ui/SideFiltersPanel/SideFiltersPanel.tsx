@@ -83,7 +83,6 @@ const SideFilterPanel = () => {
     const debouncedSearch = useDebouncedValue(searchQuery, 600);
 
     useEffect(() => {
-        console.log("setFormats", formats);
         const fetchFilters = async () => {
             const filtersObj = {
                 experience: withExperience,

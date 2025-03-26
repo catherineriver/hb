@@ -6,8 +6,9 @@ import {
     SelectValueText
 } from "@/components/ui/select";
 import {createListCollection} from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SelectLabel } from "@ark-ui/react";
+import {usePitchesFilter} from "@/context/pitches-context";
 
 interface BaseSelectProps {
     items: { label: string; value: string }[];
@@ -16,27 +17,17 @@ interface BaseSelectProps {
 }
 
 const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChange }) => {
+    const { fetchFilteredPitches } = usePitchesFilter();
     const collection = createListCollection({ items });
     const defaultItem = items[0]?.value || "";
-    const [value, setValue] = useState<string[]>([])
 
-    const handleValueChange = (value: string | null) => {
-        const newValue = value ?? defaultItem;
-        {/*@ts-expect-error: Should expect string[]*/}
-        setValue(newValue);
+    const handleValueChange = (values: string[] | null) => {
+        const newValues = values ?? [defaultItem];
         if (onValueChange) {
-            onValueChange(newValue);
+            onValueChange(newValues.join(",")); // или другой формат
         }
+        fetchFilteredPitches({ value: newValues });
     };
-
-    useEffect(() => {
-        if (value) {
-            fetch(`/api/your-endpoint?value=${value}`)
-                .then(response => response.json())
-                .then(data => console.log("Fetched data:", data))
-                .catch(error => console.error("Error fetching data:", error));
-        }
-    }, [value]);
 
     return (
         <SelectRoot
@@ -44,7 +35,7 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
             size="sm"
             width="320px"
             defaultValue={[defaultItem]}
-            onValueChange={(e) => setValue(e.value)}
+            onValueChange={(e) => handleValueChange(e.value)}
             display="flex"
             flexDirection="row"
             alignItems='center'
@@ -59,7 +50,6 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
                     <SelectItem
                         item={item}
                         key={item.value}
-                        onClick={() => handleValueChange(item.value)}
                     >
                         {item.label}
                     </SelectItem>

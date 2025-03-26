@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Flex,
@@ -9,34 +9,24 @@ import {
     Spinner
 } from "@chakra-ui/react";
 import MainLayout from "@/components/main-layout";
-import { useNews } from "@/context/news-context";
-import { Pitch } from "@/hooks/useMockData";
 import PitchCard from "@/components/ui/pitch-card";
+import {PitchesFilterProvider, usePitchesFilter} from "@/context/pitches-context";
+import {PitchType} from "@/hooks/useMockData";
 
-const Pitches = () => {
-    const { selectedTags, selectedFormat, sortBy } = useNews();
-    const [post, setPosts] = useState<Pitch[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+const PitchesPage = () => {
+    return (
+        <PitchesFilterProvider>
+            <PitchesContent />
+        </PitchesFilterProvider>
+    );
+};
 
+
+const PitchesContent = () => {
+    const {fetchInitialPitches, pitches, loading, error} = usePitchesFilter();
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch("/api/pitches");
-                if (!response.ok) throw new Error("Ошибка загрузки данных");
-                const data = await response.json();
-
-                setPosts(data.pitches);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [sortBy, selectedTags, selectedFormat]);
+        fetchInitialPitches();
+    }, [fetchInitialPitches]);
 
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
 
@@ -52,13 +42,13 @@ const Pitches = () => {
                         <Flex justify="center" align="center" height="100%" p={5}>
                             <Spinner size="xl" color="{colors.primary}" borderWidth="4px" />
                         </Flex>
-                    ) : post.length === 0 ? (
+                    ) : pitches.length === 0 ? (
                         <Text textAlign="center" py={4}>
                             Ничего не найдено
                         </Text>
                     ) : (
                         <SimpleGrid columns={{ base: 1, md: 2 }} position="relative" gridAutoFlow="row" minHeight="100%">
-                            {post.map((item, index) => (
+                            {pitches.map((item: PitchType, index: number) => (
                                 <Box key={item.id} height="auto">
                                     <PitchCard isHighlighted={isHighlighted(index)} item={item} />
                                 </Box>
@@ -84,4 +74,4 @@ const Pitches = () => {
     );
 };
 
-export default Pitches;
+export default PitchesPage;

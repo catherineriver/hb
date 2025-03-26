@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import {Box, Heading, Text, VStack, HStack, Highlight, Button, Stack, Flex, Spinner} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
-import { Pitch, AuthorType } from "@/hooks/useMockData";
+import { PitchType, AuthorType } from "@/hooks/useMockData";
 import PageLayout from "@/components/page-layout";
 import PitchCard from "@/components/ui/pitch-card";
 import {Tooltip} from "@/components/ui/tooltip";
@@ -13,7 +13,7 @@ import {FaInfoCircle} from "react-icons/fa";
 const AuthorPage = () => {
     const { id } = useParams();
     const [author, setAuthor] = useState<AuthorType | null>(null);
-    const [pitches, setPitches] = useState<Pitch[]>([]);
+    const [pitches, setPitches] = useState<PitchType[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 

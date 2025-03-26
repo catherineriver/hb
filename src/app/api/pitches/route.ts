@@ -23,5 +23,5 @@ export async function GET(request: Request) {
         );
     }
 
-    return NextResponse.json({ pitches: filteredPitches });
+    return NextResponse.json({ data: filteredPitches });
 }
