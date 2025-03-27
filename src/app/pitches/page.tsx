@@ -42,13 +42,13 @@ const PitchesContent = () => {
                         <Flex justify="center" align="center" height="100%" p={5}>
                             <Spinner size="xl" color="{colors.primary}" borderWidth="4px" />
                         </Flex>
-                    ) : pitches.length === 0 ? (
+                    ) : Array.isArray(pitches) && pitches.length === 0 ? (
                         <Text textAlign="center" py={4}>
                             Ничего не найдено
                         </Text>
                     ) : (
                         <SimpleGrid columns={{ base: 1, md: 2 }} position="relative" gridAutoFlow="row" minHeight="100%">
-                            {pitches.map((item: PitchType, index: number) => (
+                            {pitches?.map((item: PitchType, index: number) => (
                                 <Box key={item.id} height="auto">
                                     <PitchCard isHighlighted={isHighlighted(index)} item={item} />
                                 </Box>

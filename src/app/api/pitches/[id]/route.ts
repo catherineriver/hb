@@ -5,7 +5,7 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const id = url.pathname.split("/").pop();
 
-    const pitch = mockData.data.find((a) => String(a.id) === id);
+    const pitch = mockData.pitches.find((a) => String(a.id) === id);
 
     if (!pitch) {
         return NextResponse.json({ error: 'Pitch not found' }, { status: 404 });

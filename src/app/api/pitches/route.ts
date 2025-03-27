@@ -3,25 +3,32 @@ import mockData from "../mockData.json";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
+    const topicsParam = searchParams.get("topics");
+    const formatsParam = searchParams.get("format");
+    const regionsParam = searchParams.get("region");
 
-    const formatsQuery = searchParams.get("formats");
-    const topicsQuery = searchParams.get("topics");
+    let filtered = mockData.pitches;
 
-    let filteredPitches = mockData.data;
-
-    if (formatsQuery) {
-        const formats = formatsQuery.split(",");
-        filteredPitches = filteredPitches.filter((author: any) =>
-            formats.some((format: string) => author.formats.includes(format))
+    if (topicsParam) {
+        const topics = topicsParam.split(",");
+        filtered = filtered.filter(p =>
+            p.content?.topics?.some((t: string) => topics.includes(t))
         );
     }
 
-    if (topicsQuery) {
-        const topics = topicsQuery.split(",");
-        filteredPitches = filteredPitches.filter((author: any) =>
-            topics.some((topic: string) => author.topics.includes(topic))
+    if (formatsParam) {
+        const formats = formatsParam.split(",");
+        filtered = filtered.filter(p =>
+            formats.includes(p.content?.format)
         );
     }
 
-    return NextResponse.json({ data: filteredPitches });
+    if (regionsParam) {
+        const region = regionsParam.split(",");
+        filtered = filtered.filter(p =>
+            region.includes(p.content?.location)
+        );
+    }
+
+    return NextResponse.json(filtered);
 }

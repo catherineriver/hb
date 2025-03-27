@@ -30,7 +30,7 @@ export const PitchesFilterProvider = ({ children }: { children: React.ReactNode 
         try {
             const res = await fetch("/api/pitches");
             const data = await res.json();
-            setPitches(data.data);
+            setPitches(data);
         } catch (e) {
             console.error(e);
             setError("Ошибка при загрузке");
@@ -43,16 +43,22 @@ export const PitchesFilterProvider = ({ children }: { children: React.ReactNode 
         try {
             setLoading(true);
             let url = "/api/pitches?";
+            console.log('filters', filters)
             if (filters.formats && filters.formats.length > 0) {
-                url += `formats=${filters.formats.join(",")}&`;
+                url += `format=${filters.formats.join(",")}&`;
             }
             if (filters.topics && filters.topics.length > 0) {
                 url += `topics=${filters.topics.join(",")}&`;
             }
+            if (filters.regions && filters.regions.length > 0) {
+                url += `region=${filters.regions.join(",")}&`;
+            }
             const res = await fetch(url);
             const data = await res.json();
-            setPitches(data.authors);
-            setNotFound(data.authors.length === 0);
+            if (!Array.isArray(data)) throw new Error("Некорректный ответ от сервера");
+            console.log(data)
+            setPitches(data);
+            setNotFound(data.length === 0);
         } catch (e) {
             console.error(e);
             setError("Ошибка при поиске");

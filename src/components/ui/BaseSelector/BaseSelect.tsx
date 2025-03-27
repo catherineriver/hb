@@ -8,26 +8,16 @@ import {
 import {createListCollection} from "@chakra-ui/react";
 import React from "react";
 import { SelectLabel } from "@ark-ui/react";
-import {usePitchesFilter} from "@/context/pitches-context";
 
 interface BaseSelectProps {
     items: { label: string; value: string }[];
     placeholder: string;
-    onValueChange?: (value: string) => void;
+    onValueChange?: (value: string | string[]) => void;
 }
 
 const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChange }) => {
-    const { fetchFilteredPitches } = usePitchesFilter();
     const collection = createListCollection({ items });
     const defaultItem = items[0]?.value || "";
-
-    const handleValueChange = (values: string[] | null) => {
-        const newValues = values ?? [defaultItem];
-        if (onValueChange) {
-            onValueChange(newValues.join(",")); // или другой формат
-        }
-        fetchFilteredPitches({ value: newValues });
-    };
 
     return (
         <SelectRoot
@@ -35,7 +25,10 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ items, placeholder, onValueChan
             size="sm"
             width="320px"
             defaultValue={[defaultItem]}
-            onValueChange={(e) => handleValueChange(e.value)}
+            onValueChange={(e) => {
+                const newValue = e.value;
+                onValueChange?.(newValue);
+            }}
             display="flex"
             flexDirection="row"
             alignItems='center'
