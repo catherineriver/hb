@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {Box, Heading, Text, HStack, Badge, Button, Stack} from "@chakra-ui/react";
+import {Box, Heading, Text, HStack, Badge, Button, Stack, ButtonGroup, IconButton} from "@chakra-ui/react";
+import {FaChevronDown} from "react-icons/fa";
 import PageLayout from "@/components/page-layout";
 import {
     MenuContent,
     MenuItem,
     MenuItemGroup,
     MenuRoot,
-    MenuSeparator,
     MenuTrigger,
 } from "@/components/ui/menu"
 import {Tag} from "@/components/ui/tag";
@@ -39,6 +39,23 @@ const PitchPage = () => {
 
         fetchData();
     }, [id]);
+
+    const updateStatus = async (newStatus: string) => {
+        if (!id) return;
+        try {
+            const res = await fetch(`/api/pitches/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newStatus }),
+            });
+            const result = await res.json();
+            if (result.success) {
+                setPitch(prev => prev ? { ...prev, content: { ...prev.content, status: result.status } } : prev);
+            }
+        } catch (err) {
+            console.error("Ошибка при обновлении статуса:", err);
+        }
+    };
 
     if (loading) return <Text>Загрузка...</Text>;
     if (error) return <Text color="red.500">Ошибка: {error}</Text>;
@@ -121,7 +138,7 @@ const PitchPage = () => {
 
                     {/* Aside block*/}
 
-                    <Box w="100%" maxWidth="428px">
+                    <Box w="100%" maxWidth="358px">
                         <AuthorDetails author={pitch.author} />
 
                         <Stack my={6}>
@@ -136,19 +153,23 @@ const PitchPage = () => {
                         </Stack>
 
                         <MenuRoot>
-                            <MenuTrigger asChild>
-                                <Button variant="outline">Edit</Button>
+                            <MenuTrigger asChild width="100%">
+                                <ButtonGroup size="sm" variant="outline" attached>
+                                    <Button width="90%" border="{borders.input}" px={6} variant="outline">{pitch.content.status}</Button>
+                                    <IconButton variant="outline" border="{borders.input}">
+                                        <FaChevronDown />
+                                    </IconButton>
+                                </ButtonGroup>
                             </MenuTrigger>
-                            <MenuContent>
-                                <MenuItemGroup title="Styles">
-                                    <MenuItem value="bold">Bold</MenuItem>
-                                    <MenuItem value="underline">Underline</MenuItem>
-                                </MenuItemGroup>
-                                <MenuSeparator />
-                                <MenuItemGroup title="Align">
-                                    <MenuItem value="left">Left</MenuItem>
-                                    <MenuItem value="middle">Middle</MenuItem>
-                                    <MenuItem value="right">Right</MenuItem>
+
+                            <MenuContent background="#fff" px={3} py={2}
+                             border="{borders.input}"
+                            >
+                                <MenuItemGroup title="Изменить статус">
+                                    <MenuItem value="draft" onClick={() => updateStatus("draft")}>Черновик</MenuItem>
+                                    <MenuItem value="in_progress" onClick={() => updateStatus("in_progress")}>В работе</MenuItem>
+                                    <MenuItem value="published" onClick={() => updateStatus("published")}>Опубликовано</MenuItem>
+                                    <MenuItem value="archived" onClick={() => updateStatus("archived")}>Архив</MenuItem>
                                 </MenuItemGroup>
                             </MenuContent>
                         </MenuRoot>

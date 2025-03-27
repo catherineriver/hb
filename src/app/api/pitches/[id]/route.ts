@@ -13,3 +13,21 @@ export async function GET(request: Request) {
 
     return NextResponse.json(pitch);
 }
+
+export async function PATCH(request: Request) {
+    const url = new URL(request.url);
+    const id = url.pathname.split("/").pop();
+
+    const body = await request.json();
+    const { status } = body;
+
+    const pitchIndex = mockData.pitches.findIndex((a) => String(a.id) === id);
+
+    if (pitchIndex === -1) {
+        return NextResponse.json({ error: 'Pitch not found' }, { status: 404 });
+    }
+
+    mockData.pitches[pitchIndex].content.status = status;
+
+    return NextResponse.json({ success: true, status });
+}
