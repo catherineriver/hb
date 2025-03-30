@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${primaryFont.className} ${secondaryFont.className}`}>
       <Provider>
           <NewsProvider>
-              {children}
+                {children}
           </NewsProvider>
       </Provider>
       </body>

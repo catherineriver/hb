@@ -16,9 +16,11 @@ import {Tag} from "@/components/ui/tag";
 import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
 import AuthorDetails from "@/components/ui/AuthorDetails/AuthorDetails";
 import {PitchType} from "@/hooks/useMockData";
+import {useCheckSession} from "@/hooks/useCheckSession";
 
 const PitchPage = () => {
     const { id } = useParams();
+    const { isAuthenticated } = useCheckSession();
     const [pitch, setPitch] = useState<PitchType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -37,7 +39,11 @@ const PitchPage = () => {
             }
         };
 
-        fetchData();
+        if (isAuthenticated) {
+            fetchData();
+        } else {
+            setError('not authenticated');
+        }
     }, [id]);
 
     const updateStatus = async (newStatus: string) => {

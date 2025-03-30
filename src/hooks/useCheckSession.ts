@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+export const useCheckSession = () => {
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true)
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
@@ -16,6 +16,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             } = await supabase.auth.getSession();
 
             if (session) {
+                console.log('session', session);
                 setIsAuthenticated(true);
             } else {
                 router.push('/');
@@ -24,10 +25,9 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             setLoading(false);
         };
 
+
         checkSession();
-    }, [router]);
+    }, [supabase])
 
-    if (loading) return null;
-
-    return isAuthenticated ? <>{children}</> : null;
+    return { isAuthenticated, loading }
 }

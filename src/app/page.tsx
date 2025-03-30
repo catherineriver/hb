@@ -89,7 +89,7 @@ const App = () => {
 
                 {/* Правая секция (38.2%) */}
                     {!session ? (
-                        <>
+                        <Flex direction="column" justifyContent='center' alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "100%", md: "38.2%" }}>
                             <Box w="100%" display="flex" justifyContent={{ base: 'flex-end', md: 'center' }}>
                                 <Button
                                     onClick={(e) => {
@@ -114,7 +114,7 @@ const App = () => {
                                     Войти через Google
                                 </Button>
                             </Box>
-                        </>
+                        </Flex>
                     ) : (
                         <Flex direction="column" alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "100%", md: "38.2%" }}>
                             <Button onClick={handleLogout} colorScheme="blue">
