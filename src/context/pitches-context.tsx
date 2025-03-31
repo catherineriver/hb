@@ -43,7 +43,6 @@ export const PitchesFilterProvider = ({ children }: { children: React.ReactNode 
         try {
             setLoading(true);
             let url = "/api/pitches?";
-            console.log('filters', filters)
             if (filters.formats && filters.formats.length > 0) {
                 url += `format=${filters.formats.join(",")}&`;
             }
@@ -56,12 +55,10 @@ export const PitchesFilterProvider = ({ children }: { children: React.ReactNode 
             const res = await fetch(url);
             const data = await res.json();
             if (!Array.isArray(data)) throw new Error("Некорректный ответ от сервера");
-            console.log(data)
             setPitches(data);
             setNotFound(data.length === 0);
-        } catch (e) {
-            console.error(e);
-            setError("Ошибка при поиске");
+        } catch (err) {
+            setError((err as Error).message);
         } finally {
             setLoading(false);
         }

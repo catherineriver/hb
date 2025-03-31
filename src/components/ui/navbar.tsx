@@ -10,7 +10,7 @@ import { Session } from "@supabase/supabase-js";
 export const navigationData = [
     { href: "/authors", label: "Авторы" },
     { href: "/pitches", label: "Питчи" },
-    { href: "/settings", label: "Ваша организация" },
+    { href: "/organisation", label: "Ваша организация" },
 ];
 
 export default function Navbar(props: { inline?: boolean }) {

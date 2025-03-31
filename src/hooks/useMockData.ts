@@ -48,6 +48,14 @@ export interface AuthorType {
     },
 }
 
+export interface OrganisationType {
+    avatar_url: string,
+    id: number,
+    name: string,
+    description: string,
+    pitches: PitchType[],
+}
+
 export interface MockData {
     formats: string[];
     tags: string[];

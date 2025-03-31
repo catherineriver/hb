@@ -37,6 +37,7 @@ const App = () => {
     }, [router]);
 
     const handleLogin = async () => {
+        console.log(location.origin)
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {

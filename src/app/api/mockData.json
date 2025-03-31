@@ -853,6 +853,62 @@
           }
         }
       ]
+    },
+    {
+      "id": "2",
+      "name": "Ваша классная организация",
+      "description": "Вдали от всех забот и суеты, в безмолвии ночи, мысль рождается свободной...",
+      "avatar_url": "https://avatar.iran.liara.run/public",
+      "authors": [
+        { "id": "4",
+          "name": "Фёдор Лисович",
+          "avatar_url": "https://avatar.iran.liara.run/public",
+          "stats": {
+            "completed_posts": 10,
+            "total_posts": 23
+          }
+        },
+        { "id": "5",
+          "name": "Гриша Полоскун",
+          "avatar_url": "https://avatar.iran.liara.run/public",
+          "stats": {
+            "completed_posts": 15,
+            "total_posts": 28
+          }
+        },
+        {
+          "id": "1",
+          "name": "Маркиз Холмс",
+          "avatar_url": "https://avatar.iran.liara.run/public",
+          "stats": {
+            "completed_posts": 20,
+            "total_posts": 30
+          }
+        }
+      ],
+      "pitches": [
+        {
+          "id": "9007199254740924",
+          "content": {
+            "title": "Почему ИИ не заменит журналиста (пока)",
+            "key_description": "Разбираемся, чем сильны и слабы алгоритмы."
+          }
+        },
+        {
+          "id": "9007199254740993",
+          "content": {
+            "title": "Архитектор вдохновился бобрами и построил дом без гвоздей",
+            "key_description": "Дом полностью собран из дерева без использования гвоздей и клея."
+          }
+        },
+        {
+          "id": "9007199254740993",
+          "content": {
+            "title": "Архитектор вдохновился бобрами и построил дом без гвоздей",
+            "key_description": "Дом полностью собран из дерева без использования гвоздей и клея."
+          }
+        }
+      ]
     }
   ]
 }
