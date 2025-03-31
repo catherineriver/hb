@@ -44,7 +44,7 @@ const PitchPage = () => {
         } else {
             setError('not authenticated');
         }
-    }, [id]);
+    }, [id, isAuthenticated]);
 
     const updateStatus = async (newStatus: string) => {
         if (!id) return;

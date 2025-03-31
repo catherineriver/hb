@@ -1,13 +1,10 @@
 'use client';
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+export default function CallbackPage() {
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         const checkSession = async () => {
@@ -16,18 +13,14 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             } = await supabase.auth.getSession();
 
             if (session) {
-                setIsAuthenticated(true);
-            } else {
                 router.push('/');
+            } else {
+                router.push('/access-restricted');
             }
-
-            setLoading(false);
         };
 
         checkSession();
     }, [router]);
 
-    if (loading) return null;
-
-    return isAuthenticated ? <>{children}</> : null;
+    return null;
 }

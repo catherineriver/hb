@@ -27,7 +27,7 @@ export const useCheckSession = () => {
 
 
         checkSession();
-    }, [supabase])
+    }, [router])
 
     return { isAuthenticated, loading }
 }
