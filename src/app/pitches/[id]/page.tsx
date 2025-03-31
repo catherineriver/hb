@@ -20,7 +20,6 @@ import {useCheckSession} from "@/hooks/useCheckSession";
 
 const PitchPage = () => {
     const { id } = useParams();
-    const { isAuthenticated } = useCheckSession();
     const [pitch, setPitch] = useState<PitchType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,12 +38,8 @@ const PitchPage = () => {
             }
         };
 
-        if (isAuthenticated) {
-            fetchData();
-        } else {
-            setError('not authenticated');
-        }
-    }, [id, isAuthenticated]);
+        fetchData();
+    }, [id]);
 
     const updateStatus = async (newStatus: string) => {
         if (!id) return;
