@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Flex, Heading, Link, Button } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import { supabase } from '@/lib/supabaseClient';
@@ -34,7 +34,7 @@ const App = () => {
         return () => {
             listener.subscription.unsubscribe();
         };
-    }, []);
+    }, [router]);
 
     const handleLogin = async () => {
         const { error } = await supabase.auth.signInWithOAuth({
@@ -47,11 +47,6 @@ const App = () => {
         if (error) {
             router.push('/access-restricted');
         }
-    };
-
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
-        setSession(null);
     };
 
     if (!authChecked) return null;
