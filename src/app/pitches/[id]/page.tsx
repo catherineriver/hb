@@ -16,7 +16,6 @@ import {Tag} from "@/components/ui/tag";
 import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
 import AuthorDetails from "@/components/ui/AuthorDetails/AuthorDetails";
 import {PitchType} from "@/hooks/useMockData";
-import {useCheckSession} from "@/hooks/useCheckSession";
 
 const PitchPage = () => {
     const { id } = useParams();
