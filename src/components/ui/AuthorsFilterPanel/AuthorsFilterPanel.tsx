@@ -3,20 +3,18 @@ import {
     Input,
     Checkbox,
     Field,
-    Select,
-    Portal,
     Button,
     Flex,
     CheckboxGroup,
     Fieldset,
     For,
-    createListCollection,
     VStack
 } from "@chakra-ui/react";
-import { useState} from "react";
+import React, { useState} from "react";
 import { useEffect } from "react";
 import {useAuthorsFilter} from "@/context/authors-context";
 import {useDebouncedValue} from "@/hooks/useDebouncedValue";
+import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
 
 const formatOptions = [
     { value: "investigation", label: "Расследование" },
@@ -39,29 +37,25 @@ const topicOptions = [
     { value: "conflict", label: "Конфликты" },
 ];
 
-const russianRegions = createListCollection({
-    items: [
-        { value: "moscow", label: "Москва" },
-        { value: "spb", label: "Санкт-Петербург" },
-        { value: "kazan", label: "Казань" },
-        { value: "yekaterinburg", label: "Екатеринбург" },
-        { value: "novosibirsk", label: "Новосибирск" },
-        { value: "nizhny_novgorod", label: "Нижний Новгород" },
-        { value: "rostov", label: "Ростов-на-Дону" },
-        { value: "krasnoyarsk", label: "Красноярск" },
-        { value: "irkutsk", label: "Иркутск" },
-        { value: "vladivostok", label: "Владивосток" },
-        { value: "samara", label: "Самара" },
-        { value: "ufa", label: "Уфа" },
-        { value: "perm", label: "Пермь" },
-        { value: "volgograd", label: "Волгоград" },
-        { value: "chelyabinsk", label: "Челябинск" },
-    ],
-    itemToString: (item) => item.label,
-    itemToValue: (item) => item.value,
-});
+const russianRegions = [
+    { value: "moscow", label: "Москва" },
+    { value: "spb", label: "Санкт-Петербург" },
+    { value: "kazan", label: "Казань" },
+    { value: "yekaterinburg", label: "Екатеринбург" },
+    { value: "novosibirsk", label: "Новосибирск" },
+    { value: "nizhny_novgorod", label: "Нижний Новгород" },
+    { value: "rostov", label: "Ростов-на-Дону" },
+    { value: "krasnoyarsk", label: "Красноярск" },
+    { value: "irkutsk", label: "Иркутск" },
+    { value: "vladivostok", label: "Владивосток" },
+    { value: "samara", label: "Самара" },
+    { value: "ufa", label: "Уфа" },
+    { value: "perm", label: "Пермь" },
+    { value: "volgograd", label: "Волгоград" },
+    { value: "chelyabinsk", label: "Челябинск" },
+];
 
-const SideFilterPanel = () => {
+const AuthorsFilterPanel = () => {
     const { fetchSearchedAuthors } = useAuthorsFilter();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -72,12 +66,9 @@ const SideFilterPanel = () => {
     const [topics, setTopics] = useState<string[]>([]);
 
     const handleClearFilters = () => {
-        setSearchQuery("");
         setWithExperience(false);
         setReadyToTravel(false);
         setReadyToUrgent(false);
-        setFormats([]);
-        setTopics([]);
     };
 
     const debouncedSearch = useDebouncedValue(searchQuery, 600);
@@ -91,13 +82,13 @@ const SideFilterPanel = () => {
                 formats,
                 topics,
             };
-            await fetchSearchedAuthors(debouncedSearch, filtersObj);
+            await fetchSearchedAuthors( filtersObj, debouncedSearch);
         };
         fetchFilters();
     }, [debouncedSearch, withExperience, readyToTravel, readyToUrgent, formats, topics, fetchSearchedAuthors]);
 
     return (
-            <Box borderRight="1px solid #ddd" p={{ base: 2, md: 3 }} bg="white" w='100%'>
+            <Box p={{ base: 2, md: 3 }} bg="white" w='100%'>
                 <Button
                     display={{ base: "flex", md: "none" }}
                     onClick={() => setIsOpen(!isOpen)}
@@ -115,13 +106,12 @@ const SideFilterPanel = () => {
                     wrap="wrap"
                     display={{ base: isOpen ? "flex" : "none", md: "flex" }}
                     mt={{ base: 2, md: 0 }}
-                    overflowY="scroll"
                 >
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Field.Root required>
                             <Field.Label>
                                 Имя/псевдоним
-                                {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
+                                {searchQuery !== '' && <Button size="xs" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
                             </Field.Label>
                             <Input
                                 border="{borders.input}"
@@ -132,21 +122,17 @@ const SideFilterPanel = () => {
                                 placeholder="Имя"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                mb={4}
                             />
                         </Field.Root>
                     </Box>
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <VStack gap={4} alignItems="start">
-                            {(searchQuery || readyToUrgent || readyToTravel || withExperience || formats.length > 0 || topics.length > 0) &&
-                                <Button size="xs" color="#ddd" variant="ghost" onClick={handleClearFilters}>Очистить</Button>}
                         <Checkbox.Root
                             checked={readyToUrgent}
                             onCheckedChange={(e) => setReadyToUrgent(!!e.checked)}
                         >
                             <Checkbox.HiddenInput />
-
                             <Checkbox.Control
                                 css={{
                                     '&[data-state="unchecked"]': {
@@ -231,6 +217,7 @@ const SideFilterPanel = () => {
                             </Checkbox.Control>
                             <Checkbox.Label>✅ Опыт с High Beam</Checkbox.Label>
                         </Checkbox.Root>
+                        {(readyToUrgent || readyToTravel || withExperience) && <Button size="xs" variant="ghost" onClick={handleClearFilters}>Очистить</Button>}
                         </VStack>
                     </Box>
 
@@ -239,8 +226,7 @@ const SideFilterPanel = () => {
                         <Fieldset.Root>
                             <CheckboxGroup name="formats" value={formats} onValueChange={(values: string[]) => setFormats(values)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
-                                    Выберите формат
-                                    {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
+                                    Предпочитает формат
                                 </Fieldset.Legend>
                                 <Fieldset.Content>
                                     <For each={formatOptions}>
@@ -275,6 +261,7 @@ const SideFilterPanel = () => {
                                     </For>
                                 </Fieldset.Content>
                             </CheckboxGroup>
+                            {formats.length > 0 && <Button size="xs" variant="ghost" onClick={() => setFormats([])}>Очистить</Button>}
                         </Fieldset.Root>
                     </Box>
 
@@ -282,8 +269,7 @@ const SideFilterPanel = () => {
                         <Fieldset.Root>
                             <CheckboxGroup name="topics" value={topics} onValueChange={(values: string[]) => setTopics(values)}>
                                 <Fieldset.Legend fontSize="sm" mb="2">
-                                    Выберите тему
-                                    {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
+                                    Пишет на тему
                                 </Fieldset.Legend>
                                 <Fieldset.Content>
                                     <For each={topicOptions}>
@@ -317,50 +303,16 @@ const SideFilterPanel = () => {
                                     </For>
                                 </Fieldset.Content>
                             </CheckboxGroup>
+                            {topics.length > 0 && <Button size="xs" variant="ghost" onClick={() => setTopics([])}>Очистить</Button>}
                         </Fieldset.Root>
                     </Box>
 
-                    <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
-                        <Select.Root
-                            collection={russianRegions}
-                            size="sm"
-                            multiple
-                        >
-                            <Select.HiddenSelect />
-                            <Select.Label>Регион</Select.Label>
-                            {searchQuery !== '' && <Button size="xs" color="#ddd" variant="ghost" onClick={() => setSearchQuery("")}>Очистить</Button>}
-                            <Select.Control>
-                                <Select.Trigger
-                                    focusRing="outside"
-                                    border="{borders.input}"
-                                    color="{colors.lightGray}"
-                                    fontSize="xs"
-                                    px={2}
-                                    backgroundColor="white"
-                                >
-                                    <Select.ValueText placeholder="Выберите регион" />
-                                </Select.Trigger>
-                                <Select.IndicatorGroup>
-                                    <Select.Indicator />
-                                </Select.IndicatorGroup>
-                            </Select.Control>
-                            <Portal>
-                                <Select.Positioner>
-                                    <Select.Content background="#fff" w="100%">
-                                        {russianRegions.items.map((item) => (
-                                            <Select.Item item={item} key={item.value}>
-                                                {item.label}
-                                                <Select.ItemIndicator />
-                                            </Select.Item>
-                                        ))}
-                                    </Select.Content>
-                                </Select.Positioner>
-                            </Portal>
-                        </Select.Root>
+                    <Box background="{colors.gray}" p={4} borderRadius={2} w="100%" mb={4}>
+                        <BaseSelect items={russianRegions} label='Регион' placeholder='Пишет о регионе' onValueChange={(value) => fetchSearchedAuthors({ regions: value })} />
                     </Box>
                 </Flex>
             </Box>
     );
 };
 
-export default SideFilterPanel;
+export default AuthorsFilterPanel;

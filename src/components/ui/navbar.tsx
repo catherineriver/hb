@@ -1,6 +1,6 @@
 "use client";
 
-import {Box, Button, Link as ChakraLink, Stack} from "@chakra-ui/react";
+import {Box, Link as ChakraLink, Stack} from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -41,9 +41,6 @@ export default function Navbar(props: { inline?: boolean }) {
     return (
         <Box as="nav" p={4}>
             <Stack direction={props.inline ? "row" : "column"} gap={5}>
-                <Button onClick={handleLogout} colorScheme="blue">
-                    выйти
-                </Button>
                 {navigationData
                     .filter(({ href }) => href !== pathname)
                     .map(({ href, label }) => (
@@ -58,6 +55,9 @@ export default function Navbar(props: { inline?: boolean }) {
                             {label}
                         </ChakraLink>
                     ))}
+                <ChakraLink onClick={handleLogout} colorScheme="blue">
+                    выйти
+                </ChakraLink>
             </Stack>
         </Box>
     );

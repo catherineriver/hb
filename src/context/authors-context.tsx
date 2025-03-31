@@ -1,7 +1,7 @@
 import {createContext, useContext, useState, useCallback, useMemo} from "react";
 import {AuthorType} from "@/hooks/useMockData";
 
-interface Filters {
+interface AuthorsFilter {
     search?: string;
     format?: string;
     tags?: string[];
@@ -12,24 +12,24 @@ interface Filters {
     experience?: boolean;
 }
 
-interface FilterContextProps {
-    filters: Filters;
-    setFilters: (filters: Partial<Filters>) => void;
+interface AuthorsFilterContextProps {
+    filters: AuthorsFilter;
+    setFilters: (filters: Partial<AuthorsFilter>) => void;
     authors: AuthorType[];
     loading: boolean;
     error: string | null;
-    fetchSearchedAuthors: (query: string, filters: Record<string, any>) => Promise<void>;
+    fetchSearchedAuthors: (filters: Record<string, any>, query?: string ) => Promise<void>;
     fetchInitialAuthors: () => Promise<void>;
     notFound: boolean;
 }
 
-const AuthorsContext = createContext<FilterContextProps | undefined>(undefined);
+const AuthorsFilterContext = createContext<AuthorsFilterContextProps | undefined>(undefined);
 
-export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthorsFilterProvider = ({ children }: { children: React.ReactNode }) => {
     const [authors, setAuthors] = useState<AuthorType[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [filters, setFilters] = useState<Filters>({});
+    const [filters, setFilters] = useState<AuthorsFilter>({});
     const [notFound, setNotFound] = useState(false);
 
     const fetchInitialAuthors = useCallback(async () => {
@@ -46,7 +46,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, []);
 
-    const fetchSearchedAuthors = useCallback(async (query: string = "", filters: Record<string, any> = {}) => {
+    const fetchSearchedAuthors = useCallback(async (filters: Record<string, any> = {}, query: string = "") => {
         try {
             setLoading(true);
             let url = "/api/authors?";
@@ -94,19 +94,19 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     ]);
 
     return (
-        <AuthorsContext.Provider value={contextValue}>
+        <AuthorsFilterContext.Provider value={contextValue}>
             {children}
-        </AuthorsContext.Provider>
+        </AuthorsFilterContext.Provider>
     );
 };
 
 
 export const useAuthorsFilter = () => {
-    const context = useContext(AuthorsContext);
+    const context = useContext(AuthorsFilterContext);
     if (!context) {
-        throw new Error("useAuthorsFilter must be used within an FilterProvider");
+        throw new Error("useAuthorsFilter must be used within an AuthorsFilterProvider");
     }
-    return context as FilterContextProps;
+    return context as AuthorsFilterContextProps;
 };
 
-export type { Filters };
+export type { AuthorsFilter };

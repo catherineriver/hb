@@ -8,16 +8,17 @@ import {
     SimpleGrid,
     Spinner
 } from "@chakra-ui/react";
-import MainLayout from "@/components/main-layout";
 import PitchCard from "@/components/ui/pitch-card";
-import {PitchesFilterProvider, usePitchesFilter} from "@/context/pitches-context";
+import { usePitchesFilter} from "@/context/pitches-context";
 import {PitchType} from "@/hooks/useMockData";
+import FiltersLayout from "@/components/filters-layout";
+import PitchesFilterPanel from "@/components/ui/PitchesFilterPanel/PitchesFilterPanel";
 
 const PitchesPage = () => {
     return (
-        <PitchesFilterProvider>
+        <FiltersLayout filterPanel={<PitchesFilterPanel />}>
             <PitchesContent />
-        </PitchesFilterProvider>
+        </FiltersLayout>
     );
 };
 
@@ -35,7 +36,6 @@ const PitchesContent = () => {
     };
 
     return (
-        <MainLayout withTopPanel>
             <Flex height="100%">
                 <Box flex={2} overflowY="auto">
                     {loading ? (
@@ -70,7 +70,6 @@ const PitchesContent = () => {
                     )}
                 </Box>
             </Flex>
-        </MainLayout>
     );
 };
 
