@@ -1,10 +1,11 @@
-import {Button, Heading, HStack, Text, VStack, Show, LinkBox, LinkOverlay} from "@chakra-ui/react";
+import {Button, Heading, HStack, Text, VStack, Show, LinkBox, LinkOverlay, Badge} from "@chakra-ui/react";
 import React from "react";
 import { PitchType } from "@/hooks/useMockData";
 import {FaPaperPlane} from "react-icons/fa";
 import AuthorLink from "@/components/ui/author-link";;
 import Overlay from "@/components/ui/Overlay/Overlay";
 import NextLink from "next/link";
+import { getStatusColor } from "@/utils/getStatusColor";
 
 interface CardProps {
     item: PitchType;
@@ -44,6 +45,9 @@ const PitchCard = ({ item, isHighlighted, isPreviewCard }: CardProps) => {
             w='100%'
         >
             <VStack align="start" gap={1} filter={potsBooked ? 'opacity(0.5)' : 'none'}>
+                {!potsBooked && post.status &&<Badge variant="solid" px={2} py={1} colorScheme={getStatusColor(post.status)}>
+                    {post.status}
+                </Badge>}
                 <Heading fontSize="18px" lineHeight="24px" textTransform="uppercase" mb={2}>
                     <LinkOverlay as={NextLink} href={`/pitches/${item.id}`}>
                         {post.title}

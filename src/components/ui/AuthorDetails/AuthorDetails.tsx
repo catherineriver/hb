@@ -1,4 +1,4 @@
-import {VStack, HStack, Text, Button, Heading} from "@chakra-ui/react";
+import {VStack, HStack, Text, Button} from "@chakra-ui/react";
 import AuthorLink from "@/components/ui/author-link";
 import React from "react";
 import {AuthorType} from "@/hooks/useMockData";
@@ -33,16 +33,16 @@ const AuthorDetails: React.FC<AuthorDetailsProps> = ({author}) => {
         <VStack gap={4} p={4} bg="blue.100" borderRadius="md" align="center">
             <VStack align="start" gap={2} w="100%">
                 <HStack  w="100%">
-                    <AuthorLink variant='withAvatar' author={author} />
+                    <AuthorLink variant='withAvatar' author={author} size='medium' />
                 </HStack>
 
                 <HStack justify="space-between" w="100%">
-                    <Heading fontSize="sm">🗂 Законченых материалов:</Heading>
+                    <Text fontSize="sm">🗂 Законченых материалов:</Text>
                     <Text fontSize="sm" color="gray.600">{author.stats.completed_posts ? author.stats.completed_posts : '-'}</Text>
                 </HStack>
 
                 <HStack justify="space-between" w="100%">
-                    <Heading fontSize="sm">📍Регион/город:</Heading>
+                    <Text fontSize="sm">📍Регион/город:</Text>
                     <Text fontSize="sm" color="gray.600">{author.location ? author.location : '-'}</Text>
                 </HStack>
             </VStack>

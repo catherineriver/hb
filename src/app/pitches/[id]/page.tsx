@@ -57,10 +57,6 @@ const PitchPage = () => {
         }
     };
 
-    if (loading) return <Text>Загрузка...</Text>;
-    if (error) return <Text color="red.500">Ошибка: {error}</Text>;
-    if (!pitch) return <Text textAlign="center">Питч не найден</Text>;
-
     return (
         <PageLayout>
             <HStack
@@ -71,149 +67,154 @@ const PitchPage = () => {
                 flexDirection={{ base: "column", md: "row" }}
                 p={{ base: 4, md: 0 }}
             >
-                    <Box
-                        width="100%"
-                        maxWidth={{ base: "none", md: "750px" }}
-                        maxHeight={{ base: "none", md: "85dvh" }}
-                        overflowY={{ base: "auto", md: "scroll" }}
-                        paddingRight="8px"
-
-                    >
-                        <Badge variant="solid" paddingX={2} paddingY={1} background="green" color="white">
-                            {pitch.content.status}
-                        </Badge>
-                        <HStack align="center" justify="space-between" gap={3}>
-                            <Heading size="4xl" mb={4}>
-                                {pitch.content.title}
-                            </Heading>
-                        </HStack>
-
-                        <Box display={{ base: "block", md: "none" }}>
-                            <PitchDetails
-                                format={pitch.content.format}
-                                region={pitch.content.location}
-                                deadline={pitch.content.deadline}
-                                fee={pitch.content.budget}
-
-                            />
-                        </Box>
-
-                        <Heading>Тема</Heading>
-                        {[...Array(1)].map((_, index) => (
-                            <Text key={index} mt={4}>{pitch.content.key_description}</Text>
-                        ))}
-
-                        <Stack my={6}>
+                {loading ? null : !pitch ? (
+                    <Text textAlign="center">Питч не найден</Text>
+                ) : error ? (
+                    <Text color="red.500">Ошибка: {error}</Text>
+                ) : (
+                        <>
                             <Box
-                                w="100%"
-                                h="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left bottom"
-                                backgroundRepeat= "repeat-x"
-                                backgroundSize= "4px 100%"
-                            ></Box>
-                        </Stack>
-
-                        <Heading>Предварительный план</Heading>
-                        {[...Array(5)].map((_, index) => (
-                            <Text key={index} mt={4}>{pitch.content.full}</Text>
-                        ))}
-
-                        <Stack my={6}>
-                            <Box
-                                w="100%"
-                                h="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left bottom"
-                                backgroundRepeat= "repeat-x"
-                                backgroundSize= "4px 100%"
-                            ></Box>
-                        </Stack>
-
-                        <Heading>Сюжет</Heading>
-                        {[...Array(5)].map((_, index) => (
-                            <Text key={index} mt={4}>{pitch.content.plot}</Text>
-                        ))}
-                    </Box>
-
-                    {/* Aside block*/}
-
-                    <Box w="100%" maxWidth="358px">
-                        <AuthorDetails author={pitch.author} />
-
-                        <Stack my={6}>
-                            <Box
-                                w="100%"
-                                h="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left bottom"
-                                backgroundRepeat= "repeat-x"
-                                backgroundSize= "4px 100%"
-                            ></Box>
-                        </Stack>
-
-                        <MenuRoot>
-                            <MenuTrigger asChild width="100%">
-                                <ButtonGroup size="sm" variant="outline" attached>
-                                    <Button width="90%" border="{borders.input}" px={6} variant="outline">{pitch.content.status}</Button>
-                                    <IconButton variant="outline" border="{borders.input}">
-                                        <FaChevronDown />
-                                    </IconButton>
-                                </ButtonGroup>
-                            </MenuTrigger>
-
-                            <MenuContent background="#fff" px={3} py={2}
-                             border="{borders.input}"
+                                width="100%"
+                                maxWidth={{ base: "none", md: "750px" }}
+                                maxHeight={{ base: "none", md: "85dvh" }}
+                                overflowY={{ base: "auto", md: "scroll" }}
+                                paddingRight="8px"
                             >
-                                <MenuItemGroup title="Изменить статус">
-                                    <MenuItem value="draft" onClick={() => updateStatus("draft")}>Черновик</MenuItem>
-                                    <MenuItem value="in_progress" onClick={() => updateStatus("in_progress")}>В работе</MenuItem>
-                                    <MenuItem value="published" onClick={() => updateStatus("published")}>Опубликовано</MenuItem>
-                                    <MenuItem value="archived" onClick={() => updateStatus("archived")}>Архив</MenuItem>
-                                </MenuItemGroup>
-                            </MenuContent>
-                        </MenuRoot>
+                                <Badge variant="solid" paddingX={2} paddingY={1} background="green" color="white">
+                                    {pitch.content.status}
+                                </Badge>
+                                <HStack align="center" justify="space-between" gap={3}>
+                                    <Heading size="4xl" mb={4}>
+                                        {pitch.content.title}
+                                    </Heading>
+                                </HStack>
 
-                        <Stack my={6}>
-                            <Box
-                                w="100%"
-                                h="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left bottom"
-                                backgroundRepeat= "repeat-x"
-                                backgroundSize= "4px 100%"
-                            ></Box>
-                        </Stack>
+                                <Box display={{ base: "block", md: "none" }}>
+                                    <PitchDetails
+                                        format={pitch.content.format}
+                                        region={pitch.content.location}
+                                        deadline={pitch.content.deadline}
+                                        fee={pitch.content.budget}
+                                    />
+                                </Box>
 
-                        <Box display={{ base: "none", md: "block" }}>
-                            <PitchDetails
-                                format={pitch.content.format}
-                                region={pitch.content.location}
-                                deadline={pitch.content.deadline}
-                                fee={pitch.content.budget}
-                            />
-                        </Box>
+                                <Heading>Тема</Heading>
+                                {[...Array(1)].map((_, index) => (
+                                    <Text key={index} mt={4}>{pitch.content.key_description}</Text>
+                                ))}
 
-                        <Stack my={6}>
-                            <Box
-                                w="100%"
-                                h="2px"
-                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition= "left bottom"
-                                backgroundRepeat= "repeat-x"
-                                backgroundSize= "4px 100%"
-                            ></Box>
-                        </Stack>
+                                <Stack my={6}>
+                                    <Box
+                                        w="100%"
+                                        h="2px"
+                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                        backgroundPosition= "left bottom"
+                                        backgroundRepeat= "repeat-x"
+                                        backgroundSize= "4px 100%"
+                                    ></Box>
+                                </Stack>
 
-                        <HStack gap={2} mt={2}>
-                            {pitch.content.tags.map((tag, i) => (
-                                <Tag key={i} variant="outline" paddingY={1} paddingX={2} size="sm">
-                                    {tag}
-                                </Tag>
-                            ))}
-                        </HStack>
-                    </Box>
-                </HStack>
+                                <Heading>Предварительный план</Heading>
+                                {[...Array(5)].map((_, index) => (
+                                    <Text key={index} mt={4}>{pitch.content.full}</Text>
+                                ))}
+
+                                <Stack my={6}>
+                                    <Box
+                                        w="100%"
+                                        h="2px"
+                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                        backgroundPosition= "left bottom"
+                                        backgroundRepeat= "repeat-x"
+                                        backgroundSize= "4px 100%"
+                                    ></Box>
+                                </Stack>
+
+                                <Heading>Сюжет</Heading>
+                                {[...Array(5)].map((_, index) => (
+                                    <Text key={index} mt={4}>{pitch.content.plot}</Text>
+                                ))}
+                            </Box>
+                            {/* Aside block*/}
+                            <Box w="100%" maxWidth="358px">
+                                <AuthorDetails author={pitch.author} />
+
+                                <Stack my={6}>
+                                    <Box
+                                        w="100%"
+                                        h="2px"
+                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                        backgroundPosition= "left bottom"
+                                        backgroundRepeat= "repeat-x"
+                                        backgroundSize= "4px 100%"
+                                    ></Box>
+                                </Stack>
+
+                                <MenuRoot>
+                                    <MenuTrigger asChild width="100%">
+                                        <ButtonGroup size="sm" variant="outline" attached>
+                                            <Button width="90%" border="{borders.input}" px={6} variant="outline">{pitch.content.status}</Button>
+                                            <IconButton variant="outline" border="{borders.input}">
+                                                <FaChevronDown />
+                                            </IconButton>
+                                        </ButtonGroup>
+                                    </MenuTrigger>
+
+                                    <MenuContent background="#fff" px={3} py={2}
+                                                 border="{borders.input}"
+                                    >
+                                        <MenuItemGroup title="Изменить статус">
+                                            <MenuItem value="draft" onClick={() => updateStatus("draft")}>Черновик</MenuItem>
+                                            <MenuItem value="in_progress" onClick={() => updateStatus("in_progress")}>В работе</MenuItem>
+                                            <MenuItem value="published" onClick={() => updateStatus("published")}>Опубликовано</MenuItem>
+                                            <MenuItem value="archived" onClick={() => updateStatus("archived")}>Архив</MenuItem>
+                                        </MenuItemGroup>
+                                    </MenuContent>
+                                </MenuRoot>
+
+                                <Stack my={6}>
+                                    <Box
+                                        w="100%"
+                                        h="2px"
+                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                        backgroundPosition= "left bottom"
+                                        backgroundRepeat= "repeat-x"
+                                        backgroundSize= "4px 100%"
+                                    ></Box>
+                                </Stack>
+
+                                <Box display={{ base: "none", md: "block" }}>
+                                    <PitchDetails
+                                        format={pitch.content.format}
+                                        region={pitch.content.location}
+                                        deadline={pitch.content.deadline}
+                                        fee={pitch.content.budget}
+                                    />
+                                </Box>
+
+                                <Stack my={6}>
+                                    <Box
+                                        w="100%"
+                                        h="2px"
+                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                        backgroundPosition= "left bottom"
+                                        backgroundRepeat= "repeat-x"
+                                        backgroundSize= "4px 100%"
+                                    ></Box>
+                                </Stack>
+
+                                <HStack gap={2} mt={2}>
+                                    {pitch.content.tags.map((tag, i) => (
+                                        <Tag key={i} variant="outline" paddingY={1} paddingX={2} size="sm">
+                                            {tag}
+                                        </Tag>
+                                    ))}
+                                </HStack>
+                            </Box>
+                        </>
+                    )
+                }
+            </HStack>
         </PageLayout>
     );
 };
