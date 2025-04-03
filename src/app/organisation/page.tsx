@@ -7,6 +7,7 @@ import {Avatar} from "@/components/ui/avatar";
 import PitchCard from "@/components/ui/pitch-card";
 import PageLayout from "@/components/page-layout";
 import {OrganisationType} from "@/hooks/useMockData";
+import AuthorLink from "@/components/ui/author-link";
 
 export default function Organisation() {
     // const { organisationId } = useParams();
@@ -67,6 +68,31 @@ export default function Organisation() {
                         ></Box>
                     </Stack>
 
+                    <VStack align="start" w="100%">
+                        <Heading size="xl" mb="20px">Авторы ({organisation.authors.length}):</Heading>
+                        <HStack w="100%">
+                        {organisation.authors.length > 0 ? (
+                            organisation.authors.map((author) => (
+                                <AuthorLink variant='onlyAvatar' author={author} key={author.id}/>
+                            ))
+                        ) : (
+                            <Text>Пока ни с кем не работали.</Text>
+                        )}
+                        </HStack>
+                    </VStack>
+
+                    {/* Разделитель */}
+                    <Stack my={6} w="100%">
+                        <Box
+                            w="100%"
+                            h="2px"
+                            backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                            backgroundPosition= "left bottom"
+                            backgroundRepeat= "repeat-x"
+                            backgroundSize= "4px 100%"
+                        ></Box>
+                    </Stack>
+
                     {/* Список открытых питчей */}
                     <VStack align="start" w="100%">
                         <Heading size="xl" mb="20px">Открытые питчи:</Heading>
@@ -75,7 +101,7 @@ export default function Organisation() {
                                 <PitchCard key={index} item={pitch} isPreviewCard={true} isHighlighted={isHighlighted(index)} />
                             ))
                         ) : (
-                            <Text>У этого автора пока нет питчей.</Text>
+                            <Text>Пока нет открытых питчей.</Text>
                         )}
                     </VStack>
                 </VStack>

@@ -6,6 +6,7 @@ export async function GET(request: Request) {
     const topicsParam = searchParams.get("topics");
     const formatsParam = searchParams.get("format");
     const regionsParam = searchParams.get("region");
+    const statusParams = searchParams.get("status");
 
     let filtered = mockData.pitches;
 
@@ -27,6 +28,13 @@ export async function GET(request: Request) {
         const region = regionsParam.split(",");
         filtered = filtered.filter(p =>
             region.includes(p.content?.location)
+        );
+    }
+
+    if (statusParams) {
+        const status = statusParams.split(",");
+        filtered = filtered.filter(p =>
+            status.includes(p.content?.status)
         );
     }
 

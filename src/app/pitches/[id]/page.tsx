@@ -16,12 +16,16 @@ import {Tag} from "@/components/ui/tag";
 import PitchDetails from "@/components/ui/PitchDetails/PitchDetails";
 import AuthorDetails from "@/components/ui/AuthorDetails/AuthorDetails";
 import {PitchType} from "@/hooks/useMockData";
+import {useManagerContext} from "@/context/mock-context";
+import {getStatusProps} from "@/utils/getStatusProps";
 
 const PitchPage = () => {
+    const { isManager } = useManagerContext();
     const { id } = useParams();
     const [pitch, setPitch] = useState<PitchType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { color, label } = getStatusProps(pitch?.content?.status);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -80,9 +84,11 @@ const PitchPage = () => {
                                 overflowY={{ base: "auto", md: "scroll" }}
                                 paddingRight="8px"
                             >
-                                <Badge variant="solid" paddingX={2} paddingY={1} background="green" color="white">
-                                    {pitch.content.status}
-                                </Badge>
+                                {isManager &&
+                                    <Badge size="xs" variant="solid" px={2} py={1} background={color} color="#fff">
+                                        {label}
+                                    </Badge>
+                                }
                                 <HStack align="center" justify="space-between" gap={3}>
                                     <Heading size="4xl" mb={4}>
                                         {pitch.content.title}
@@ -150,38 +156,44 @@ const PitchPage = () => {
                                     ></Box>
                                 </Stack>
 
-                                <MenuRoot>
-                                    <MenuTrigger asChild width="100%">
-                                        <ButtonGroup size="sm" variant="outline" attached>
-                                            <Button width="90%" border="{borders.input}" px={6} variant="outline">{pitch.content.status}</Button>
-                                            <IconButton variant="outline" border="{borders.input}">
-                                                <FaChevronDown />
-                                            </IconButton>
-                                        </ButtonGroup>
-                                    </MenuTrigger>
+                                {isManager &&
+                                    <>
+                                        <MenuRoot>
+                                            <MenuTrigger asChild width="100%">
+                                                <ButtonGroup size="sm" variant="outline" attached>
+                                                    <Button width="90%" border="{borders.input}" px={6} variant="outline">{pitch.content.status}</Button>
+                                                    <IconButton variant="outline" border="{borders.input}">
+                                                        <FaChevronDown />
+                                                    </IconButton>
+                                                </ButtonGroup>
+                                            </MenuTrigger>
 
-                                    <MenuContent background="#fff" px={3} py={2}
-                                                 border="{borders.input}"
-                                    >
-                                        <MenuItemGroup title="Изменить статус">
-                                            <MenuItem value="draft" onClick={() => updateStatus("draft")}>Черновик</MenuItem>
-                                            <MenuItem value="in_progress" onClick={() => updateStatus("in_progress")}>В работе</MenuItem>
-                                            <MenuItem value="published" onClick={() => updateStatus("published")}>Опубликовано</MenuItem>
-                                            <MenuItem value="archived" onClick={() => updateStatus("archived")}>Архив</MenuItem>
-                                        </MenuItemGroup>
-                                    </MenuContent>
-                                </MenuRoot>
+                                            <MenuContent background="#fff" px={3} py={2}
+                                                         border="{borders.input}"
+                                            >
+                                                <MenuItemGroup title="Изменить статус">
+                                                    <MenuItem value="draft" onClick={() => updateStatus("draft")}>Черновик</MenuItem>
+                                                    <MenuItem value="in_progress" onClick={() => updateStatus("in_progress")}>В работе</MenuItem>
+                                                    <MenuItem value="published" onClick={() => updateStatus("published")}>Опубликовано</MenuItem>
+                                                    <MenuItem value="archived" onClick={() => updateStatus("archived")}>Архив</MenuItem>
+                                                </MenuItemGroup>
+                                            </MenuContent>
+                                        </MenuRoot>
 
-                                <Stack my={6}>
-                                    <Box
-                                        w="100%"
-                                        h="2px"
-                                        backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                        backgroundPosition= "left bottom"
-                                        backgroundRepeat= "repeat-x"
-                                        backgroundSize= "4px 100%"
-                                    ></Box>
-                                </Stack>
+                                        <Stack my={6}>
+                                            <Box
+                                                w="100%"
+                                                h="2px"
+                                                backgroundImage= "radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
+                                                backgroundPosition= "left bottom"
+                                                backgroundRepeat= "repeat-x"
+                                                backgroundSize= "4px 100%"
+                                            ></Box>
+                                        </Stack>
+                                    </>
+                                }
+
+
 
                                 <Box display={{ base: "none", md: "block" }}>
                                     <PitchDetails

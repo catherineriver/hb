@@ -54,6 +54,7 @@ export interface OrganisationType {
     name: string,
     description: string,
     pitches: PitchType[],
+    authors: AuthorType[],
 }
 
 export interface MockData {

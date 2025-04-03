@@ -52,6 +52,9 @@ export const PitchesFilterProvider = ({ children }: { children: React.ReactNode 
             if (filters.regions && filters.regions.length > 0) {
                 url += `region=${filters.regions.join(",")}&`;
             }
+            if (filters.status && filters.status.length > 0) {
+                url += `status=${filters.status.join(",")}&`;
+            }
             const res = await fetch(url);
             const data = await res.json();
             if (!Array.isArray(data)) throw new Error("Некорректный ответ от сервера");

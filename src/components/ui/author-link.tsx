@@ -5,7 +5,7 @@ import {AuthorType} from "@/hooks/useMockData";
 
 interface AuthorLinkProps {
     author: AuthorType;
-    variant?: 'withAvatar' | string;
+    variant?: 'withAvatar' | 'onlyAvatar' | string;
     size?: 'small' | 'medium' | 'large';
 }
 
@@ -21,8 +21,8 @@ const AuthorLink: React.FC<AuthorLinkProps> = ({ size= 'small', variant, author 
                 align="center"
                 gap={variant === "withAvatar" ? 2 : 0}
             >
-                {variant === "withAvatar" && <Avatar size="md" src={author.avatar_url} />}
-                <Text fontSize={size === 'medium' ? '18px' : '14px' } fontWeight="bold">{author.name}</Text>
+                {variant === "withAvatar" || variant === "onlyAvatar" && <Avatar size="md" src={author.avatar_url} />}
+                {variant !== 'onlyAvatar' && <Text fontSize={size === 'medium' ? '18px' : '14px' } fontWeight="bold">{author.name}</Text>}
             </Flex>
         </Link>
     );

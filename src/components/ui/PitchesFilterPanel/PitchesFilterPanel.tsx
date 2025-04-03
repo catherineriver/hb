@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 import {usePitchesFilter} from "@/context/pitches-context";
 import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
+import {useManagerContext} from "@/context/mock-context";
 
 const formatOptions = [
     { value: "investigation", label: "Расследование" },
@@ -21,6 +22,13 @@ const formatOptions = [
     { value: "analysis", label: "Аналитика" },
     { value: "feature", label: "Фичер" },
     { value: "longread", label: "Лонгрид" },
+];
+
+const statusOptions = [
+    { value: "draft", label: "Черновик" },
+    { value: "in_progress", label: "В работе" },
+    { value: "published", label: "Опубликовано" },
+    { value: "archived", label: "Архив" },
 ];
 
 const topicOptions = [
@@ -54,9 +62,11 @@ const russianRegions = [
 
 const PitchesFilterPanel = () => {
     const { fetchFilteredPitches } = usePitchesFilter();
+    const { isManager } = useManagerContext();
     const [isOpen, setIsOpen] = useState(false);
     const [formats, setFormats] = useState<string[]>([]);
     const [topics, setTopics] = useState<string[]>([]);
+    const [status, setStatus] = useState<string[]>([]);
 
     // const handleClearFilters = () => {
     //     setFormats([]);
@@ -68,11 +78,12 @@ const PitchesFilterPanel = () => {
             const filtersObj = {
                 formats,
                 topics,
+                status
             };
             await fetchFilteredPitches( filtersObj);
         };
         fetchFilters();
-    }, [formats, topics, fetchFilteredPitches]);
+    }, [formats, topics, status, fetchFilteredPitches]);
 
     return (
             <Box borderRight="1px solid #ddd" p={{ base: 2, md: 3 }} bg="white" w='100%'>
@@ -95,6 +106,49 @@ const PitchesFilterPanel = () => {
                     mt={{ base: 2, md: 0 }}
                     overflowY="scroll"
                 >
+                    {isManager &&
+                    <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
+                        <Fieldset.Root>
+                            <CheckboxGroup name="status" value={status} onValueChange={(values: string[]) => setStatus(values)}>
+                                <Fieldset.Legend fontSize="sm" mb="2">
+                                    Статус питча
+                                </Fieldset.Legend>
+                                <Fieldset.Content>
+                                    <For each={statusOptions}>
+                                        {(value) => (
+                                            <Checkbox.Root key={value.value} value={value.value}>
+                                                <Checkbox.HiddenInput />
+                                                <Checkbox.Control
+                                                    css={{
+                                                        '&[data-state="unchecked"]': {
+                                                            borderColor: "{borders.input}",
+                                                            background: 'white',
+                                                            color: "{colors.lightGray}"
+                                                        },
+                                                        '&[data-state="checked"]': {
+                                                            borderColor: "{borders.input}",
+                                                            background: 'white',
+                                                        },
+                                                    }}
+                                                >
+                                                    <Checkbox.Indicator>
+                                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                                            <path
+                                                                fill="currentColor"
+                                                                d="M6.173 11.414L3.293 8.536a1 1 0 011.414-1.414l1.466 1.466 4.293-4.293a1 1 0 011.414 1.414L6.173 11.414z"
+                                                            />
+                                                        </svg>
+                                                    </Checkbox.Indicator>
+                                                </Checkbox.Control>
+                                                <Checkbox.Label>{value.label}</Checkbox.Label>
+                                            </Checkbox.Root>
+                                        )}
+                                    </For>
+                                </Fieldset.Content>
+                            </CheckboxGroup>
+                        </Fieldset.Root>
+                    </Box>
+                    }
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="formats" value={formats} onValueChange={(values: string[]) => setFormats(values)}>
