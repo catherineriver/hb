@@ -5,8 +5,8 @@ import {
     Box,
     Flex,
     Text,
-    SimpleGrid,
-    Spinner
+    GridItem,
+    Spinner, Grid
 } from "@chakra-ui/react";
 import PitchCard from "@/components/ui/pitch-card";
 import { usePitchesFilter} from "@/context/pitches-context";
@@ -37,7 +37,7 @@ const PitchesContent = () => {
 
     return (
             <Flex height="100%">
-                <Box flex={2} overflowY="auto">
+                <Box flex={2} overflowY="auto" height='calc(100vh - 70px)'>
                     {loading ? (
                         <Flex justify="center" align="center" height="100%" p={5}>
                             <Spinner size="xl" color="{colors.primary}" borderWidth="4px" />
@@ -47,26 +47,30 @@ const PitchesContent = () => {
                             Ничего не найдено
                         </Text>
                     ) : (
-                        <SimpleGrid columns={{ base: 1, md: 2 }} position="relative" gridAutoFlow="row" minHeight="100%">
-                            {pitches?.map((item: PitchType, index: number) => (
-                                <Box key={item.id} height="auto">
-                                    <PitchCard isHighlighted={isHighlighted(index)} item={item} />
-                                </Box>
-                            ))}
-                            <Box
-                                position="absolute"
-                                left="50%"
-                                top={0}
-                                bottom={0}
-                                width="2px"
-                                backgroundImage="radial-gradient(circle, {colors.neutral} 1px, transparent 1px)"
-                                backgroundPosition="left top"
-                                backgroundRepeat="repeat-y"
-                                backgroundSize="2px 4px"
-                                transform="translateX(-50%)"
-                                display={{ base: "none", md: "block" }}
-                            />
-                        </SimpleGrid>
+                        <Grid
+                            templateColumns={{ base: "1fr", md: "repeat(2, auto)" }}
+                            gridAutoFlow="row"
+                            templateRows={{ base: "1fr", md: "204px" }}
+                            minHeight="calc(100vh - 70px)"
+                        >
+                                {pitches?.map((item: PitchType, index: number) => (
+                                    <GridItem key={item.id} position='relative'>
+                                        <Box
+                                            display={{ base: 'none', md: 'block' }}
+                                            position="absolute"
+                                            top="0"
+                                            bottom="0"
+                                            right="-1px"
+                                            width="2px"
+                                            backgroundImage="radial-gradient(circle, #ccc 1px, transparent 1px)"
+                                            backgroundRepeat="repeat-y"
+                                            backgroundSize="2px 4px"
+                                        />
+                                        <PitchCard isHighlighted={isHighlighted(index)} item={item} />
+                                    </GridItem>
+                                ))}
+
+                        </Grid>
                     )}
                 </Box>
             </Flex>

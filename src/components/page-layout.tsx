@@ -20,6 +20,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
                              position={{ base: 'absolute', md: 'relative' }}
                              left={{ base: '0', md: 'auto' }}
                              zIndex="10"
+                             display={{ base: 'none', md: 'block'}}
                         >
                             <Button onClick={() => router.back()} variant="solid" borderRadius={50} background="#000086" color="white" size={{ base: 'sm', md: 'lg'}}>
                                 <FaArrowLeft />

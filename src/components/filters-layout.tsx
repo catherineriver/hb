@@ -19,8 +19,8 @@ const FiltersLayout = ({ children, filterPanel }: { children: React.ReactNode,  
                         </Box>
                     </Box>
 
-                    <Flex mt="82px" w="100%" flex="1" minHeight="0" height="fit-content">
-                        <Box w="300px" overflowY="scroll" minHeight="0" display={{ base: 'none', md: 'flex' }} borderRight="1px solid #ddd">
+                    <Flex mt={{ base: '130px', md: '70px' }} w="100%" flex="1" minHeight="0" height="fit-content">
+                        <Box w="300px" minHeight="0" display={{ base: 'none', md: 'flex' }} borderRight="1px solid #ddd">
                             {filterPanel}
                         </Box>
 

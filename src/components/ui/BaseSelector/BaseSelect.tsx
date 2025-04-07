@@ -5,9 +5,9 @@ import {
     SelectTrigger,
     SelectValueText
 } from "@/components/ui/select";
-import {createListCollection, VStack} from "@chakra-ui/react";
+import {createListCollection, VStack, Text} from "@chakra-ui/react";
 import React from "react";
-import { SelectLabel } from "@ark-ui/react";
+import { SelectLabel} from "@ark-ui/react";
 
 interface BaseSelectProps {
     items: { label: string; value: string }[];
@@ -18,6 +18,11 @@ interface BaseSelectProps {
 
 const BaseSelect: React.FC<BaseSelectProps> = ({ label, items, placeholder, onValueChange }) => {
     const collection = createListCollection({ items });
+    const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+    const selectedLabels = items
+        .filter(item => selectedItems.includes(item.value))
+        .map(item => item.label)
+        .join(', ');
 
     return (
         <SelectRoot
@@ -26,16 +31,21 @@ const BaseSelect: React.FC<BaseSelectProps> = ({ label, items, placeholder, onVa
             onValueChange={(e) => {
                 const newValue = e.value;
                 onValueChange?.(newValue);
+                setSelectedItems(Array.isArray(newValue) ? newValue : [newValue]);
             }}
             multiple
         >
-            <VStack align='flex-start'>
+            <VStack align='flex-start' gap={0}>
                 <SelectLabel>{label}</SelectLabel>
                 <SelectTrigger clearable w="100%">
-                    <SelectValueText fontSize="16px" px={3} py={2} placeholder={placeholder} />
+                    <SelectValueText fontSize="16px" placeholder={placeholder } />
                 </SelectTrigger>
+                <Text fontSize="xs" color="gray.600">
+                    {selectedLabels && selectedLabels.length > 0 && selectedLabels}
+                </Text>
+
         </VStack>
-            <SelectContent background="white" border="none" boxShadow="md">
+            <SelectContent background="white" border="1px solid #ddd" boxShadow="md" p={4}>
                 {collection.items.map((item) => (
                     <SelectItem
                         item={item}

@@ -2,7 +2,7 @@ import { Button, Box, Flex } from '@chakra-ui/react';
 
 export default function SignIn({ handleLogin }: { handleLogin: () => void }) {
     return (
-        <Flex direction="column" justifyContent='center' alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "100%", md: "38.2%" }}>
+        <Flex direction="column" justifyContent='center' alignItems={{ base: "flex-end", md: "flex-start" }} h="100%" w={{ base: "auto", md: "38.2%" }}>
             <Box w="100%" display="flex" justifyContent={{ base: 'flex-end', md: 'center' }}>
                 <Button
                     onClick={(e) => {

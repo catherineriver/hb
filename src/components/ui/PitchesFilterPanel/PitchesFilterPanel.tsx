@@ -5,7 +5,7 @@ import {
     Flex,
     CheckboxGroup,
     Fieldset,
-    For,
+    For, HStack,
 } from "@chakra-ui/react";
 import React, { useState} from "react";
 import { useEffect } from "react";
@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import {usePitchesFilter} from "@/context/pitches-context";
 import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
 import {useManagerContext} from "@/context/mock-context";
+import {FaXmark} from "react-icons/fa6";
 
 const formatOptions = [
     { value: "investigation", label: "Расследование" },
@@ -68,10 +69,12 @@ const PitchesFilterPanel = () => {
     const [topics, setTopics] = useState<string[]>([]);
     const [status, setStatus] = useState<string[]>([]);
 
-    // const handleClearFilters = () => {
-    //     setFormats([]);
-    //     setTopics([]);
-    // };
+    const activeFilter = formats.length > 0 || status.length > 0 || topics.length > 0;
+
+    const handleClearFilters = () => {
+        setFormats([]);
+        setTopics([]);
+    };
 
     useEffect(() => {
         const fetchFilters = async () => {
@@ -87,16 +90,34 @@ const PitchesFilterPanel = () => {
 
     return (
             <Box borderRight="1px solid #ddd" p={{ base: 2, md: 3 }} bg="white" w='100%'>
-                <Button
-                    display={{ base: "flex", md: "none" }}
-                    onClick={() => setIsOpen(!isOpen)}
-                    w="full"
-                    justifyContent="space-between"
-                    size="sm"
-                    as="button"
-                >
-                    Фильтры
-                </Button>
+                <HStack justify='space-between'>
+                    <Button
+                        display={{ base: "flex", md: "none" }}
+                        onClick={() => setIsOpen(!isOpen)}
+                        size="sm"
+                        as="button"
+                    >
+                        Фильтры
+                    </Button>
+
+                    {isOpen && <Button
+                        display={{ base: "flex", md: "none" }}
+                        onClick={() => setIsOpen(!isOpen)}
+                        size="sm"
+                        as="button"
+                    >
+                        Применить
+                    </Button>}
+
+                    {activeFilter && <Button
+                        display={{ base: "flex", md: "none" }}
+                        onClick={() => handleClearFilters()}
+                        size="sm"
+                        as="button"
+                    >
+                        Очистить
+                    </Button>}
+                </HStack>
 
                 <Flex
                     align="center"
@@ -105,14 +126,25 @@ const PitchesFilterPanel = () => {
                     display={{ base: isOpen ? "flex" : "none", md: "flex" }}
                     mt={{ base: 2, md: 0 }}
                     overflowY="scroll"
+                    height='100%'
+                    css={{
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        '-ms-overflow-style': 'none',
+                        'scrollbar-width': 'none'
+                    }}
                 >
                     {isManager &&
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="status" value={status} onValueChange={(values: string[]) => setStatus(values)}>
-                                <Fieldset.Legend fontSize="sm" mb="2">
-                                    Статус питча
-                                </Fieldset.Legend>
+                                <HStack width="100%" justifyContent="space-between" alignItems="center" mb="2">
+                                    <Fieldset.Legend fontSize="sm" lineHeight='36px'>
+                                        Статус питча
+                                    </Fieldset.Legend>
+                                    {status.length > 0 && <Button size="xs" variant="ghost" onClick={() => setStatus([])}>
+                                        <FaXmark />
+                                    </Button>}
+                                </HStack>
                                 <Fieldset.Content>
                                     <For each={statusOptions}>
                                         {(value) => (
@@ -152,9 +184,14 @@ const PitchesFilterPanel = () => {
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="formats" value={formats} onValueChange={(values: string[]) => setFormats(values)}>
-                                <Fieldset.Legend fontSize="sm" mb="2">
-                                    Выберите формат
-                                </Fieldset.Legend>
+                                <HStack width="100%" justifyContent="space-between" alignItems="center" mb="2">
+                                    <Fieldset.Legend fontSize="sm" lineHeight='36px'>
+                                        Выберите формат
+                                    </Fieldset.Legend>
+                                    {formats.length > 0 && <Button size="xs" variant="ghost" onClick={() => setFormats([])}>
+                                        <FaXmark />
+                                    </Button>}
+                                </HStack>
                                 <Fieldset.Content>
                                     <For each={formatOptions}>
                                         {(value) => (
@@ -194,9 +231,14 @@ const PitchesFilterPanel = () => {
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="topics" value={topics} onValueChange={(values: string[]) => setTopics(values)}>
-                                <Fieldset.Legend fontSize="sm" mb="2">
-                                    Выберите тему
-                                </Fieldset.Legend>
+                                <HStack width="100%" justifyContent="space-between" alignItems="center" mb="2">
+                                    <Fieldset.Legend fontSize="sm" lineHeight='36px'>
+                                        Выберите тему
+                                    </Fieldset.Legend>
+                                    {topics.length > 0 && <Button size="xs" variant="ghost" onClick={() => setTopics([])}>
+                                        <FaXmark />
+                                    </Button>}
+                                </HStack>
                                 <Fieldset.Content>
                                     <For each={topicOptions}>
                                         {(value) => (
@@ -232,7 +274,7 @@ const PitchesFilterPanel = () => {
                         </Fieldset.Root>
                     </Box>
 
-                    <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
+                    <Box background="{colors.gray}" borderRadius={2} p={4} w="100%">
                         <BaseSelect items={russianRegions} placeholder="Регион:" onValueChange={(value) => fetchFilteredPitches({ regions: value })} />
                     </Box>
                 </Flex>

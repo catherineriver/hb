@@ -95,7 +95,7 @@ export const SelectValueText = React.forwardRef<
           if (children) return children(items)
           if (items.length === 1)
             return select.collection.stringifyItem(items[0])
-          return `${items.length} selected`
+          return `${items.length} выбрано`
         }}
       </ChakraSelect.Context>
     </ChakraSelect.ValueText>

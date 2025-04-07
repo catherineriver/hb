@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import {
-    Box,
     Text,
     Flex,
     Spinner,
@@ -28,8 +27,7 @@ const AuthorsContent = () => {
     }, [fetchInitialAuthors]);
 
     return (
-        <Flex height="100%" gap={4} p={4} justifyContent="center" width="100%">
-            <Box overflowY="auto">
+        <Flex gap={4} p={4} justifyContent="center">
                 {loading ? (
                     <Flex justify="center" align="center" height="100%" p={5}>
                         <Spinner size="xl" color="blue.500" borderWidth="4px" />
@@ -41,7 +39,6 @@ const AuthorsContent = () => {
                 ) : (
                     <AuthorsList authors={authors} />
                 )}
-            </Box>
         </Flex>
     );
 };

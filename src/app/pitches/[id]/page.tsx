@@ -82,7 +82,7 @@ const PitchPage = () => {
                                 maxWidth={{ base: "none", md: "750px" }}
                                 maxHeight={{ base: "none", md: "85dvh" }}
                                 overflowY={{ base: "auto", md: "scroll" }}
-                                paddingRight="8px"
+                                paddingRight={{ base: "0", md: "8px" }}
                             >
                                 {isManager &&
                                     <Badge size="xs" variant="solid" px={2} py={1} background={color} color="#fff">
@@ -90,12 +90,12 @@ const PitchPage = () => {
                                     </Badge>
                                 }
                                 <HStack align="center" justify="space-between" gap={3}>
-                                    <Heading size="4xl" mb={4}>
+                                    <Heading size={{ base: 'xl', md: '4xl'}} mb={{ base: 0, md: 4}}>
                                         {pitch.content.title}
                                     </Heading>
                                 </HStack>
 
-                                <Box display={{ base: "block", md: "none" }}>
+                                <Box display={{ base: "block", md: "none" }} my={2} background='gray' p={2} borderRadius='8px'>
                                     <PitchDetails
                                         format={pitch.content.format}
                                         region={pitch.content.location}
@@ -104,7 +104,7 @@ const PitchPage = () => {
                                     />
                                 </Box>
 
-                                <Heading>Тема</Heading>
+                                <Heading size={{ base: 'md', md: 'xl'}}>Тема</Heading>
                                 {[...Array(1)].map((_, index) => (
                                     <Text key={index} mt={4}>{pitch.content.key_description}</Text>
                                 ))}
@@ -120,9 +120,9 @@ const PitchPage = () => {
                                     ></Box>
                                 </Stack>
 
-                                <Heading>Предварительный план</Heading>
+                                <Heading size={{ base: 'md', md: 'xl'}}>Предварительный план</Heading>
                                 {[...Array(5)].map((_, index) => (
-                                    <Text key={index} mt={4}>{pitch.content.full}</Text>
+                                    <Text fontSize={{ base: 'md', md: 'md'}} key={index} mt={4}>{pitch.content.full}</Text>
                                 ))}
 
                                 <Stack my={6}>
@@ -136,7 +136,7 @@ const PitchPage = () => {
                                     ></Box>
                                 </Stack>
 
-                                <Heading>Сюжет</Heading>
+                                <Heading size={{ base: 'md', md: 'xl'}}>Сюжет</Heading>
                                 {[...Array(5)].map((_, index) => (
                                     <Text key={index} mt={4}>{pitch.content.plot}</Text>
                                 ))}

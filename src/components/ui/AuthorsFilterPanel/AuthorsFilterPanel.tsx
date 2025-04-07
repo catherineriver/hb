@@ -8,13 +8,14 @@ import {
     CheckboxGroup,
     Fieldset,
     For,
-    VStack
+    VStack, HStack
 } from "@chakra-ui/react";
 import React, { useState} from "react";
 import { useEffect } from "react";
 import {useAuthorsFilter} from "@/context/authors-context";
 import {useDebouncedValue} from "@/hooks/useDebouncedValue";
 import BaseSelect from "@/components/ui/BaseSelector/BaseSelect";
+import {FaXmark} from "react-icons/fa6";
 
 const formatOptions = [
     { value: "investigation", label: "Расследование" },
@@ -65,10 +66,15 @@ const AuthorsFilterPanel = () => {
     const [formats, setFormats] = useState<string[]>([]);
     const [topics, setTopics] = useState<string[]>([]);
 
+    const activeFilter = formats.length > 0 || searchQuery.length > 0 || topics.length > 0 || readyToTravel || readyToUrgent || withExperience;
+
     const handleClearFilters = () => {
         setWithExperience(false);
         setReadyToTravel(false);
         setReadyToUrgent(false);
+        setSearchQuery("");
+        setFormats([]);
+        setTopics([]);
     };
 
     const debouncedSearch = useDebouncedValue(searchQuery, 600);
@@ -89,16 +95,34 @@ const AuthorsFilterPanel = () => {
 
     return (
             <Box p={{ base: 2, md: 3 }} bg="white" w='100%'>
-                <Button
-                    display={{ base: "flex", md: "none" }}
-                    onClick={() => setIsOpen(!isOpen)}
-                    w="full"
-                    justifyContent="space-between"
-                    size="sm"
-                    as="button"
-                >
-                    Фильтры
-                </Button>
+                    <HStack justify='space-between'>
+                        <Button
+                            display={{ base: "flex", md: "none" }}
+                            onClick={() => setIsOpen(!isOpen)}
+                            size="sm"
+                            as="button"
+                        >
+                            Фильтры
+                        </Button>
+
+                        {isOpen && <Button
+                            display={{ base: "flex", md: "none" }}
+                            onClick={() => setIsOpen(!isOpen)}
+                            size="sm"
+                            as="button"
+                        >
+                            Применить
+                        </Button>}
+
+                        {activeFilter && <Button
+                            display={{ base: "flex", md: "none" }}
+                            onClick={() => handleClearFilters()}
+                            size="sm"
+                            as="button"
+                        >
+                            Очистить
+                        </Button>}
+                    </HStack>
 
                 <Flex
                     align="center"
@@ -106,6 +130,13 @@ const AuthorsFilterPanel = () => {
                     wrap="wrap"
                     display={{ base: isOpen ? "flex" : "none", md: "flex" }}
                     mt={{ base: 2, md: 0 }}
+                    // overflowY="scroll"
+                    height='100%'
+                    css={{
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        '-ms-overflow-style': 'none',
+                        'scrollbar-width': 'none'
+                    }}
                 >
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Field.Root required>
@@ -128,6 +159,9 @@ const AuthorsFilterPanel = () => {
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <VStack gap={4} alignItems="start">
+                            <HStack width="100%" justifyContent="end">
+                                {(readyToUrgent || readyToTravel || withExperience) && <Button size="xs" variant="ghost" onClick={handleClearFilters}>Очистить</Button>}
+                            </HStack>
                         <Checkbox.Root
                             checked={readyToUrgent}
                             onCheckedChange={(e) => setReadyToUrgent(!!e.checked)}
@@ -217,7 +251,6 @@ const AuthorsFilterPanel = () => {
                             </Checkbox.Control>
                             <Checkbox.Label>✅ Опыт с High Beam</Checkbox.Label>
                         </Checkbox.Root>
-                        {(readyToUrgent || readyToTravel || withExperience) && <Button size="xs" variant="ghost" onClick={handleClearFilters}>Очистить</Button>}
                         </VStack>
                     </Box>
 
@@ -225,9 +258,14 @@ const AuthorsFilterPanel = () => {
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="formats" value={formats} onValueChange={(values: string[]) => setFormats(values)}>
-                                <Fieldset.Legend fontSize="sm" mb="2">
-                                    Предпочитает формат
-                                </Fieldset.Legend>
+                                <HStack width="100%" justifyContent="space-between" alignItems="center" mb="2">
+                                    <Fieldset.Legend fontSize="sm" lineHeight='36px'>
+                                        Предпочитает формат
+                                    </Fieldset.Legend>
+                                    {formats.length > 0 && <Button size="xs" variant="ghost" onClick={() => setFormats([])}>
+                                        <FaXmark />
+                                    </Button>}
+                                </HStack>
                                 <Fieldset.Content>
                                     <For each={formatOptions}>
                                         {(value) => (
@@ -261,16 +299,20 @@ const AuthorsFilterPanel = () => {
                                     </For>
                                 </Fieldset.Content>
                             </CheckboxGroup>
-                            {formats.length > 0 && <Button size="xs" variant="ghost" onClick={() => setFormats([])}>Очистить</Button>}
                         </Fieldset.Root>
                     </Box>
 
                     <Box background="{colors.gray}" p={4} borderRadius={2} w="100%">
                         <Fieldset.Root>
                             <CheckboxGroup name="topics" value={topics} onValueChange={(values: string[]) => setTopics(values)}>
-                                <Fieldset.Legend fontSize="sm" mb="2">
-                                    Пишет на тему
-                                </Fieldset.Legend>
+                                <HStack width="100%" justifyContent="space-between" alignItems="center" mb="2">
+                                    <Fieldset.Legend fontSize="sm" lineHeight='36px'>
+                                        Пишет на тему
+                                    </Fieldset.Legend>
+                                    {topics.length > 0 && <Button size="xs" variant="ghost" onClick={() => setTopics([])}>
+                                        <FaXmark />
+                                    </Button>}
+                                </HStack>
                                 <Fieldset.Content>
                                     <For each={topicOptions}>
                                         {(value) => (
@@ -303,12 +345,11 @@ const AuthorsFilterPanel = () => {
                                     </For>
                                 </Fieldset.Content>
                             </CheckboxGroup>
-                            {topics.length > 0 && <Button size="xs" variant="ghost" onClick={() => setTopics([])}>Очистить</Button>}
                         </Fieldset.Root>
                     </Box>
 
-                    <Box background="{colors.gray}" p={4} borderRadius={2} w="100%" mb={4}>
-                        <BaseSelect items={russianRegions} label='Регион' placeholder='Пишет о регионе' onValueChange={(value) => fetchSearchedAuthors({ regions: value })} />
+                    <Box background="{colors.gray}" borderRadius={2} p={4} w="100%">
+                        <BaseSelect items={russianRegions} placeholder='Пишет о регионе' onValueChange={(value) => fetchSearchedAuthors({ regions: value })} />
                     </Box>
                 </Flex>
             </Box>
